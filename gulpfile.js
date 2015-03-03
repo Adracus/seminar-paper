@@ -43,7 +43,9 @@ gulp.task("pdf", function() {
 		.pipe(shell(["pandoc <%= file.path %> -o <%= f(file.path) %>"],
 			{templateData: {
 				f: function(s) {
-					return s.replace(/md\//, "pdf/").replace(/\.tex/, ".pdf");
+                    var filename = s.replace(/tex\//, "pdf/").replace(/\.tex/, ".pdf");
+                    console.log(filename);
+					return filename;
 				}
 			}}));
 		
