@@ -1,4 +1,5 @@
 var gulp		= require("gulp");
+var shell 		= require("gulp-shell");
 var pandoc 		= require("gulp-pandoc");
 var runSequence = require("run-sequence");
 
@@ -39,12 +40,13 @@ gulp.task("html", function() {
 
 gulp.task("pdf", function() {
 	return gulp.src(paths.tex_files)
-		.pipe(pandoc({
-			from: 	"latex",
-			to: 	"pdf",
-			ext: 	".pdf",
-			args: 	["--smart"]
-		}))
+		.pipe(shell(["pandoc <%= file.path %> -o <%= f(file.path) %>"],
+			{templateData: {
+				f: function(s) {
+					return s.replace(/md\//, "pdf/").replace(/\.tex/, ".pdf");
+				}
+			}}));
+		
 });
 
 gulp.task("default", function(cb) {
