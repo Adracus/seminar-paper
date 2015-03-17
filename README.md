@@ -4,7 +4,7 @@ Paper
 You will need a LaTeX Distribution like TeX Live. Then you can simply compile
 the document with
 
-	pdflatex seminar_paper.tex
+	pdflatex seminarpaper.tex
 
 > Hint: You might need to compile a couple of times so the table of contents is
 > correctly built
