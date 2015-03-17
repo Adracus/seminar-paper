@@ -99,3 +99,39 @@ reconstruct the secret)
 
 \chapter{Duse}
 \section{The Cryptographic Protocol}
+
+The protocol involves a server and a client. During a secrets lifecycle, there
+are four events that are relevant for the protocol creating, reading, updating,
+and deleting. These are also known as \textit{CRUD}.
+
+\subsection{Creating a secret}
+
+When creating a secret, the client first has to retrieve all profiles of the
+users the secret should be shared with. These profiles contain the public key
+of each user.
+
+Now shamir's secret sharing could be used to split the secret into shares for
+each user, however, this can lead to problems. Since shamir's secret sharing
+requires primes equally large as the input, it can in theory handle any size of
+input, but not in practise, as it might take a long time to calculate such a
+large prime. Instead the original secret is split into chunks, here called
+\textit{secret parts}.
+
+Considering that all the \textit{secret parts} are not too long to compute
+primes for each of them, shamir's secret sharing can now be applied.
+
+Once shamir's secret sharing has been applied there are shares for each user
+for every secret part. These shares can then be encrypted with the previously
+retrieved public keys of each user and then signed with the creating users
+private key. All of this data is then send to the server to verify and save.
+
+Shamir's secret sharing requires at least two shares to reconstruct a secret,
+therefore there will always be a transparent "server"-user which gets a share
+that is shared with every participant.
+
+\begin{figure}
+  \includegraphics[scale=0.65]{pictures/create_secret_sequence_diagram.png}
+  \centering
+  \caption{Creating a secret}
+  \label{fig:creating_a_secret}
+\end{figure}
