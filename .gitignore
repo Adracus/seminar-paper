@@ -1,3 +1,8 @@
-tex/
-pdf/
-node_modules/
+*.lof
+*.log
+*.lot
+*.nlo
+*.out
+*.pdf
+*.toc
+*.aux

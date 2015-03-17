@@ -1,4 +1,0 @@
-The Cryptographic Protocol
-==========================
-
-
