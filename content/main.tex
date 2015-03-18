@@ -25,12 +25,16 @@ were switched or rotated.
 
 Imagine the following message:
 
+\vspace{0.5cm}
 \textit{attack at dawn}
+\vspace{0.5cm}
 
 If one substituted all "a"s with a "z" and all "t"s with an "e", the message
 would look like this:
 
+\vspace{0.5cm}
 \textit{zeezck ze dzwn}
+\vspace{0.5cm}
 
 The message immediately becomes unreadable for someone who doesn't know about
 the underlying subsitution. This was, when cryptanalysis comes in: If one looks
@@ -39,7 +43,9 @@ letters, in this example "z" and "e". The most common letters in the English
 alphabet are "e" and "a". One could now try to substitute the letter "z" with
 "e". The outcome would be
 
+\vspace{0.5cm}
 \textit{aeeack ae dawn}
+\vspace{0.5cm}
 
 If one can't guess that the message is \textit{attack at dawn}, one could
 continue using cryptanalysis. Since substituting "e" with commonly used letters
@@ -47,7 +53,9 @@ fails, one could analyze two letter chains. One of the most common used two
 letter combinations with "a" is "at" (as one could have guessed when seeing
 "ae").  After substituting "e" with "t", the original message is revealed.
 
+\vspace{0.5cm}
 \textit{attack at dawn}
+\vspace{0.5cm}
 
 Soon, this procedure also became quite insecure and cryptographers tried to
 find new ways to encrypt their messages. It was a gift for them when computers
@@ -74,6 +82,54 @@ algorithms. Digital signatures, one-way has functions, as and public key
 cryptography are examples for cryptographic primitives.
 
 \subsection{RSA}
+	
+RSA is an asymmetric encryption standard, developed by Rivest, Shamir and
+Adleman. As many other asymmetric encryptions, RSA uses a one way function
+with a trapdoor. So in order to understand RSA, one has to understand the
+trapdoor function. The RSA trapdoor function relies on Euler's totient function
+$\phi$. This function returns the amount of numbers, which are relatively prime
+and smaller than a number n. Since prime numbers are only evenly divisible by
+1 and themselves, the totient function returns n - 1 for prime numbers. Also,
+if you multiply a number with another, the totient function also mutliplies
+with the totient function of the other number. An example:
+
+$$\phi(13) = 12$$
+
+$$\phi(11) = 10$$
+
+$$13 * 11 = 143$$
+
+$$\phi(143) = \phi(13) * \phi(11) = 120$$
+
+RSA uses this as follows: To encrypt something, one needs the so called
+public key. To decrypt something, one needs the private key. Both keys
+contain the so called RSA modulus \textit{n}, which is the product of 
+two primes, \textit{p} and \textit{q}. The public key additionally has
+the number \textit{e} and the private key has the additional number
+\textit{d}. \textit{e} is a number which is coprime to the result of
+the totient function of \textit{n}. \textit{d} is the multiplicative inverse
+\footnote{The multiplicative inverse of a number a is the number b where $a*b = 1$} of
+\textit{e} relative to $\phi(n)$.
+
+Having calculated those needed factors, it is easy to en- and decrypt
+a message representative (usually a number). To encrypt a message, one
+has to apply the following procedure:
+
+$$c = m^e mod N$$
+
+Where \textit{c} is the ciphertext and \textit{m} the message representative.
+
+The decryption follows the same procedure, only \textit{c} and \textit{d} are
+swapped and the exponent is \textit{d}:
+
+$$m = c^d mod N$$
+
+Using this procedure without further additions isn't considered safe today:
+One plaintext would always produce the same ciphertext. This is why cryptographers
+started to use \textit{paddings}. Paddings wrap the plaintext and the padded
+text is then encrypted. After decryption, the padding has to be removed in order
+to obtain the original plaintext. As a result, to en- and decrypt a message, one
+has to know the RSA procedure as well as the used padding.
 
 \section{Cryptographic Protocols}
 
