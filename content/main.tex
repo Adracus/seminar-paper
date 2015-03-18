@@ -81,6 +81,28 @@ cryptographic primitives. They include well researched, reliable and accepted
 algorithms. Digital signatures, one-way has functions, as and public key
 cryptography are examples for cryptographic primitives.
 
+\section{Prime numbers}
+
+Prime numbers are natural numbers which are greater than one and only evenly
+divisible by one and themselves.
+
+Those numbers play a main role in cryptography as they are commonly used
+as a security factor. For example, it is quite difficult to determine the
+prime factorization of a number, as none of the existing algorithms solves
+the problem in polynomial time. Therefore, prime factorization is a problem
+of \textit{nondeterministic polynomial time complexity} and to factorize
+large numbers, more time than the age of the universe is needed.
+
+But how can one get prime numbers in a short amount of time? There are two
+main known solutions: The first solution is to permute through all positive
+natural numbers, more efficient algorithms here are for example the
+\textit{Sieve of Erathostenes} or the \textit{Sieve of Atkin}. The other
+main approach is the statistical or heuristic approach. Well known methods
+here are the \textit{Miller Rabin Test}, a test which delivers the propability
+of a number to be a prime or not. This test is used in \textit{OpenSSL} to
+find large primes, which makes it possible for users of \textit{OpenSSL} to
+not have primes as factors of their RSA modulus.
+
 \subsection{RSA}
 	
 RSA is an asymmetric encryption standard, developed by Rivest, Shamir and
