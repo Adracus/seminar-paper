@@ -169,11 +169,60 @@ different implementations are compatible to each other.
 
 \section{Secret Sharing}
 
-Describe simple secret sharing (every participant needs all shares to
-reconstruct the secret)
+The practise of secret sharing takes a secret and splits it into $n$ parts,
+called shares. These shares can then be distributed among all participants, the
+secret should be shared with.
+
+Most secret sharing schemes are so called $(t, n)$-threshold schemes. Within
+those schemes, $t$ is the threshold out of $n$ shares required to be able to
+reconstruct the secret, therefore $t \leq n$.
+
+The easiest form of secret sharing is to divide the secret $S$ into shares of
+equal length and requiring as many shares as generated to reconstruct the
+secret $S$. In a $(t, n)$-threshold scheme that would mean $t = n$.
+
+$$S = "secret"$$
+$$s_1 = "se"; s_2 = "cr"; s_3 = "et";$$
+
+Assuming an attacker knows, the secret only consists of alphabetical characters
+and that it is six characters long, then there are $6^{26} = 1.7 * 10^{20}$
+possibilities.  However, if the attacker is able to obtain a share and knows
+where in the secret it belongs, then the possibilities to try decrease to
+$4^{26} = 4.5 * 10^{15}$. That's a factor of $37876$.
+
+To avoid this issue a schemes shares below the threshold must not disclose any
+information about the secret. This is called \textit{secure} secret sharing.
+An example for a secure secret sharing scheme with a $(t, n)$-threshold is the
+\textit{XOR} encryption.
+
+$$k = n; k > 0;k, n \in \mathbb{N}$$
+
+$$S \in \mathbb{N}$$
+
+$$j_{i} \in \mathbb{R}; i = n$$
+
+$$\forall m: j_{m} = Random; m = {1, 2, ..., n-1}$$
+
+$$j_{n} = S \oplus j_{1} \oplus j_{2} \oplus ... \oplus j_{n-1} $$
+
+$$S = j_{1} \oplus j_{2} \oplus ... \oplus j_{n-1} \oplus j_{n} $$
+
+To perform this type of scheme $n-1$ random numbers $j_{i}$ must be generated.
+Then \textit{XOR} the secret $S$ and the randomly generated numbers. Each of
+the generated numbers is a share and the result of the \textit{XOR} chain being
+the $n$th share. To reconstruct the secret $S$ simply \textit{XOR} the shares.
+This is possible since \textit{XOR} is symmetric.
+
+Although secret sharing through \textit{XOR} encryption is simple and fast, it
+becomes impractical once there are many particpants, since all shares are
+required to reconstruct the secret and $k = n$ and $n$ is large.
+
+To solve this issue secure $(t, n)$-threshold schemes with $t < n$ must be
+used.
 
 \subsection{Shamir's Secret Sharing}
 \subsection{Blakley's scheme}
+\subsection{Secret Sharing in Practise}
 
 \chapter{Duse}
 \section{The Cryptographic Protocol}
