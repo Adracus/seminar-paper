@@ -221,8 +221,33 @@ To solve this issue secure $(t, n)$-threshold schemes with $t < n$ must be
 used.
 
 \subsection{Shamir's Secret Sharing}
+
+The goals of Shamir's Secret Sharing are that "knowledge of any $k$ or more
+$D_i$ pieces makes $D$ easily computable; knowledge of any $k - 1$ or fewer
+$D_i$ pieces leaves $D$ completely undetermined (in the sense that all its
+possible values are equally likely)." With $D$ being any Data, like a secret.
+
+Shamir's Secret Sharing is more practical since it is a real $(t, n)$-threshold
+scheme as $t$ can be smaller than $n$.
+
+$$a_{n}x^n + a_{n-1}x^{n-1} + ... + a_{3}x^3 + a_{2}x^2 + a_{1}x + a_0 $$
+
+Shamir's Secret Sharing uses a polynomial of degree $t$ to generate secrets.
+In the generated polynomial in standard form the secret would be $a_0$. The
+main idea is that any polynomial can be reconstructed using $degree + 1$ points
+on the function. The task of reconstruction can be accomplished using lagrange
+interpolation.
+
+In the sense of secret sharing $n$ would be any number of distinct points on
+the generated polynomial, except the intercept with the value axis, which is
+the secret.
+
+The smallest degree of a polynomial, that is not a single point, is a line, a
+polynomial of degree 1, it therefore be reconstructed with two points. It
+consequently creates an edge condition of $t \geq 1$.
+
 \subsection{Blakley's scheme}
-\subsection{Secret Sharing in Practise}
+\subsection{Practical Secret Sharing}
 
 \chapter{Duse}
 \section{The Cryptographic Protocol}
