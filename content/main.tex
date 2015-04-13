@@ -266,7 +266,26 @@ To be cryptographically secure, the operations are to be done within finite
 fields. Using shamir's secret sharing scheme that means, that the prime of the
 finite field has to be larger than the secret integer. $P > S$
 
-While it is not possible to identify a the next prime larger than $S$, there is
+To get such a prime number, one has to test numbers larger than $S$. For example
+for the number $S = 25$, the prime number $P$ would be $29$. In that case it is
+easy to get a prime number, but for larger numbers it takes a lot of time to get
+the next prime number. That's why one needs to have a more efficient method of
+getting large prime numbers in a small amount of time.
+
+To always have accurate prime numbers one has to either have a way to efficiently
+calculate prime numbers as they are needed or a way to efficiently get a prime
+number of a pre-computed set. Each prime number \textit{covers} its on range. For
+example, for a secret $S = 14$, the prime number $P = 17$ is suitable as it
+\textit{covers} the range from $13$ to $17$. As a result, the range of each
+prime number $P$ is from $P_{-1} to P-1$, where $P_{-1}$ is the next smaller
+prime number (and for $P = 1$ it is $0$). To represent those ranges one could
+invent a range-datastructure (R-Tree is not suitable for this use case), but
+if one tried to store the prime numbers from $0$ to $10^{100}$ one would need
+an incredibly high amount of storage. As a result, the approach to store all
+prime numbers in a large range is quite inefficient in terms of storage and
+overall hard to realize.
+
+While it is hard to identify the next prime larger than $S$, there is
 a phenomenon that $2^p-1$, is likely to be a prime. These primes are called
 Mersenne primes, with $p$ being the $p_{th}$ Mersenne prime. The largest known
 Mersenne prime is the 48$_{th}$ and has $17,425,170$ digits.
