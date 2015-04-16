@@ -153,6 +153,26 @@ text is then encrypted. After decryption, the padding has to be removed in order
 to obtain the original plaintext. As a result, to en- and decrypt a message, one
 has to know the RSA procedure as well as the used padding.
 
+There are several known so called \textit{padding schemes}. The most widespread
+padding was defined in \textit{PKCS #1}, the first of a family of standards
+called Public Key Kryptography Standards. To encrypt, a secret Integer $m$ is 
+first encoded into an octet string using the $i2osp$ (integer to octet string 
+primitive). This results in an octet string message $M$. $M$ is then
+concatenated with a randomly generated octet string as well as some other control
+sequences as follows:
+
+$$EM = 0x00 || 0x02 || PS || 0x00 || M$$
+
+Where $EM$ is the encoded message and $PS$ the randomly generated octet string.
+$EM$ is then converted into the ciphertext representing integer $C$ with the $os2ip$
+operation (octet string to integer primitive).
+
+The decryption then decodes $C$ back into $EM$ and 
+uses the leading $0x00$ and $0x02$ to check if the padding was
+applied. If so, it uses the second $0x00$ to detect the start of the encrypted
+message. In total, this encryption padding enables users to encrypt secrets with
+always different integer outcomes.
+
 \section{Cryptographic Protocols}
 
 A cryptographic protocol is a combination of cryptographic primitives,
