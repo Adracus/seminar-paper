@@ -6,5 +6,6 @@
 *.pdf
 *.toc
 *.aux
+.DS_Store
 seminar-paper.sublime-project
 seminar-paper.sublime-workspace
