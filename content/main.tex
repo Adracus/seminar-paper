@@ -394,7 +394,84 @@ then apply the string to integer conversion as explained usind the ASCII
 charset. This is possible, since all characters of Base64 are a subset of
 ASCII.
 
+\subsection{Share representation}
+
+How shamir's secret sharing can be extended to use finite fields and allowing
+UTF-8 have been discussed. To communicate a share, however, a reasonable string
+representation has to be chosen.
+
+The main components of a shamir's secret sharing share are the \textit{x} and
+the \textit{y} value. Combining them in a single string can be accomplished by
+concatenating the two around a dash. While the \textit{x} values will only
+become as large as the number of participants, the \textit{y} value can become
+any number up to the chosen prime. Since the shares are not human readable,
+the \textit{y} value can be compressed by turning them into hex representation
+instead of decimal.
+
+Also, to be able to predict the length of a share better, the \textit{x} value
+will have a left padding of zeros. If the number of participants is represented
+by $n$ then the length of \textit{x} with zero-padding must be
+$floor(log_{10}(n))+1$. For example, there are ten participants, then
+
+$$n = 10$$
+$$floor(log_{10}(n))+1 = 2$$
+
+Accordingly, the \textit{x} values are represented as $01, 02, 03, 04, 05, 06,
+07, 08, 09, 10$.
+
+An example of the explained representation could be \textit{"1-f0"}, which is
+equivalent to the point $(1, 240)$.
+
+Additionally the representation is in use by other shamir's secret sharing
+libraries, therefore compatibility is more uncomplicated when choosing the
+argued representation.
+
 \subsection{Connecting shamir's secret sharing and RSA}
+
+When using shamir's secret sharing, even under consideration of finite fields,
+an attacker can estimate the size of a secret since it is somewhat close to the
+chosen prime. To eliminate this possibility and introduce more security
+features, shamir's secret sharing and RSA are going to be combined. Due to some
+limitations of the technologies some adaptions have to be made. These mainly
+concern length restrictions of RSA.
+
+When using a RSA public key to encrypt a plain text, the resulting length of
+the cipher text is equal to the key size. In case of an 1024 bit RSA key, the
+resulting cipher text is always 128 bytes. Within those 128 bytes are a minimum
+of 11 bytes PKCS1.5 padding, which leaves up to 117 bytes of actual payload. As
+discussed in the previous section the string representation of a share always
+contains a dash, leaving 116 bytes. The \textit{x} value is also at least one
+character, leaving up to 115 bytes of payload.
+
+Since the chosen prime restricts the size of the shares \textit{y} value, it
+has a heavy influence on the total size. To calculate the maximum size of the
+payload, the primes have to be examined. The largest possible share can be
+represented as only 15 or \textit{f} in terms of hex. Since the mersenne primes
+are used, they can be examined for their maximum size. The expected prime is
+the mersenne prime below the first prime resulting in more than 117 bytes.
+
+$$11. Mersenne prime: 2^{107}-1$$
+$$2^{107} = 800000000000000000000000000_{16}$$
+
+$$12. Mersenne prime: 2^{127}-1$$
+$$2^{127} = 80000000000000000000000000000000_{16}$$
+
+$$13. Mersenne prime: 2^{521}-1$$
+$$2^{521} = (2*10^{130})_{16}$$
+
+Since the 13$^{th}$ mersenne prime is the first one to exceed 117 digits in
+hex, the searched for prime is the 12$^{th}$. Therefore the maximum length for
+a single share can be up to 34, since the length of the \textit{y}
+representation can be up to 32 bytes. The two additional bytes are for the
+dash, and at least one byte for the \textit{x} value representation.
+
+$$floor(log_{10}(80000000000000000000000000000000)) + 1 = 32$$
+$$length(x) >= 1$$
+$$length(y) = 32$$
+$$1 + length(x) + length(y) = total\_length$$
+$$1 + length(x) + 32 = total\_length$$
+$$1 + 1 + 32 <= total\_length$$
+$$34 <= total\_length$$
 
 \chapter{Duse}
 \section{The Cryptographic Protocol}
