@@ -137,14 +137,14 @@ Having calculated those needed factors, it is easy to en- and decrypt
 a message representative (usually a number). To encrypt a message, one
 has to apply the following procedure:
 
-$$c = m^e mod N$$
+$$c = m^e \Mod{N}$$
 
 Where \textit{c} is the ciphertext and \textit{m} the message representative.
 
 The decryption follows the same procedure, only \textit{c} and \textit{d} are
 swapped and the exponent is \textit{d}:
 
-$$m = c^d mod N$$
+$$m = c^d \Mod{N}$$
 
 Using this procedure without further additions isn't considered safe today:
 One plaintext would always produce the same ciphertext. This is why cryptographers
@@ -185,7 +185,77 @@ specific dificulties up to the implementation. Since only the interfaces are
 defined, the developers can implement against those and therefore make sure
 different implementations are compatible to each other.
 
-\subsection{Diffie Hellmann}
+\subsection{Diffie-Hellmann}
+
+The Diffie-Hellmann key exchange is a protocol to create a secret key between
+two stations. A simple visualization of the Diffie-Hellmann key exchange can
+be achieved by using colors. Imagine each of two persons has got a color,
+their secret color. To now create a shared secret, they both agree on a
+public color. After that, they mix their own private color with that public
+color and send the mixture to each other. Both persons are now able to mix
+the received mixture with their private color and have then both the same
+color, their shared secret.
+
+The previous description is rather informal. To turn those mentioned components
+into a procedure which works with computers, some math is required.
+
+First, there has to be a problem, which can't be solved in feasible time
+(most commonly, it is an $NP$ hard problem). The most common problem for
+the Diffie-Hellmann key exchange is the so called
+\textit{Computational-Diffie-Hellmann Problem}:
+
+\vspace{1em}
+
+Given $g$ of a group and the values $A = g^a$ and $B = g^b$, what is
+$K = g^{ab}$ with $a$ and $b$ unknown?
+
+\vspace{1em}
+
+The group $g$ is in today's use cases a \textit{cyclic group of prime order}.
+In such groups, results of addition and multiplication are repeating
+themselves. This is achieved by applying the modulo operation to the result
+of e.g. an addition. The modulus has to be a prime number here. An example
+for such a group would be
+
+$$n \Mod{13}$$ where $13$ is the prime number and $n$ can be any number.
+
+In practice, the commonly shared secret in the Diffie-Hellman key exchange
+is the prime number $p$ determining the cyclic group of prime order and also
+the number $g$ which is the base for that group ($g$ has to be a primitive
+root of $p$, but explaining this is not relevant for the further explanation).
+For the following example, $p = 23$ and $g = 5$.
+
+After having shared the prime number, both participants generate their
+private numbers $a$ and $b$, for example $a = 4$ and $b = 10$. Referring to the
+previously mentioned visualization, $a$ and $b$ are the private colors of the
+two persons wanting to communicate. They both then compute the mixture of their
+private color and the ``color'' $g$ with $A = g^a$ and $B = g^b$ which is
+$A = 5^4 \Mod{13} = 625 \Mod{13} = 1$ and $B = 5^10 \Mod{13} = 9765625 \Mod{13} = 12$.
+
+The mixtures are then transferred to the communication partner. Each
+participant then computes the shared secret $s$ by raising the mixture
+to the power of their private color. This results in the following:
+
+$$s = B^a \Mod{p} = 12^4 \Mod{13} = 20736 \Mod{13} = 1$$
+
+or
+
+$$s = A^b \Mod{p} = 1^10 \Mod{13} = 1 \Mod{13} = 1$$
+
+All in all, the Diffie-Hellmann key exchange provides a very secure way
+to create a shared secret, but it also is not bulletproof. It is vulnerable
+to man-in-the-middle attacks:
+
+Imagine Alice and Bob want to establish a shared secret. They proceed as
+described previously by choosing their private colors and the numbers $g$
+and $p$. But when asking each other for the mixture, the man in the middle
+intercepts as follows: He blocks the request and instead returns a mixture
+with his private color and gets the mixtures of Alice and Bob. He then
+creates a shared secret with Alice and another shared secret with Bob. With
+Alice and Bob thinking they communicate with each other, they actually
+communicate with the man in the middle, who is now able to decrypt both
+the messages of Alice and Bob. In practice, to prevent such attacks, digital
+signatures are applied to the exchanged messages.
 
 \section{Secret Sharing}
 
