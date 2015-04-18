@@ -587,9 +587,67 @@ that is shared with every participant.
 \section{Attacks}
 
 Since this is an atempt to build a system to securely share secrets, possible
-attacks must be examined.
+attacks must be examined. To prove the security of a protocol the Dolev-Yao
+model is often used. The Dolev-Yao model includes abilities one must assume
+when evaluating a cryptographic protocol. These include, that the attacker can
+listen to all communicated messages, modify them and possibly send them to a
+different recipient than the sender intended to. This essentially describes the
+classic \textit{Man in the middle} attack.
+
+To validate the system further, the consequences of a completely compromised
+system are examined.
 
 \subsection{Man in the middle}
+
+The developed cryptographic protocol has two essential elements, creating and
+retrieving a secret. To evaluate the security of these components it is
+assumed, that an attacker could modify all data exchanged from client and
+server.
+
+\subsubsection{Creating a secret}
+
+There are several requests during the creation of a secret. The attacker cannot
+decrypt the encrypted shares, however, the attacker could intercept when the
+client requests the user profiles to share the secret with.
+
+The attacker can replace the genuine public keys with its own counterfeit keys.
+Then the attacker can decrypt the encrypted shares since the attacker knows the
+matching private keys.
+
+The described attack can be weakened when introducing a Public key
+infrastructure. Then the clients can verify the authenticity of the received
+public key.
+
+There is a second aspect to be examined when creating a secret. The attacker
+cannot create modified secrets, since the authenticity through RSA signatures
+is checked upon receiving by the server. The attacker is only able to modify a
+secret and save it, if the attacker had modified the public key, when the user
+was created. To eliminate the possiblity of such an attack the operator of the
+system could use a second way of checking the authenticity of a users public
+key, an eligibility check for example.
+
+\subsubsection{Retrieving a secret}
+
+\subsection{Compromising the server}
+
+Once the attacker has compromised the server, the abilities match those of the
+\textit{Man in the middle} attack, however, with the addition of access to the
+database.
+
+Fortunately an attacker cannot decrypt any share, since the users private key
+is required to achieve that. Hence any of the stored shares, unless the
+attacker previously already tampered the communication of a users public key at
+time of user creation is useless for the attacker.
+
+The only assumption an attacker can track is the circumstance, that a secret
+has been devided into multiple parts. The number of parts can be used to
+approximate the total length. All parts have a maximum length, thus the
+attacker can multiply the maximum length by the number of parts and receives an
+approximate length of the secret.
+
+$$n: number\,of\,parts$$
+$$l: maximum\,length\,of\,secret\,part$$
+$$(n - 1) * l \leq length(secret) \leq n * l$$
 
 \section{Development}
 \subsection{Quality Assurance}
