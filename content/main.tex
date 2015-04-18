@@ -338,6 +338,43 @@ consequently creates an edge condition of $t \geq 1$.
 
 \subsection{Blakley's scheme}
 
+Blakeley's scheme offers another but referring to the idea quite similar
+approach for secret sharing. For a secret which consists of two parts, 
+Blakeley encodes the parts into two dimensional, non-parallel linear functions.
+The point where the graphs of the two functions intersect represents the
+secret. For example, if the secret $s$ is $4$, one has to compute two non-parallel
+linear functions intersecting at $y = 4$. It is simple to generate those two
+functions if you remember how to compute the point of intersection of two graphs.
+
+For 2D graphs, the intersection can be computed by equating one function with
+another function:
+
+$$f(x) = g(x)$$
+
+The standard linear function is $f(x) = mx + b$ where $b$ is the y-intercept and
+$m$ is the slope. Two functions are considered parallel if their slope $m$ is 
+the same. So now, a more formal definition of two nonparallel lines (which are
+always intersecting) is the following:
+
+$$m_1x + b_1 = m_2x + b_2$$
+
+Now, resolve after x:
+
+$$m_1x - m_2x = b_2 - b_1 $$
+
+$$x (m_1 - m_2) = b_2 - b_1$$
+
+$$x = \frac{b_2 - b_1}{m_1 - m_2}$$
+
+Since $b_1$ and $b_2$ as well as $m_1$ and $m_2$ are constants, we can simplify
+
+$$x = \frac{B}{M}$$
+
+To now encode a secret with two parts, one simply has to generate a number $B$
+and a number $M \neq 0$ whose quotient is $s$.
+$B$ can then be split into $b_1$ and $b_2$ at will
+while $M$ has to be split as well, but $m_1 \neq m_2$ (non-parallel lines).
+
 \subsection{Choosing a scheme}
 
 \section{Practical Secret Sharing}
