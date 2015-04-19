@@ -585,7 +585,9 @@ $$34 <= total\_length$$
 
 The protocol involves a server and a client. During a secrets lifecycle, there
 are four events that are relevant for the protocol creating, reading, updating,
-and deleting. These are also known as \textit{CRUD}.
+and deleting. These are also known as \textit{CRUD}. Most interesting of those
+are creating and reading a secret, because deleting just removes all related
+data and creating essentially works like creating.
 
 \subsection{Creating a secret}
 
@@ -607,19 +609,37 @@ Once shamir's secret sharing has been applied there are shares for each user
 for every secret part. These shares can then be encrypted with the previously
 retrieved public keys of each user and then signed with the creating users
 private key. All of this data is then send to the server to verify and save.
+(see figure \ref{fig:creating_a_secret})
 
 Shamir's secret sharing requires at least two shares to reconstruct a secret,
 therefore there will always be a transparent "server"-user which gets a share
 that is shared with every participant.
 
 \begin{figure}
-  \includegraphics[scale=0.65]{pictures/create_secret_sequence_diagram.png}
-  \centering
+  \includegraphics[scale=0.55]{pictures/create_secret_sequence_diagram.png}
   \caption{Creating a secret}
   \label{fig:creating_a_secret}
 \end{figure}
 
 \subsection{Retrieving a secret}
+
+Retrieving a secret can be divided into two main parts, server and client
+processing.
+
+When a client requests a secret, the servers shares are first decrypted and
+then encrypted with the requesting users public key. The shares and additional
+metadata, such as the secrets title and a list of participants, is then
+returned as the response to the clients request.
+
+Once the client received said response, it decrypts the shares and reconstructs
+the secret parts using shamir's secret sharing. Next the secret parts are
+concatenated, and the secret is successfully retrieved.
+
+\begin{figure}
+  \includegraphics[scale=0.55]{pictures/retrieve_secret_sequence_diagram.png}
+  \caption{Retrieving a secret}
+  \label{fig:retrieving_a_secret}
+\end{figure}
 
 \section{Attacks}
 
@@ -664,6 +684,14 @@ system could use a second way of checking the authenticity of a users public
 key, an eligibility check for example.
 
 \subsubsection{Retrieving a secret}
+
+Unless an attacker already modified the requesting users public key, at time of
+creation of the said user, then the attacker cannot determine the original
+secret.
+
+All shares are encrypted with the requesting users public key, thus the shares
+are of no use for an attacker, under the condition, that the key establishment
+is secure.
 
 \subsection{Compromising the server}
 
