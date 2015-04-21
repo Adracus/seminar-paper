@@ -386,6 +386,15 @@ threshold of needed participants in a shared secret.
 
 \subsection{Choosing a scheme}
 
+Both secret sharing algorithms achieve security and are able to produce
+parts which can be shared across several particpants. Blakeleys scheme
+has the important drawback of larger shares the larger the threshold (number
+of needed persons to recover a secret) becomes. It can be limited using
+several techniques but that would increase the complexity of the encryption.
+As a result, a space efficient and for our usecase optimal secret sharing
+scheme is \textit{Shamir's Secret Sharing} due to it's simplicity and
+security.
+
 \section{Practical Secret Sharing}
 
 The math behind secret sharing schemes has been proven long ago, however, for a
@@ -603,6 +612,8 @@ Tests are great but they might be ineffective, test the wrong things
 or simply are too few to assure no bugs. This is why there are metrics
 for tests or other tools to test whether tests are effective or not.
 
+\subsection{Branch Coverage}
+
 One measure for tests is the so called \textit{coverage}. Coverage
 comes in two flavors: The first one is the \textit{Branch Coverage}.
 Branch coverage determines whether a test has run through the
@@ -650,6 +661,8 @@ assert(abs(-5), equals(5))
 \end{figure}
 
 Full branch coverage is hard to achieve, but important for full testing.
+
+\subsection{Line Coverage}
 
 Another metric for test coverage is the \textit{line coverage}. The line
 coverage determines the number of lines covered during a test. It is much
