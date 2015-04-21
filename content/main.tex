@@ -682,13 +682,61 @@ coverage, we also respect branch coverage (even if it is not calculated by
 the existing tools).
 
 \section{Testing}
+
+Testing is an integral part of software development. Tests help to ensure the
+software meets the requirements and identify bugs. There are several kinds of
+methods used in testing. Some of them focus on the exhaustiveness of the
+overall testing, others to ensure that bugs that already occured do not appear
+again.
+
 \subsection{Mutation testing}
+
+While testing software is a widely adapted technique, the question is often,
+how many tests and more importantly which tests to write. There are numerous
+metrics describing the effectiveness of tests.
+
+Mutation tests make sure the existing tests are exhaustive enough. To do so,
+the productive code is mutated, hence the name. There are several mutation
+techniques.
+
+After each single mutations the tests suite runs and at least one test must
+fail. If at least one test fails, the mutation is covered by said test.
+Otherwise the mutation is remembered and the next mutation is applied. At the
+end all uncovered mutations are listed for the developer to implement. This
+method helps developers to test for boundary values, as they are often
+automatically discovered by mutations.
+
+Mutations include modification of conditions, literals, return values,
+replacing objects with null references, deleting code, and many more, also
+depending on the language used.
+
+In the case of integer literals being modified they could be modified by
+increasing or decreasing it or setting it to another random value. Then a test
+must cover whatever effect the value of the literal has and hopefully
+invalidate that cause when it is modified.
+
+When using conditions, it happens easily that a condition is not properly
+defined. Therefore mutating rational operators can be useful to determine the
+correctness and effectiveness of the defined condition.
+
+Similar to other metrics for tests it is usually very tedious to reach 100\%
+mutation coverage, but it ensures that the present tests are as thorough as
+possible.
+
 \subsection{Regression testing}
+
+
 
 \section{Continuous Delivery}
 \subsection{Blue green deployment}
 
 \chapter{Duse}
+
+The most important part of a system to securly share secrets is the
+cryptographic protocol consisting of multiple cryptographic primitives and
+other protocols or algorithms. Since it is a security concerned system,
+possible attacks must also be examined.
+
 \section{The Cryptographic Protocol}
 
 The protocol involves a server and a client. During a secrets lifecycle, there
