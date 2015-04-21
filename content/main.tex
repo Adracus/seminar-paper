@@ -589,6 +589,92 @@ $$1 + length(x) + 32 = total\_length$$
 $$1 + 1 + 32 <= total\_length$$
 $$34 <= total\_length$$
 
+\chapter{Quality Assurance}
+
+Quality assurance in software covers all aspects of a softwares lifecycle.
+From design over the process of development, code revisions, testing and
+deployment.
+
+To ensure the best quality software, proven metrics and practises are used.
+
+\section{Code Coverage}
+
+Tests are great but they might be ineffective, test the wrong things
+or simply are too few to assure no bugs. This is why there are metrics
+for tests or other tools to test whether tests are effective or not.
+
+One measure for tests is the so called \textit{coverage}. Coverage
+comes in two flavors: The first one is the \textit{Branch Coverage}.
+Branch coverage determines whether a test has run through the
+required paths of a program. To calculate the branch coverage of a test,
+simply divide the number of covered branches $c$ by $b$, where b is the
+total number of branches. For example, imagine the following
+method:
+
+\begin{figure}
+\begin{lstlisting}
+abs(int input)
+  if (input < 0) return -input
+  else return input
+\end{lstlisting}
+\caption{Absolute method for branch coverage analysis}
+\label{code:branchCoverage}
+\end{figure}
+
+This method has got two paths: If the number is negative, it will
+be multiplied with $-1$ to get the positive absolute of the number.
+Otherwise (if it is already positive), it returns the original input.
+
+Now imagine if one wrote the following test \ref{code:oneBranch}
+
+\begin{figure}
+\begin{lstlisting}
+assert(abs(5), equals(5))
+\end{lstlisting}
+\caption{One branch covered}
+\label{code:oneBranch}
+\end{figure}
+
+Of the two paths of the method, only the path with positive numbers is
+covered. This leads to $c$ (the number of branches covered) being $1$,
+as a result the branch coverage is $\frac{1}{2} = 0.5$. A test with
+full branch coverage would be \ref{code:fullBranch}
+
+\begin{figure}
+\begin{lstlisting}
+assert(abs(5), equals(5))
+assert(abs(-5), equals(5))
+\end{lstlisting}
+\caption{Full branch coverage}
+\label{code:fullBranch}
+\end{figure}
+
+Full branch coverage is hard to achieve, but important for full testing.
+
+Another metric for test coverage is the \textit{line coverage}. The line
+coverage determines the number of lines covered during a test. It is much
+easier to get 100\% line coverage, but tests with 100\% line coverage do
+not guarantee the absence of errors.
+
+The programming language in the backend of our service offers good integration
+for line coverage analysis while the frontend language for our HTML interface
+completely lacked an integration for services offering line coverage analysis.
+As a result and as an important measure for quality assurance, an integration
+for the coverage analysis service is now established and made public as open
+source software. It is now also used by other programmers and companies, such
+as for example Google.
+
+It is also important to mention that we are not satisfied with a large line
+coverage, we also respect branch coverage (even if it is not calculated by
+the existing tools).
+
+\section{Testing}
+\subsection{Mutation testing}
+\subsection{Regression testing}
+
+\section{Continuous Delivery}
+\subsection{Blue green deployment}
+
 \chapter{Duse}
 \section{The Cryptographic Protocol}
 
@@ -723,77 +809,3 @@ $$n: number\,of\,parts$$
 $$l: maximum\,length\,of\,secret\,part$$
 $$(n - 1) * l \leq length(secret) \leq n * l$$
 
-\section{Development}
-\subsection{Quality Assurance}
-
-Tests are great but they might be ineffective, test the wrong things
-or simply are too few to assure no bugs. This is why there are metrics
-for tests or other tools to test whether tests are effective or not.
-
-One measure for tests is the so called \textit{coverage}. Coverage
-comes in two flavors: The first one is the \textit{Branch Coverage}.
-Branch coverage determines whether a test has run through the
-required paths of a program. To calculate the branch coverage of a test,
-simply divide the number of covered branches $c$ by $b$, where b is the
-total number of branches. For example, imagine the following
-method:
-
-\begin{figure}
-\begin{lstlisting}
-abs(int input)
-  if (input < 0) return -input
-  else return input
-\end{lstlisting}
-\caption{Absolute method for branch coverage analysis}
-\label{code:branchCoverage}
-\end{figure}
-
-This method has got two paths: If the number is negative, it will
-be multiplied with $-1$ to get the positive absolute of the number.
-Otherwise (if it is already positive), it returns the original input.
-
-Now imagine if one wrote the following test \ref{code:oneBranch}
-
-\begin{figure}
-\begin{lstlisting}
-assert(abs(5), equals(5))
-\end{lstlisting}
-\caption{One branch covered}
-\label{code:oneBranch}
-\end{figure}
-
-Of the two paths of the method, only the path with positive numbers is
-covered. This leads to $c$ (the number of branches covered) being $1$,
-as a result the branch coverage is $\frac{1}{2} = 0.5$. A test with
-full branch coverage would be \ref{code:fullBranch}
-
-\begin{figure}
-\begin{lstlisting}
-assert(abs(5), equals(5))
-assert(abs(-5), equals(5))
-\end{lstlisting}
-\caption{Full branch coverage}
-\label{code:fullBranch}
-\end{figure}
-
-Full branch coverage is hard to achieve, but important for full testing.
-
-Another metric for test coverage is the \textit{line coverage}. The line
-coverage determines the number of lines covered during a test. It is much
-easier to get 100\% line coverage, but tests with 100\% line coverage do
-not guarantee the absence of errors.
-
-The programming language in the backend of our service offers good integration
-for line coverage analysis while the frontend language for our HTML interface
-completely lacked an integration for services offering line coverage analysis.
-As a result and as an important measure for quality assurance, an integration
-for the coverage analysis service is now established and made public as open
-source software. It is now also used by other programmers and companies, such
-as for example Google.
-
-It is also important to mention that we are not satisfied with a large line
-coverage, we also respect branch coverage (even if it is not calculated by
-the existing tools).
-
-
-\subsection{Continuous Delivery}
