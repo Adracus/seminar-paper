@@ -40,12 +40,12 @@ algorithm, Duse can too.
 
 \section{RSA OAEP}
 
-The PKCS#1v1.5 padding scheme is not considered secure since
+The PKCS\#1v1.5 padding scheme is not considered secure since
 \textit{Bleichenbacher's CRYPTO 98 Paper} \cite{rsabulletin}
 revealed a chosen ciphertext
 attack. It is still used inside TLS encryption at the time of writing,
 but just because TLS does it doesn't make it right. A very important
-future work is to replace the default PKCS#1v1.5 padding scheme with
+future work is to replace the default PKCS\#1v1.5 padding scheme with
 the more secure OAEP padding scheme.
 
 OAEP is an algorithm which is a form of a \textit{Feistel Network}\footnote{
