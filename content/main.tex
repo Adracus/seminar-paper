@@ -683,11 +683,16 @@ the existing tools).
 
 \section{Testing}
 
-Testing is an integral part of software development. Tests help to ensure the
-software meets the requirements and identify bugs. There are several kinds of
-methods used in testing. Some of them focus on the exhaustiveness of the
-overall testing, others to ensure that bugs that already occured do not appear
-again.
+Tests help to ensure the software meets the requirements and identify bugs.
+
+Testing is an integral part of software development. Today this is especially
+the case for test automation. As software becomes more complex it is not
+feasible to manually test an application. Most tasks are even to complex for
+humans to perform, or they would take a lot of time.
+
+There are several kinds of methods used in automated testing. Some of them
+focus on the exhaustiveness of the overall testing, others to ensure that bugs
+that already occured do not appear again.
 
 \subsection{Mutation testing}
 
@@ -725,9 +730,69 @@ possible.
 
 \subsection{Regression testing}
 
+Regression testing are known as tests used to discover bugs in existing
+functional code bases, when adding new code, fixing code or modifying
+configurations of any kind. These tests often originate from previous bug
+reports.
 
+Regression tests avoid, that previously patched bugs do not occur again. In
+complex systems adding a new feature often results in breaking corner cases of
+other features. When that happens regressions are there to tell the developer
+about it.
+
+Obviously these tests should be automated, for the developer to execute when
+implementing new features or patches.
 
 \section{Continuous Delivery}
+
+Continuous Delivery embraces test automation, Continuous Integration and the
+continuous installation of a software product. It allows teams to perform task
+with lots of agility while improving the softwares quality.
+
+A central concept of continuous delivery is known as the deployment pipleline.
+The deployment pipeline is the collection of processes a software has to go
+through before being released or deployed. An example of a deployment pipeline
+could be: 
+
+\begin{itemize}
+  \item{passing all tests}
+  \item{compiling the source to its targets}
+  \item{packaging the application}
+  \item{deploying the application to a staging environment}
+  \item{executing acceptance tests}
+  \item{deploying to a production environment}
+\end{itemize}
+
+The trigger for the deployment pipeline is often the used version control
+system. Once a new revision is created and uploaded an automated mechanism
+triggers the execution of the tests. All tasks trigger the next task once they
+finish successfully. If any task fails, preferably the developer who caused the
+error should be informed.
+
+This approach allows easy rollback in case a faulty version passed the checks,
+since earlier versions of the software can be deployed from version control.
+
+Following this methodology allows teams to ship extremely early and often.
+Accompanied by the perfectly fitting use of the so called FeatureToggle. A
+FeatureToggle allows a developer to hide a feature which is currently in
+development in production, but have it available in the other phases of the
+deployment pipeline. It can be thought of as beta testing for each feature.
+
+Integrating the deployment process into daily business of a developer reduces
+the risks when deploying to the customer or production.
+
+Continuous delivery does not only improve life for the developer, but also
+allows customers to see results in very early stages of the development
+process.
+
+\subsection{Continuous Integration}
+
+Continuous integration is the part of Continuous delivery ensuring that a
+revisions changes are still allowing the automated tests to pass. The name
+originated from the task of integrating all working copies from all developers
+of a project. It ensures, that all code being produced still plays well with
+the work from the other developers.
+
 \subsection{Blue green deployment}
 
 \chapter{Duse}
