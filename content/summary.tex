@@ -37,7 +37,27 @@ algorithm, Duse can too.
 \section{Updating key pairs}
 \section{Offline access}
 \section{Advanced permissions}
+
 \section{RSA OAEP}
+
+The PKCS#1v1.5 padding scheme is not considered secure since
+\textit{Bleichenbacher's CRYPTO 98 Paper} \cite{rsabulletin}
+revealed a chosen ciphertext
+attack. It is still used inside TLS encryption at the time of writing,
+but just because TLS does it doesn't make it right. A very important
+future work is to replace the default PKCS#1v1.5 padding scheme with
+the more secure OAEP padding scheme.
+
+OAEP is an algorithm which is a form of a \textit{Feistel Network}\footnote{
+  Feistel Networks or Feistel Ciphers are symmetric structures which are used
+  during the construction of block ciphers with the most prominent example
+  being the DES encryption. In general, a Feistel cipher is a cipher which
+  iteratively applies an internal function, often referred as \textit{round function}.
+}. OAEP prevents information leakage caused by partial decryption of 
+ciphertexts and also turns deterministic encryption schemes like RSA into
+propabilistic encryption schemes. When used with RSA, OAEP is called
+RSA-OAEP.
+
 \section{Key establishment}
 \subsection{Diffie-Hellman key exchange}
 \subsection{Public key infrastructure}
