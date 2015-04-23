@@ -688,7 +688,7 @@ Tests help to ensure the software meets the requirements and identify bugs.
 Testing is an integral part of software development. Today this is especially
 the case for test automation. As software becomes more complex it is not
 feasible to manually test an application. Most tasks are even to complex for
-humans to perform, or they would take a lot of time.
+humans to perform, or they would take a lot of time and be error-prone.
 
 There are several kinds of methods used in automated testing. Some of them
 focus on the exhaustiveness of the overall testing, others to ensure that bugs
@@ -791,9 +791,68 @@ Continuous integration is the part of Continuous delivery ensuring that a
 revisions changes are still allowing the automated tests to pass. The name
 originated from the task of integrating all working copies from all developers
 of a project. It ensures, that all code being produced still plays well with
-the work from the other developers.
+the work from the other developers. Today the task of integrating is often done
+with the version control system in use.
+
+CI originated from the extreme programming methodology, however, today many
+software teams embrace CI without following all extreme programming guidelines.
+Typically CI is refered to as a server, service or platform where tests are
+executed and the outcome is reported back to the development team. This is also
+known as the feedback loop.
+
+The benefit a team applying Continuous integration are numerous. An important
+benefit though is that the team eliminate the \textit{it works on my machine}
+phenomenon. If the tests pass on the CI server, then the code is classified as
+\textit{shippable}. It wipes out the possibility, that a local configuration,
+the developer adds is lost along the way, which directly contributes to the
+idea of continuous deloyment. The CI becomes the central location of truth
+concerning passing tests.
+
+\subsection{Code reviews}
+
+Software teams regularly review their code to improve the softwares quality,
+reduce the risk of bugs and provide a consistent coding standard. Code reviews
+can take place in different forms, but they all serve the same purpose.
+
+A team can also perform code reviews through version control systems, without
+requiring the team to be in the same place. These forms are refered to as
+collaborative or crowdsourced reviews.
+
+Code reviews have been researched and they show a significant discovery of
+defects in software of 60 percent or more. In terms of continuous deployment it
+is critical for a team to embed code reviews in their daily work to make sure
+all code is reviewed.
 
 \subsection{Blue green deployment}
+
+A critical feature of continuous deployment is to deploy or release the
+software in development up to several times a day. Feature toggles even allows
+these systems to be run in production. Troublesome however is when end users
+are restricted by downtimes of the application when deploying a new version to
+production. To avoid end users ever noticing these downtimes, a method for zero
+downtime has to be applied.
+
+Blue green deployments allow deployments to be zero downtime. The approach is
+simple. When deploying, there are two identical but seperate environments. The
+blue and the green environment. A router, in case of a webserver this can for
+example be a reverse proxy or a load balancer, decides to which environment a
+requesting user is routed to. Before deployment the service points to the green
+environment.
+
+Assuming when the deployment starts, the green environment is live, then the
+new version is deployed to the blue environment. In case something fails while
+deploying, the router simply does not route to the blue environment. If the
+deployment is successful, then the router switches to the blue environment,
+thus the new version is now live without any downtime. Of course, this requires
+the router to hotload the new configuration.
+
+The two environments, blue and green, are often only used as a metaphor,
+because the in the described case updated blue environment is created merely
+for the deployment process. Once the deployment has been successful it is
+viewed as the green environment and the now outdated environment is removed.
+This approach leads to the thought of an immutable infrastructure, where the
+philosophy is to never change the state of a deployed system and rather discard
+it and fully redeploy it.
 
 \chapter{Duse}
 
