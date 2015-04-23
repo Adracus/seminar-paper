@@ -42,13 +42,17 @@ algorithm, Duse can too.
 
 The PKCS\#1v1.5 padding scheme is not considered secure since
 \textit{Bleichenbacher's CRYPTO 98 Paper} \cite{rsabulletin}
-revealed a chosen ciphertext
-attack. It is still used inside TLS encryption at the time of writing,
+revealed a chosen ciphertext attack \footnote{
+  An attacker is able to decrypt self-chosen ciphertexts (also
+  known as Decryption Oracle). \cite[p. 70]{baumann2014kryptographische}
+}.
+It is still used inside TLS encryption at the time of writing,
 but just because TLS does it doesn't make it right. A very important
 future work is to replace the default PKCS\#1v1.5 padding scheme with
 the more secure OAEP padding scheme.
 
-OAEP is an algorithm which is a form of a \textit{Feistel Network}\footnote{
+The Optimal Asymmetric Encryption Padding or also \textit{OAEP}
+is an algorithm which is a form of a \textit{Feistel Network}\footnote{
   Feistel Networks or Feistel Ciphers are symmetric structures which are used
   during the construction of block ciphers with the most prominent example
   being the DES encryption. In general, a Feistel cipher is a cipher which
@@ -58,8 +62,77 @@ ciphertexts and also turns deterministic encryption schemes like RSA into
 propabilistic encryption schemes. When used with RSA, OAEP is called
 RSA-OAEP.
 
+\subsection{Applying the padding}
+
+To pad a message $m$ of length $k$ bits, one first has to choose a sequence
+$r$ of $k_0$ randomly generated bits. Then one calculates
+
+$$X = m \oplus G(r)$$
+
+and
+
+$$Y = r \oplus H(m \oplus G(r))$$
+
+with $G$ and $H$ being cryptographic hash functions. To then compute the
+ciphertext $c$, one finally calculates the trap door function $f$ of the
+concatenation of $X$ and $Y$
+
+$$c = f(X || Y)$$
+
+\subsection{Striping the Padding}
+
+In order to get $X$ and $Y$ out of $c$, one first has to unapply the
+trapdoorfunction $f$.
+
+$$X || Y = f^{-1}(c)$$
+
+$r$ can then be reconstructed by calculating
+
+$r = Y \oplus H(x)$
+
+With $r$ one can finally get the original message $m$ by applying XOR
+to the padding part $X$ with $G(r)$:
+
+$$m = X \oplus G(r)$$
+
 \section{Key establishment}
+
+If one wants to share his secret with many others, one first encrypts the
+secret into many shares with the secret sharing scheme. After that, one needs
+to fetch all public keys of the secret's participants in order to encrypt the
+shares so no unauthorized person has access to the share. In the current
+implementation of Duse, the public keys are stored as part of a user account
+in the Duse system. But the Duse system itself is \textit{not} designed to
+work as a public key exchange. If it is compromised, the public key access
+becomes a major attack point: A fake public key could be downloaded and shares
+could be encrypted with an insecure public key. As a result, an attacker
+could easily read shares without permission, if he has access to the database
+or the entire Duse system. Duse is not the right place to perform public
+key exchange. It is designed to host and distribute secrets to users with ease.
+As mentioned before, secret exchange is still safe even if the server is compormised
+but the area of public key exchange is one major attack point.
+The key exchange should therefore be outsourced to another
+infrastructure or happen between the users directly. There are three possible
+solutions for this problem.
+
 \subsection{Diffie-Hellman key exchange}
+
+The Diffie-Hellman key exchange is one option. Users which want to share secrets
+start the Diffie-Hellman key exchange as described in the section Cryptography
+Fundamentals. But there are two main attack points here:
+
+First, how can one user even know the IP-Address of the other user? If a compromised
+Duse system hosts the address of each participant for the key exchange, one could
+easily change the address so that the key exchange is made with the wrong person.
+
+Even if this problem could be solved somehow (secret channels or manual IP transmission
+between future share holders), the possibility of a man-in-the-middle attack still
+exists. The attacker could easily redirect participant traffic so that all participants
+actually exchange keys with the attacker than with their original target.
+These insecurities as well as the huge workload each user has to do to obtain
+secure IP addresses are the reason for not choosing the Diffie-Hellman key exchange
+as the public key exchange protocol for Duse.
+
 \subsection{Public key infrastructure}
 \subsection{Web of trust}
 \section{Mark as insecure (either key of user compromised or secret itself compromised)}

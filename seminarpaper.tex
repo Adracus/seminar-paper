@@ -8,9 +8,8 @@ headsepline, 					% horizontale Linie unter Kolumnentitel
 %DIV11,							% auskommentieren, um den Seitenspiegel zu vergrößern
 BCOR6mm,						% Bindekorrektur, die den Seitenspiegel um 6mm nach rechts verschiebt,
 ]{scrreprt}			
-\usepackage{ucs} 				% Dokument in utf8-Codierung schreiben und speichern
-\usepackage[utf8x]{inputenc} 	% ermöglicht die direkte Eingabe von Umlauten
-\usepackage[T1]{fontenc} 		% Ausgabe aller zeichen in einer T1-Codierung (wichtig für die Ausgabe von Umlauten!)
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
 \usepackage{graphicx}  			% Einbinden von Grafiken erlauben
 \usepackage{amsmath}
 \usepackage{amsfonts}
@@ -28,7 +27,10 @@ BCOR6mm,						% Bindekorrektur, die den Seitenspiegel um 6mm nach rechts verschi
 \usepackage{tikz-qtree}
 \usepackage{tkz-graph}  
 \usepackage{url}
+\usepackage[english]{babel}
+\usepackage{blindtext}
 \usepackage{listings}
+\usepackage{textcomp}
 \usepackage[hidelinks]{hyperref}
 
 % -----------------------------------------------------------------------------------------------------------------
@@ -105,20 +107,12 @@ BCOR6mm,						% Bindekorrektur, die den Seitenspiegel um 6mm nach rechts verschi
 \include{content/summary}
 
 % ---------------------------- Literaturverzeichnis ----------------------------------------------
-
-\begin{thebibliography}{999999}
-
-\bibitem[git01]{apress2009} Scott Chacon: \emph{Pro Git (Expert's Voice in Software Development)}, Apress, 2009
-
-\bibitem[rsabulletin]{RSA Laboratories} News and advice on data security and cryptography 
-ftp://ftp.rsa.com/pub/pdfs/bulletn7.pdf
-
-\end{thebibliography}
+\bibliographystyle{amsplain}
+\bibliography{seminarpaper}
 
 % ------------------------------- Anhang ---------------------------------------------------------
 
 \begin{appendix}
-\clearpage
 \pagenumbering{Roman}
 \end{appendix}
 
