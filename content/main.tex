@@ -843,8 +843,16 @@ Assuming when the deployment starts, the green environment is live, then the
 new version is deployed to the blue environment. In case something fails while
 deploying, the router simply does not route to the blue environment. If the
 deployment is successful, then the router switches to the blue environment,
-thus the new version is now live without any downtime. Of course, this requires
-the router to hotload the new configuration.
+thus the new version is now live without any downtime. (see fig
+\ref{fig:blue_green_deployment}) Of course, this requires the router to hotload the
+new configuration.
+
+\begin{figure}
+  \includegraphics[scale=0.55]{pictures/blue_green_deployment.png}
+  \caption{Blue green deployment}
+  \centering
+  \label{fig:blue_green_deployment}
+\end{figure}
 
 The two environments, blue and green, are often only used as a metaphor,
 because the in the described case updated blue environment is created merely
@@ -853,6 +861,27 @@ viewed as the green environment and the now outdated environment is removed.
 This approach leads to the thought of an immutable infrastructure, where the
 philosophy is to never change the state of a deployed system and rather discard
 it and fully redeploy it.
+
+\subsection{Rolling updates}
+
+Once applications receive more traffic, then multiple instances have to be
+created and load balanced. In such an setting zero downtime deployments are
+much easier, since there are already multiple instances of the application
+running, there is no single point of failure. Once there is a new version to be
+deployed, it is deployed one instance at a time. Since there are multiple
+instances running anyways, there will be no noticeable downtime for end users,
+thanks to the load balancer, which does not route to an instance that does not
+respond yet. (see fig \ref{fig:rolling_updates})
+
+\begin{figure}
+  \includegraphics[scale=0.55]{pictures/rolling_updates.png}
+  \caption{Rolling updates}
+  \centering
+  \label{fig:rollgin_updates}
+\end{figure}
+
+While there is no established name for this method of zero downtime
+deployments, it is sometimes referred to as rolling updates.
 
 \chapter{Duse}
 
