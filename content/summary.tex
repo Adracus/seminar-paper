@@ -133,8 +133,57 @@ These insecurities as well as the huge workload each user has to do to obtain
 secure IP addresses are the reason for not choosing the Diffie-Hellman key exchange
 as the public key exchange protocol for Duse.
 
-\subsection{Public key infrastructure}
-\subsection{Web of trust}
+\subsection{Trust Models for Public Key Infrastructures}
+
+To get the right public key, public key infrastructures or short \textit{PKI}s use
+digital certificates. Digital certificates proof the authenticity of a key. To proof
+the authenticity of such a digital signature, one can check the signature with the
+public key of the signer. The authenticity of the signer itself can then be checked
+by checking another digital signature. This builds up a chain of signatures and 
+signers relying on each other and ends on a single certificate which has to be trusted.
+Currently, there are several models of PKIs which are interesting for the use
+in conjunction with duse.
+
+\subsubsection{Strict Hierarchical PKI}
+
+This PKI model relies on a root certification authority, short \textit{Root-CA}.
+All other groups have to trust this Root-CA.
+De facto a single Root-CA does not exist. There is a Root-CA for many countries
+in order for them to be able to control their trust chain.
+The certificate of this Root-CA, the
+root certificate, has no signature and is therefore called \textit{self-signed}.
+Products, like for example \textit{Google Chrome} or other main browsers are
+shipped with some chosen, default trusted Root-CAs in order for the trust-chain
+to work with the product. A disadvantage of this certification model is the
+strong dependency on the Root-CA as well as the power the Root-CA possesses.
+If one wants a trusted certificate nowadays, one has to pay a lot of money to
+get one. This creates a strong conjunction of the amount of money someone has with
+the trustworthyness that someone gets by obtaining an expensive, valuable certificate.
+
+\subsubsection{Cross Certification}
+
+Cross certification nearly has the same model of certification as the Strict
+Hierarchical PKI with the difference being that there can be two or more
+Root-CAs. Those independently working certification authorities mutually
+sign their root certificates. This creates a sign of trust between the two
+CAs. Today this is used as a method to connect two or more hierarchical PKIs
+in order to achieve cross country communication. The disadvantage of this
+technology is the amount of cross certificates between the several Root-CAs
+which rises squarely with the number of Root-CAs.
+
+\subsubsection{Web of Trust}
+
+In the Web of Trust, each user can trust each other and sign their public keys.
+The propability of a key belonging to a user rises with the amount of certificates
+that user has received. Each user can also specify the so called owner trust on
+a key of another person. The owner trust can be several levels from unknown to
+not tusted to ultimate trust. If now one wants to trust another user, one can
+calculate the \textit{key legitimacy} out of the number of certificates on that
+key as well as the individual trust levels. The concept of the web of trust allows
+control about who to trust or who not to trust. Therefore, the participants of
+the web should be able to identify who to trust and they should be sophisticated
+in terms of creating a trusted web.
+
 \section{Mark as insecure (either key of user compromised or secret itself compromised)}
 \section{Expiry date}
 \section{Client side signature checks}
