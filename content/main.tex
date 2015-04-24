@@ -907,17 +907,13 @@ respond yet. (see fig \ref{fig:rolling_updates})
 While there is no established name for this method of zero downtime
 deployments, it is sometimes referred to as rolling updates.
 
-\section{Technical dept}
-
-
-
 \section{Dependency locking}
 
 Even when keeping an eye on an applications technical dept, a few dependencies
 will almost always exist. A problem with having dependencies is that they might
-introduce breaking changes in the future. To avoid complications with these
-possible breaking changes, a method sometimes called dependency locking is
-used.
+introduce breaking changes in the future, thus contributing to the projects
+technical dept. To avoid complications with these possible breaking changes, a
+method sometimes called dependency locking is used.
 
 Dependency locking can be acted out in different ways, often depending on the
 used language and tools. A popular approach is to have one file declaring the
@@ -1075,12 +1071,53 @@ $$(n - 1) * l \leq length(secret) \leq n * l$$
 \chapter{Technology basics}
 \section{Web development}
 \subsection{Middlewares}
+
+Middlewares are a method in which software applications are build within
+layers. Each layer only concerning the in- and output. It allows applications
+to be more modular and increase the Seperation of Concerns principle.
+
+Within web development middlewares describe the architecture of a webserver.  A
+call to a webserver is handled by several middlewares until one of the
+middlewares produce and reply a response. Typically middlewares process
+incoming data and then call the next middleware, until a middleware decides to
+end the request and send a response.
+
+Middlewares can be used to authenticate a user and keep a request from entering
+domain logic if not authenticated. A middleware could also transform the
+request content to a unified form, for example parsing different text formats
+and turning them into higher level objects, that way following middlewares do
+not have deal with different format, and instead concentrate on its real
+purpose.
+
 \subsection{RESTful API}
+
+REST is an abbreviation for Representational State Transfer. It describes the
+behaviour of webservice. It defines a set of constraints leading to several
+advantages. It is usually practised via HTTP and its methods.
+
+The constraints include
+
+\begin{itemize}
+  \item{Client-Server}
+  \item{Stateless}
+  \item{Cachable}
+  \item{Uniform Interface}
+  \item{Layered system}
+\end{itemize}
+
 \section{Git}
 \subsection{Hooks}
 
 \chapter{Development}
 \section{API}
+
+Duse is a so called API first application. Meaning the software development
+highlights building the components of a system as APIs. In the case of duse, it
+is a central RESTful API. By embracing this, it is straightforward to create
+several clients, cross platform and for multiple languages.
+
+\subsection{Architecture}
+
 \section{Clients}
 \section{Deployment}
 \subsection{API}
