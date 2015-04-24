@@ -406,6 +406,7 @@ Those include:
 \begin{itemize}
   \item cryptographic security
   \item using text instead of numbers
+  \item correctly handle random values
 \end{itemize}
 
 \subsection{Finite Fields}
@@ -519,6 +520,29 @@ then apply the string to integer conversion as explained usind the ASCII
 charset. This is possible, since all characters of Base64 are a subset of
 ASCII.
 
+\subsection{Correctly using random values}
+
+Most languages provide a way to generate cryptographically secure random
+values, however, even when using these methods, there are still a number of
+possibilities to incorrectly use these random number generators.
+
+Built-in random number generators often allow specifying an upper bound to
+randomly select from. The result is a number between zero and that upper bound.
+Specifically in the case of shamir's secret sharing, when a random polynomial
+is generated, the coefficients should not be zero. If a coefficient is zero, it
+can potentially result in a lower threshold than intended. Say the randomly
+generated polynomial is of degree three and in standard form. A polynomial of
+degree has a threshold of three.
+
+$$f(x) = a_0 + a_1 * x + a_2 * x^2 + a_3 * x^3$$
+
+If $a_3$ were to become zero through the random number generator, then the
+threshold would suddenly be three instead of four. To avoid this, the
+coefficients randomly selected must be greater or equal to one and smaller or
+equal to the selected prime.
+
+$1 \leq a \leq p$
+
 \subsection{Share representation}
 
 How shamir's secret sharing can be extended to use finite fields and allowing
@@ -556,9 +580,9 @@ argued representation.
 When using shamir's secret sharing, even under consideration of finite fields,
 an attacker can estimate the size of a secret since it is somewhat close to the
 chosen prime. To eliminate this possibility and introduce more security
-features, shamir's secret sharing and RSA are going to be combined. Due to some
-limitations of the technologies some adaptions have to be made. These mainly
-concern length restrictions of RSA.
+features such as integrity and authentication, shamir's secret sharing and RSA
+are going to be combined. Due to some limitations of both technologies some
+adaptions have to be made. These mainly concern length restrictions of RSA.
 
 When using a RSA public key to encrypt a plain text, the resulting length of
 the cipher text is equal to the key size. In case of an 1024 bit RSA key, the
