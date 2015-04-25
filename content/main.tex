@@ -81,6 +81,43 @@ cryptographic primitives. They include well researched, reliable and accepted
 algorithms. Digital signatures, one-way has functions, as and public key
 cryptography are examples for cryptographic primitives.
 
+\subsection{Random numbers}
+
+Random numbers are one of the main building blocks of modern cryptography.
+Inside RSA they are used to create many different encryption results even
+if always the same secret is being encrypted. But what if the random numbers
+are not ``random enough''?
+
+True randomness is difficult to achieve in cryptography. Human behaviour
+is likely to be predicted. As such, humans are bad sources of true randomness.
+If one wants to obtain true randomness, the propably best source are physical
+random number generators. Physical random number generators use underlying
+physical processes to obtain randomness. An example of such a physical process
+is the atmospheric noise or radioactive sources. Both can be measured and
+are used to create good random numbers.
+
+True random numbers are unpredictable, but today many random numbers per
+second are needed in order for some cryptographic protocols to work. It would
+take too long to generate a random number using a source of true randomness
+every time. Modern computers generate random numbers by using a pre-defined behaviour.
+They do some computations based on some merely random data and try to output
+random numbers. The fact that these numbers aren't truly random is made obvious
+by calling these numbers \textit{pseudorandom} and the algorithms which create
+them \textit{pseudorandom number generators}. Some of the existing algorithms
+are rather easy to predict and some of them are not. For many use cases like
+for example genetic algorithms, predictable sources of randomness are satisfactory
+good enough to use because they offer high speed access to many random numbers.
+However for cryptographic reasons, these numbers are not suitable. If one is
+able to predict random numbers in a cryptographic protocol, it is easier to
+make conclusions regarding the encrypted secret (which could happen for example
+in RSA). Therefore, pseudorandom numbers have to be \textit{cryptographically}
+secure in order to be used for encryption. Such cryptographically secure pseudorandom
+number generators or short \textit{CSPRNG} work the same as ordinary pseudorandom
+number generators with the difference being that they have to produce number sequences
+which are not predictable and with which it is not possible to guess the internal
+state of the random number generators. CSPRNGs can rely on cryptographic primitives
+or on number theoretic designs.
+
 \subsection{Prime numbers}
 
 Prime numbers are natural numbers which are greater than one and only evenly
@@ -1119,6 +1156,52 @@ several clients, cross platform and for multiple languages.
 \subsection{Architecture}
 
 \section{Clients}
+
+\subsection{Web-Frontend}
+
+As every modern computer has got a browser as well as an internet connection today,
+a web-frontend was a requirement from the beginning. This web frontend should be
+easy to use but offer the same security and the same features as the command line
+client does. An issue of many of today's browsers is their support for
+cryptographic operations which conflicted with the security requirement:
+Since duse uses a lot of random numbers, random number generation is an important
+security aspect. Inside the command line client, randomness sources such as
+/dev/random could be used but not all modern browsers offer such randomness
+sources. Therefore a strong but also slower pseudorandom number generator has
+to be used for the web frontend.
+
+The web frontend is built in a language which runs inside a virtual machine and
+can also be cross-compiled to the web's lingua franca Javascript. As a result,
+the library for the web frontend can also be used to implement an
+additional command line client (which wasn't the focus during implementation).
+It is also much more reusable through the MVC concept.
+
+\subsection{Model-View-Controller}
+
+Model-view-controller, or short \textit{MVC} is an architectural software pattern.
+Software applications using it are divided into three main sections: The model,
+the view and the controller.
+
+The model is the part where the domain knowledge is implemented. It is completely
+ignorant to the UI. If something inside a model changes, it notifies controllers
+and views in order for them to update (for example update the displayed values
+in a view).
+
+The next part of the MVC is the controller, also sometimes referred as mediator.
+A controller sends commands to the model, altering its state. It also sends commands
+to its associated views if some model information should be displayed differently.
+
+Last but not least views are the last part which is presented to the user. A view
+gets information of underlying models to generate an interface for the user.
+
+Model-view-controller was originally developed for desktop software, but it gained
+more importance as a the concept of some famous full stack web frameworks like
+Ruby on Rails or Django. As mentioned before, duse features a RESTful API. The 
+MVC pattern is used inside the frontend technologies by a Javascript based web
+framework. This framework defines its model layer by several classes and objects
+which reside on client side only and also by calls to the duse API. Controller and
+views inside the JS-Framework behave as described before.
+
 \section{Deployment}
 \subsection{API}
 \subsection{Frontend}
