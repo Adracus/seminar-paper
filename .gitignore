@@ -6,6 +6,8 @@
 *.pdf
 *.toc
 *.aux
+*.bcf
+*.xml
 .DS_Store
 seminar-paper.sublime-project
 seminar-paper.sublime-workspace
