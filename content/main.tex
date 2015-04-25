@@ -406,6 +406,7 @@ Those include:
 \begin{itemize}
   \item cryptographic security
   \item using text instead of numbers
+  \item correctly handle random values
 \end{itemize}
 
 \subsection{Finite Fields}
@@ -519,6 +520,29 @@ then apply the string to integer conversion as explained usind the ASCII
 charset. This is possible, since all characters of Base64 are a subset of
 ASCII.
 
+\subsection{Correctly using random values}
+
+Most languages provide a way to generate cryptographically secure random
+values, however, even when using these methods, there are still a number of
+possibilities to incorrectly use these random number generators.
+
+Built-in random number generators often allow specifying an upper bound to
+randomly select from. The result is a number between zero and that upper bound.
+Specifically in the case of shamir's secret sharing, when a random polynomial
+is generated, the coefficients should not be zero. If a coefficient is zero, it
+can potentially result in a lower threshold than intended. Say the randomly
+generated polynomial is of degree three and in standard form. A polynomial of
+degree has a threshold of three.
+
+$$f(x) = a_0 + a_1 * x + a_2 * x^2 + a_3 * x^3$$
+
+If $a_3$ were to become zero through the random number generator, then the
+threshold would suddenly be three instead of four. To avoid this, the
+coefficients randomly selected must be greater or equal to one and smaller or
+equal to the selected prime.
+
+$1 \leq a \leq p$
+
 \subsection{Share representation}
 
 How shamir's secret sharing can be extended to use finite fields and allowing
@@ -556,9 +580,9 @@ argued representation.
 When using shamir's secret sharing, even under consideration of finite fields,
 an attacker can estimate the size of a secret since it is somewhat close to the
 chosen prime. To eliminate this possibility and introduce more security
-features, shamir's secret sharing and RSA are going to be combined. Due to some
-limitations of the technologies some adaptions have to be made. These mainly
-concern length restrictions of RSA.
+features such as integrity and authentication, shamir's secret sharing and RSA
+are going to be combined. Due to some limitations of both technologies some
+adaptions have to be made. These mainly concern length restrictions of RSA.
 
 When using a RSA public key to encrypt a plain text, the resulting length of
 the cipher text is equal to the key size. In case of an 1024 bit RSA key, the
@@ -883,8 +907,26 @@ respond yet. (see fig \ref{fig:rolling_updates})
 While there is no established name for this method of zero downtime
 deployments, it is sometimes referred to as rolling updates.
 
-\section{Technical dept}
 \section{Dependency locking}
+
+Even when keeping an eye on an applications technical dept, a few dependencies
+will almost always exist. A problem with having dependencies is that they might
+introduce breaking changes in the future, thus contributing to the projects
+technical dept. To avoid complications with these possible breaking changes, a
+method sometimes called dependency locking is used.
+
+Dependency locking can be acted out in different ways, often depending on the
+used language and tools. A popular approach is to have one file declaring the
+projects dependencies with a possible restriction on minimum, maximum or exact
+versions required. Once these dependencies are installed a new file, the lock
+file is created. The lock file contains the exact version used by the
+application. Using this method allows installs in any environment easier, since
+version conflicts with locally installed version can be eliminated.
+
+When new versions of the dependencies are released, updates can be performed in
+a controlled way, rather than whenever an install happens. Updating
+dependencies in a not controlled way as described can lead to hard to debug
+problems in different environment. Worst case would be in production.
 
 \chapter{Duse}
 
@@ -1029,12 +1071,53 @@ $$(n - 1) * l \leq length(secret) \leq n * l$$
 \chapter{Technology basics}
 \section{Web development}
 \subsection{Middlewares}
+
+Middlewares are a method in which software applications are build within
+layers. Each layer only concerning the in- and output. It allows applications
+to be more modular and increase the Seperation of Concerns principle.
+
+Within web development middlewares describe the architecture of a webserver.  A
+call to a webserver is handled by several middlewares until one of the
+middlewares produce and reply a response. Typically middlewares process
+incoming data and then call the next middleware, until a middleware decides to
+end the request and send a response.
+
+Middlewares can be used to authenticate a user and keep a request from entering
+domain logic if not authenticated. A middleware could also transform the
+request content to a unified form, for example parsing different text formats
+and turning them into higher level objects, that way following middlewares do
+not have deal with different format, and instead concentrate on its real
+purpose.
+
 \subsection{RESTful API}
+
+REST is an abbreviation for Representational State Transfer. It describes the
+behaviour of webservice. It defines a set of constraints leading to several
+advantages. It is usually practised via HTTP and its methods.
+
+The constraints include
+
+\begin{itemize}
+  \item{Client-Server}
+  \item{Stateless}
+  \item{Cachable}
+  \item{Uniform Interface}
+  \item{Layered system}
+\end{itemize}
+
 \section{Git}
 \subsection{Hooks}
 
 \chapter{Development}
 \section{API}
+
+Duse is a so called API first application. Meaning the software development
+highlights building the components of a system as APIs. In the case of duse, it
+is a central RESTful API. By embracing this, it is straightforward to create
+several clients, cross platform and for multiple languages.
+
+\subsection{Architecture}
+
 \section{Clients}
 \section{Deployment}
 \subsection{API}
