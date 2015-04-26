@@ -1235,6 +1235,46 @@ several clients, cross platform and for multiple languages.
 
 \subsection{Architecture}
 
+Duses RESTful API is composed of multiple middlewares.
+
+When a client does a http request, the first middleware the request passes
+through is a middleware enabling \textit{Cross Origin Resource Sharing}. This
+is necessary for possible HTML frontend for the webbrowser. Webbrowsers have
+the \textit{Same Origin Policy}, it forbids Javascript code from accessing
+resources from another origin than the host which the browser currently
+accesses. CORS has been introduced to relax the SOP. It allows the
+configuration of possible access points. CORS can be resticted to specific
+resources or resource patterns as well as specific HTTP Verbs. The webbrowser
+performs the so called \textit{preflight}, which is a HTTP Options request. The
+webbrowser then allows or denies the access, depending on the content of the
+response. The said middleware handles the \textit{preflight} requests and
+allows any resource to be requested with all HTTP Verbs.
+
+If the request is not a CORS specific request it is passed on to the next
+middleware, which is responsible for authentication. It deserializes a session
+for direct access to the requesting user in the following program logic,
+however, using sessions as in session-cookies is not appropriate for an API.
+Session cookies would be a pain to scale when the API grows in instances, as
+the session would be bound to a single instance. To avoid this and other pain
+points, authentication tokens are introduced. Authentication tokens can be
+created by providing username and password once. Requests require the
+\textit{Authentication} header to be set with a previously retrieved token.
+This token is then used to identify the requesting user.
+
+Once the request is through the authentication middleware, it is passed to a
+version switch. The version switch is useful for multiple things. It checks
+multiple aspects of the requests and decides which version of the API the
+request is routed to next. By default it uses version one of the API, but it
+makes future releases of the API much simpler. It can also be thought of as a
+feature toggle, since future releases of the API can be developed and be turned
+of until it has reached maturity and then the switch allows access to it.
+
+After the version switch the request is passed to the appropriate version of
+the API. Each version is essentially its own application.
+
+Since CORS and authentication is already taken care of, the application can
+purely focus on its purpose.
+
 \section{Clients}
 
 \subsection{Web-Frontend}
