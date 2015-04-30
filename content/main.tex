@@ -118,6 +118,23 @@ which are not predictable and with which it is not possible to guess the interna
 state of the random number generators. CSPRNGs can rely on cryptographic primitives
 or on number theoretic designs.
 
+\subsubsection{Blum Blum Shub}
+
+The Blum Blum Shub CSPRNG is a random number generator which is based on a number
+theoretic design. It was developed by Lenore Blum, Manuel Blum and Michael Shub
+(from which the name originates) in 1986. The Blum Blum Shub generator needs
+two primes $q$ and $p$ to work. Both primes have to be of the form $4k + 3$. Also,
+the starting number $s_0$ has to be coprime to the modulus $n$.
+Once both $s_0$ and $n$ have been determined, the following random number $s_{i+1}$ is
+calculated as follows:
+
+$$s_{i+1} = s_{i}^2 \Mod n$$.
+
+In general, the security of the Blum Blum Shub CSPRNG is determined by the
+difficulty of factorization of the modulus $n$. Since it is very difficult
+to factorize huge $n$, Blum Blum Shub is considered safe if one uses a large
+modulus.
+
 \subsection{Prime numbers}
 
 Prime numbers are natural numbers which are greater than one and only evenly
