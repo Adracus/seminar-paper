@@ -1161,14 +1161,91 @@ The constraints include
   \item{Layered system}
 \end{itemize}
 
-There is a REST Maturity Model describing how consequent the constraints are
-applied.
-
 \subsubsection{Client-Server}
+
+This constraint has if fundamental for any API as it tries to achieve
+separation of concerns between client and server. It requires a client to be
+completely independant of how resources are handled by the server. The server
+should even be able to switch out technologies, without effecting the client.
+This could for example be the replacement and migration to another database
+management system.
+
+The communication between server and client is to be done via a predefined
+interface. Pervasively doing this allow multiple compatible servers and clients
+to be developed simultaneously since they only have to develop against the
+specification.
+
 \subsubsection{Stateless}
+
+Statelessness is crucial for RESTful application to scale. Statelessness
+requires the server to know nothing about a state of a user. All necessary
+information to process a single request is also packaged within this one
+request. Doing so allows the operator of the service to seamlessly add more
+instances of the application without having to worry about syncronizing states
+among them. For all instances of an application to still be syncronized in
+terms of resources, they have to access a shares resource, such as a database
+or cache server.
+
 \subsubsection{Cachable}
+
+Most web clients are able to cache data they receive, however, the server has
+to tell it when the data is cachable. There are multiple mechanisms included in
+HTTP to make use of this. The server also has to tell the client what to use to
+detect expired cache. Not only does cache reduce load on from the server, but
+it also allows clients to respond much faster, since they do not have to wait
+for the servers response.
+
 \subsubsection{Uniform Interface}
+
+The uniform interface contraint is essential for a RESTful architecture. It
+allows parts of a system to mature independantly while only having to develop
+against a specification.
+
+Resources are identified by the request of a client. The request also indicates
+which representation the client expects. The server keeps its own representation
+and transforms the resource into the requested form.
+
+Whenever a resource is requested or responded, it includes metadata such as its
+representation for the other participant to know which representation is used
+and parse it correctly.
+
+Additionally a client has all required data to create, modify or delete a
+resource.
+
+Lastly, the Hypermedia as the Engine of Application State principle should be
+applied. A resource has to be self explanatory as in which actions can be
+applied, and which resources it is connected to. However, it does not nest the
+connected resources in its representation, it only tells the client where to
+find said resource. HATEOAS allows the viewed actions server to vary based on
+the state of the data. This can be useful if a process requires multiple
+requests to complete.
+
 \subsubsection{Layered system}
+
+It is transparent for a client accessing a service. The client can either be
+directly routed to the actual instance of the application or a request can go
+through multiple layers of caches and load-balancers. Combined with the other
+constraints it might not even require a request to be routed to an instance of
+an application at all, for example if a request is cachable and an expiration
+date has been provided by the application, then a cache server could answer the
+request without putting any load on an applications instance.
+
+\subsubsection{REST Maturity Model}
+
+There is a REST Maturity Model describing how consequent the constraints are
+applied. It is very much scoped on Web-Services using the REST principles via
+HTTP. There are four levels, 0 to 3.
+
+Level 0 describes services using XML-RPC or SOAP. These services are always
+requested on the same identifier and only use a single HTTP method.
+
+While level 1 also uses a single HTTP method, it differentiates by using
+different identifiers and resources.
+
+Level 2 is similar to level 1, but makes use of multiple HTTP methods.
+
+In addition to all requirements for level 2, level 3 requires a service to
+navigate using HATEOAS provided information.
 
 \section{Git}
 
