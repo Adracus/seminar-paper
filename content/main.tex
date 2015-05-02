@@ -1432,8 +1432,8 @@ discovered during development:
   Duse uses a lot of cryptographic operations with huge numbers, for example
   RSA uses public keys with a key length of 1024 bit. If one tried to handle
   this with pure Javascript, one would run into problems: According to the
-  Ecmascript 5 specification, \cite[p. 29]{ecmascript5}\textit{
-  ``The Number type has exactly 18437736874454810627 (that is 2^{64}-2^{53}+3)
+  Ecmascript 5 specification, \cite[p. 29]{ecmascriptfive} \textit{
+  ``The Number type has exactly 18437736874454810627 (that is $2^{64}-2^{53}+3$)
   values, representing the double-precision 64-bit format IEEE 754 values...''
   }. To solve this problem, one could use JS libraries such as \textit{Big-Integer}
   or others, which have a different internal representation of numbers and
