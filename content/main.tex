@@ -1398,7 +1398,10 @@ new (it was first unveilled in 2011), its ecosystem is rather small. Many
 important functionalities have to be implemented by hand. Quality assurance
 and cryptography functions belong to the requirements of duse. Some of the
 needed parts of QA and cryptography exist, but some other, very important
-functionalities are missing:
+functionalities are missing. There are also other bugs which are in fact a
+real deal breaker in terms of using duse in browsers which are not enhanced
+for the use with this programming language. Following are the biggest issues
+discovered during development:
 
 \begin{itemize}
   \item RSA-Support: Since duse requires RSA for the encryption of the shares,
@@ -1418,6 +1421,33 @@ functionalities are missing:
   as a part of the duse project. This interface is now also available as a
   duse-independent library. It is used by the open source community and some notable
   companies such as for example Google.
+
+  \item Cross-Compilation: It is sometimes difficult to write maintainable and
+  well-structured software using Javascript. Until Ecmascript 6, Javascript
+  completely lacks the support of classes, there is no real first hand import
+  system and the language itself offers some traps which are not obvious at
+  first sight. The language used inside the frontend offers all these features
+  as well as a more concise and clear syntax. It is then cross-compiled to
+  Javascript for the use inside modern browsers.
+  Duse uses a lot of cryptographic operations with huge numbers, for example
+  RSA uses public keys with a key length of 1024 bit. If one tried to handle
+  this with pure Javascript, one would run into problems: According to the
+  Ecmascript 5 specification, \cite[p. 29]{ecmascript5}\textit{
+  ``The Number type has exactly 18437736874454810627 (that is 2^{64}-2^{53}+3)
+  values, representing the double-precision 64-bit format IEEE 754 values...''
+  }. To solve this problem, one could use JS libraries such as \textit{Big-Integer}
+  or others, which have a different internal representation of numbers and
+  can handle numbers of arbitrary length.
+  The language used inside the frontend features two different number types:
+  \textit{integers} and \textit{doubles}, with the integer type being arbitrary
+  size. If one now cross-compiles code into Javascript using numbers lower than
+  the maximum Javascript number, everything is just fine. On the other hand,
+  if the number is larger than the maximum JS number, the code errors silently.
+  This issue is known at the developers of the frontend language and it
+  has the state \textit{accepted} at the date of writing. Duse ought to be
+  running on every modern browser but this bug makes the frontend implementation
+  useless as long as it exists. If it is resolved, it should run again, but
+  at the time when this work is finished, the frontend cannot be deployed.
 \end{itemize}
 
 \subsection{Model-View-Controller}
