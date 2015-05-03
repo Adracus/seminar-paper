@@ -1623,8 +1623,40 @@ framework. This framework defines its model layer by several classes and objects
 which reside on client side only and also by calls to the duse API. Controller and
 views inside the JS-Framework behave as described before.
 
-
 \section{Deployment}
+
+Througout the whole project, a complete deployment pipeline for all components
+is used. For each component of the project the deployment works differently.
+
 \subsection{API}
-\subsection{Frontend}
+
+The RESTful API is a web application developed in according to the 12 Factor
+app rules, which enables a straightforward deployment pipeline. Any time an
+event on the git repository happens, it triggers the deployment pipeline.
+Depending on the event, it can also start a release.
+
+Whenever there is a new commit on the master branch, the API is tested with the
+build server and deployed to a staging system. Now acceptance tests can be
+executed with the various clients. Once the system in whole is in a state,
+where it can go into production a git tag is created and pushed. Not only
+triggers this the deployment pipeline, but it also uniquely identifies a
+version of the API.
+
+This triggers another run of the deployment pipeline, however, tags are not
+deployed to a staging environment, but to a production one.
+
 \subsection{Libraries}
+
+A popular approach to versioning libraries is known as Semantic Versioning. In
+Semantic Versioning consists of three elements, major, minor and patch version.
+A new major version is issued when a breaking change is introduced. A minor
+version is issued when adding new functionality without breaking existing ones
+and patch versions are used to publish non breaking bug fixes.
+
+While libraries are not exactly deployed in different environments, they do
+need to be published once a new version is created, which can also be
+considered a deployment. Therefore a similar approach as deployment of the API
+can be used. Once a git tag is pushed, the build system tests the tagged commit
+and pushes the artifact to a central repository for others to consume.
+
+\subsection{Frontend}
