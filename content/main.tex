@@ -1,3 +1,34 @@
+\chapter{Distinction to existing services}
+
+\section{Vault}
+
+Vault is a rather new service developed by \textit{Hashicorp}.
+It offers a model to store and retrieve secrets, secured by a
+master key which is split into shares and distributed to authorized
+participants. Vault describes its use cases in conjunction with
+server administration and orchestration activities for several users.
+This overlaps with the duse specification, but duse is more a
+consumer grade product and it focuses on the secret sharing algorithm.
+duse splits every secret and treats it
+as sensitive as Vault treats its master key. While the master key
+could be a single point of failure for vault, secrets in duse
+are still safe even if one secret is unveilled or a private key
+is made public. Also, duse is a product which has a strong focus
+on software craftmanship: duse is a high level implementation which
+makes it easy for others to contribute and to write additional
+software while Vault is written in rather low-level go code. This
+code also meets various QA criteria, but is not as understandable
+as the code inside the duse technology stack.
+
+\section{Lastpass}
+
+The use case of Lastpass is the management of personal passwords.
+It is possible to share secrets with other people, but Lastpass
+uses public key crypto here instead of secret sharing. In general,
+duse tries to focus more on the implementation of secret sharing
+and the ability to split a secret than Lastpass.
+
+
 \chapter{Cryptography Fundamentals}
 
 \section{Definition}
@@ -88,6 +119,7 @@ Inside RSA they are used to create many different encryption results even
 if always the same secret is being encrypted. But what if the random numbers
 are not ``random enough''?
 
+\paragraph{True Randomness}
 True randomness is difficult to achieve in cryptography. Human behaviour
 is likely to be predicted. As such, humans are bad sources of true randomness.
 If one wants to obtain true randomness, the propably best source are physical
@@ -96,6 +128,7 @@ physical processes to obtain randomness. An example of such a physical process
 is the atmospheric noise or radioactive sources. Both can be measured and
 are used to create good random numbers.
 
+\paragraph{Pseudorandom numbers}
 True random numbers are unpredictable, but today many random numbers per
 second are needed in order for some cryptographic protocols to work. It would
 take too long to generate a random number using a source of true randomness
