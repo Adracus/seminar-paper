@@ -1538,7 +1538,7 @@ can also be cross-compiled to the web's lingua franca Javascript. As a result,
 the library for the web frontend can also be used to implement an
 additional command line client (which wasn't the focus during implementation).
 
-\subsubsection{Issues}
+\subsubsection{Issues and Mitigations}
 
 As the programming language used inside the frontend technology is relatively
 new (it was first unveilled in 2011), its ecosystem is rather small. Many
@@ -1595,6 +1595,24 @@ discovered during development:
   running on every modern browser but this bug makes the frontend implementation
   useless as long as it exists. If it is resolved, it should run again, but
   at the time when this work is finished, the frontend cannot be deployed.
+  There are several strategies to mitigate this:
+  \begin{itemize}
+    \item Cross-compile from other languages or completely develop a new
+    web client. This strategy could cost a lot of time but the time could
+    be reduced if the backend encryption- and decryption code can be
+    compiled to javascript code. Even if this was the case, one would have
+    to combine logic and user interface again which costs a lot of time.
+    In future work there is a section describing this approach.
+
+    \item Mitigate the cross compilation integer overflow bug with additional
+    data structures: One could implement a big integer logic which works
+    on browser side as well as on backend/vm side. If the cross compilation
+    issue is finally resolved, one could revert to the plain solution.
+
+    \item Make use of an existing Javascript BigInteger library. This would
+    lead to code which does not work the same on client and on server side which
+    is harder to maintain and not as clean as the previous solution.
+  \end{itemize}
 \end{itemize}
 
 \subsection{Model-View-Controller}
