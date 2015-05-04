@@ -233,6 +233,47 @@ Languages for this use case are for example C, Go, Rust and Nim.
 \section{Mark as insecure (either key of user compromised or secret itself compromised)}
 \section{Expiry date}
 \section{Client side signature checks}
-\section{Using symmetric encryption in conjunction with the current system}
+\section{Hybrid encryption}
+
+Hybrid encryption is known as the combination of asymmetric encryption and
+symmentric encrypiton. First the plaintext is encrypted with a symmetric
+encryption algorithm with a preferably randomly generated key. The used key is
+then encrypted with the asymmetric public key algorithm. Hybrid encrypiton
+eliminates some of the drawbacks for both kinds of algorithms.
+
+For symmetric encryption the soundness relies on the randomness of the key
+used. If the key is not random, then there is no point in using it. If the key,
+however, is random and complex, then it is very well suited. The problem with
+random and complex keys is, that they are hard to remember for humans.
+Therefore the key is encrypted with the public key of a user, who can encrypt
+it due to the ownership of the private key.
+
+Not only does this have an effect on the usability for humans, but it also
+softens restrictions of the two mechanisms. A restriction of asymmetric
+encryption is the limited plaintext size. Symmetric encryption does not have
+any limit on the plaintext size, and is significantly more performant.
+Therefore combining the who algorithms allows these restrictions to be
+eliminated.
+
+Integrating hybrid encryption into the duse protocol would require the secret
+to save to be encrypted with symmetric encryption using a randomly generated
+key. The key is then divided using Shamir's Secret Sharing and each share is
+then encrypted with the participating users public keys.
+
+In comparison to the mechanism developed in \ref{sec:duse:crypto_protocol},
+this only requires asymmetric encryption to be used once per user, instead of
+once per user per secret part. Additionally it allows large secrets to be
+saved, since the decryption of the symmetric cipher texts is very performant.
+Requireing thousands of decryption processes is not feasible, in contrast to a
+single performant decryption.
+
+Not only does this mechanism reduce the load on clients, but also on the
+server. The server decrypts its own share of the symmetric key only once
+instead of $n$ times, where $n$ is the number of parts of a secret. Having many
+parts, which in turn also have many shares is complex to safe. A single large
+cipher text is easier to handle. If the upper limits of a data type of the used
+database is not large enough, the cipher texts could be safed in a distributed
+filesystem.
+
 \section{Event logging}
 \section{Groups}
