@@ -189,6 +189,48 @@ control about who to trust or who not to trust. Therefore, the participants of
 the web should be able to identify who to trust and they should be sophisticated
 in terms of creating a trusted web.
 
+\section{Additional clients}
+
+Duse offers a protocol which is independent of client programming languages.
+Therefore, it is easy to implement clients based on different
+languages. This leads to faster adoption of the duse technology stack by
+other developers and this leads to contributions of the community as well
+as a better reputation for duse. One could think of clients in several
+popular programming languages such as Python, but the main focus of planned
+clients is the availability of duse on lots of various platforms.
+Planned are client implementations for the JVM as well as directly executable
+machine code clients for various PC architectures. Additionally, a working
+Javascript client should be established because of the cross compilation issue.
+
+\subsection{Javascript client}
+
+There are two approaches in implementing a Javascript client: The first
+approach is by cross compiling the backend language into Javascript. There
+is a well-maintained compiler for this purpose, but arbitrary size integers
+have to be implemented there as well. The other approach is by writing
+an entirely new client in vanilla Javascript. An advantage of a pure JS
+client would be that the Javascript community has access to a clean
+implementation of the duse technology stack.
+
+\subsection{JVM-based client}
+
+The JVM is available on lots of different architectures and offers a good 
+abstraction on which many languages build. Some mentionable languages here are
+of course Java, Scala and Clojure. These languages are bytecode compatible,
+a single implementation here could be used across several JVM based languages.
+As such, the JVM offers a broad developer community in which duse should
+integrate in order for better adaption as well as a better availability of
+clients. A difficulty of JVM based languages is the final packaging of the
+executable software for different operating systems because of the dependency
+on a specific JVM. Hence, a client in machine code should also exist.
+
+\subsection{Machine code client}
+
+Machine code clients have several advantages: They are easy to ship (compile
+once per OS and underlying architecture) and usually performing rapidly.
+Languages for this use case are for example C, Go, Rust and Nim.
+
+
 \section{Mark as insecure (either key of user compromised or secret itself compromised)}
 \section{Expiry date}
 \section{Client side signature checks}
