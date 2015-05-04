@@ -1503,6 +1503,41 @@ has been created using git tags or deploy to staging if it was just a new
 commit. This hook is known as the post-receive hook.
 
 \chapter{Development}
+
+\section{Big Picture}
+
+The big picture seen in \ref{fig:big_picture} has three conceptual actors:
+
+\begin{enumerate}
+  \item[Users] Users access the duse RESTful api via various
+  clients (CLI- and web-clients are depicted). One user can use multiple
+  clients and therefore is not bound to any specific client. The clients
+  establish their connection to the duse API via http calls on REST
+  resources.
+
+  \item[RESTful duse API] The RESTful API is the core of the
+  duse application stack. It consists of four main components. The first
+  component, the routing, takes care of routing calls to the correct
+  resources. The syntactical correctness is ensured here(like checking
+  for tokens or well-formedness etc.). The next layer is the organisation
+  layer. Here, the structure of the secrets as well as accessing them is
+  controlled. The most inner layer is the data. These are the raw, public
+  encrypted secrets which are accessed via an ORM on the database.
+
+  \item[duse DB] Database access is highly abstracted inside an
+  ORM. The database stores the various secrets in
+  different tables. It is a relational database, but duse does not depend
+  on any specific implementation if there only is an adapter for the ORM
+  duse uses.
+\end{enumerate}
+
+\begin{figure}
+  \includegraphics[scale=0.55]{pictures/big_picture.png}
+  \caption{Duse Big Picture}
+  \centering
+  \label{fig:big_picture}
+\end{figure}
+
 \section{API}
 
 Duse is a so called API first application. Meaning the software development
