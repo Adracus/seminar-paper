@@ -1677,4 +1677,24 @@ considered a deployment. Therefore a similar approach as deployment of the API
 can be used. Once a git tag is pushed, the build system tests the tagged commit
 and pushes the artifact to a central repository for others to consume.
 
-\subsection{Frontend}
+\subsection{Web Frontend}
+
+The main steps of deploying the web frontend are the same as the steps for the
+API. The interesting part is how it can be modular and comply with the 12
+Factor app rules. The frontend does all its calculations entirely on the client
+and sends the results to the RESTful API. How does the frontend know, what the
+hostname of the API to use is? According to 12 Factor, all configurations must
+be done with environment variables.
+
+Since a language, which is compiled to javascript is at use, the language can
+take care of these configurations at compile time. Traditionally, modular
+configurations of javascript have to be done by creating templates which insert
+the values when rendering these templates. Thanks to the compiled language, the
+environment variables do not need to be rendered at runtime.
+
+Therefore the deployment pipeline of the frontend works as follows. Same as for
+all other deployments, the trigger for the pipeline is a git commit. Automated
+tests are executed on a build server, which then deploys the frontend. Once the
+files arrive in the production environment, they are compiled with the preset
+environment variables and can then be statically served with optimal
+performance.
