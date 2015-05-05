@@ -40,7 +40,40 @@ algorithm, Duse can too.
 
 \section{Private key sharing}
 \section{Groups}
+
 \section{Event logging}
+
+The CIA triad confidentiality, integrity and availability are the core
+concepts of information security. Non-repudation was often considered
+to be added but conflicted with the idea of the core iddea of information
+security. Nevertheless, non-repudation plays an important role for the
+future of the duse system: It should be possible to know who accessed
+which secret when, how often and using which client. This all makes it
+possible to get a more detailed view of user activity and also enables
+administrators of duse systems to identify possible security leaks.
+
+Event logging for duse has to be ubiquitous, every action has to be
+logged and comprehensible. Because duse is a security critical system
+and the secrets themselves are not decryptable even from the duse API
+itself this won't conflict with the privacy of users.
+
+The main sections of logging are:
+\begin{itemize}
+  \item Request control: Each request (also from anonymous sources) have
+  to be logged. People could try to DDoS or use vulnerabilities of the
+  duse system. Admins should be informed if there are anomalies in order
+  to establish countermeasures.
+
+  \item Secret access: Secret access is a very important point of logging:
+  Who accesssed a secret and when? This coul be of interest for example if
+  a private key of a person has been unveilled, did this person access any
+  secrets after that point in time?
+
+  \item Organisational access: Public keys of users are an insurance that
+  only authorized persons can read shares. Access to these is therefore
+  also crucial and has to be logged.
+\end{itemize}
+
 \section{Offline access}
 \section{Advanced permissions}
 
