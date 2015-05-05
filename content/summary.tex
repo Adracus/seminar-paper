@@ -102,6 +102,7 @@ to the padding part $X$ with $G(r)$:
 $$m = X \oplus G(r)$$
 
 \section{Key establishment}
+\label{sec:key_establishment}
 
 If one wants to share his secret with many others, one first encrypts the
 secret into many shares with the secret sharing scheme. After that, one needs
@@ -193,6 +194,26 @@ in terms of creating a trusted web.
 \section{Client side signature checks}
 \label{sec:future:client_sig_check}
 
+Besides attacks with the goal of attaining a secret in plaintext, there is also
+another type of attack, which is feasible for duse. A man in the middle
+attacker could replace the shares with a secret, the attacker created, since
+the public keys are also accessed for the procedure. This could be the goal of
+the attacker, if attaining the plaintext is not necessary, but the resulting
+secret the user receives is under complete control of the attacker.
+
+To avoid such situations, the client could also check the signature of the
+received shares, until now, only the server performs integrity checks by
+verifying the signature at time of creation. Using a method of key
+establishment, the clients can also ensure, the received public keys are not
+tampered, or notice, when the they are tampered. (see
+\ref{sec:key_establishment}) After the key exchange, the signatures can be
+checked.
+
+Since the signatures are generated every time a secrets content or the
+participants the secret is shared with are modified, the system has to
+remember, who modified them last. Therefore the API can tell the client which
+users public key to use when verifying signatures of a specific secret.
+
 \section{Updating key pairs}
 
 It is possible, that in the lifetime of a key pair it will become insecure,
@@ -219,9 +240,17 @@ the shares get in a race condition or the public key to check the signature
 with. Only one of the race conditions can be solved by without introducing
 further mechanisms. Since the shares are a basic demand of the system to work,
 and the signature checks only for additional security, restrictions on them are
-less trouble. So before the client updates the shares, the key is replaced with
-the new one, with a flag, that the key cannot be used for signature checks,
-yet. Once all shares are updated, the flag can be removed.
+less trouble. Otherwise it would require the update process to be finished,
+before other users can access a secret. Instead when decrypting a secret, the
+system could inform the user, that the signature currently cannot be verified
+due to the key pair update in progress.
+
+So before the client updates the shares, the key is replaced with the new one,
+with a flag, that the key cannot be used for signature checks, yet. Once all
+shares are updated, the flag can be removed.
+
+It also requires the system to not only remember, who changed the secret in
+whole, but also shares in detail.
 
 Using multiple steps to update the key pair allow the user to leave the process
 uncompleted. This circumstance also leaves the key pair as not to be used for
