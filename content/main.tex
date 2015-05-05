@@ -555,6 +555,75 @@ to persist and process. Splitting allows the data to be processed sequentially,
 in a stream. One large secret or shares would require one long loading and
 processing operation.
 
+\subsection{AES}
+
+AES is the short form for \textit{Advanced Encryption Standard}. It is a block cipher
+and the successor of \textit{DES}. It is also often referred as \textit{Rijndael}
+because of John Daemen and Vincent Rimen, who created the name as a play on their
+names. It was submitted by them to the American NIST (National Institute of
+Standards and Technology) when NIST was publically searching for a successor of
+DES.
+
+\subsection{Criteria for the algorithm}
+
+Each secure symmetric cipher has two main properties:
+\textit{confusion} and \textit{diffusion}. Confusion tries to obfuscate
+the relation between ciphertext and the key. Diffusion wants to
+destroy the structure of the original text in the resulting ciphertext.
+Additional to these two criteria, AES should be fast in software implementations
+as well as in hardware realizations and also be space efficient for use
+inside for example smartcards. At the time of writing, AES fullfills these
+criteria and is used for strictly confidential documents inside the american
+secret services.
+
+\subsubsection{Procedure}
+
+The algorithm executes as follows \cite{wikipedia_aes}:
+\begin{enumerate}
+  \item Key expansion
+  \item Preliminary round
+    \begin{itemize}
+      \item AddRoundKey(Keys[0])
+    \end{itemize}
+  \item Encryption rounds (r = 0 to R - 1)
+    \begin{itemize}
+      \item SubBytes
+      \item ShiftRows
+      \item MixColumns
+      \item AddRoundKey(Keys[i]) 
+    \end{itemize}
+  \item Final round
+    \begin{itemize}
+      \item SubBytes
+      \item ShiftRows
+      \item AddRoundKey(Keys[R]) 
+    \end{itemize}
+\end{enumerate}
+
+In the final round, the bytes don't need to be mixed because the resulting
+mixture wouldn't affect the next round and is therefore useless.
+Hereafter, the main parts \textit{key expansion}, \textit{SubBytes},
+\textit{MixColumns} and \textit{AddRoundKey} are explained.
+
+\paragraph{Key expansion}
+The key expansion generates $R + 1$ keys out of the user predefined key where
+$R$ is the number of encryption rounds which in turn is dependent on the key 
+bit size (supported sizes are 128, 192 and 256 bits). Also,
+the keys are adjusted to fit the block size.
+
+\paragraph{SubBytes}
+SubBytes substitutes the bytes by putting them into substitution boxes (sbox).
+This will map each byte to another and represents a monoalphabetic substitution
+and fullfills the \textit{confusion} criteria.
+
+\paragraph{ShiftRows}
+The ShiftRows step applies a shifting operation to the input bytes. This step
+fullfills the \textit{diffusion} criteria each good encryption algorithm should
+contain.
+
+\paragraph{AddRoundKey}
+This step is rather simple: Each byte is XORed with the current round key.
+
 \subsection{Extended euclidean algorithm}
 
 \subsection{Secretly Sharing Strings}
