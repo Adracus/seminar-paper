@@ -1873,6 +1873,30 @@ UUID is not relevant for the single property.}
 
 \subsection{Semantic Validation}
 
+When creating or updating a secret, the input can very well comply with the
+json-schema, but are not valid to be saved to the database. More specifically,
+the parts and shares must be validated. Each part contains shares, which in
+turn contain a users id, the shares content encrypted with the associated users
+public key and a signature created by the user performing the action.
+
+All of the shares in a single part can be correct in terms of the structural
+validation, but still be incorrect. The user referenced by its id in a share is
+simply an integer in the schema, but incorrect, if the user does not exist.
+Even though the content of the share cannot be verified, that its decrypted
+content is valid, it does have some constraints, which can be applied. Since
+the share is encrypted with the users public key, the contents length must be
+equal to the size of the users public key and only contain base 64 compatible
+characters. The signature also has to be verified against the users public key
+performing the action.
+
+Once each single part is verified, all parts together must be verified. Each
+part has many shares. Each part must contain shares for the same set of users,
+for each part the users must also be unique. Furthermore, there must always be
+a share belonging to the server and a share for the user performing the current
+action, to avoid the possibility of creating secrets for other users. At last,
+to prevent pollution of the database by users, the number of shares can be
+restricted.
+
 \section{Clients}
 
 \subsection{Web-Frontend}
