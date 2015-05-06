@@ -203,6 +203,27 @@ of a number to be a prime or not. This test is used in \textit{OpenSSL} to
 find large primes, which makes it possible for users of \textit{OpenSSL} to
 not have primes as factors of their RSA modulus.
 
+\subsection{Chinese remainder theorem}
+
+Given $k$ positive integers $n_1, \ldots, n_k$ which are pairwise coprime\footnote{
+  Pairwise coprimalty is fullfilled if a set is \textit{setwise coprime},
+  which means that the greatest common divisor of all elements in the set
+  is $1$ and also each pair in the set is coprime.
+}. For any given sequence of $i$ integers  $a_1, \ldots a_i$, there is an integer
+$x$ which is congruent with all $a$s with the integers $n$:
+
+$$
+\left\{
+\begin{array}{l l l}
+  x \equiv a_1 \Mod n_1 \\
+  \ldots \\
+  x \equiv a_k \Mod n_k
+\end{array}
+\right.
+$$
+
+Additionally all solutions $x$ are also congruent modulo the Product $N = n_1 \ldots n_k$.
+
 \subsection{RSA}
 	
 RSA is an asymmetric encryption standard, developed by Rivest, Shamir and
@@ -688,6 +709,25 @@ result of $a \Mod b$. For each row, one now has to calculate
 $g = s \cdot a + t \cdot b$, where $g = gcd(a, b)$. The calculation begins from
 the last line, bottom up. For the last row, $s = 1$ and $t = 0$. For each
 following rows, $s = t_{old}$ and $t = s_{old} - q \cdot t_{old}$.
+
+\subsection{Polynomial interpolation}
+
+The polynomial interpolation tries to find a polynomial of maximum degree $n - 1$ which
+contains $n$ given points. Several algorithms exist which solve this problem,
+the most famous of them being the so called \textit{Lagrange Interpolation}. The
+Lagrange interpolation takes these $n$ points and transforms them into \textit{lagrange
+polynomials}. The formula for a lagrange polynomial is
+
+$$l_j(x) = \frac{(x - x_0) \cdot (x - x_1) \cdot \ldots \cdot (x - x_{j - 1}) \cdot (x - x_{j + 1}) \cdot \ldots \cdot (x - x_n)}
+{(x_j - x_0) \cdot (x_j - x_1) \cdot \ldots \cdot (x_j - x_{j - 1}) \cdot (x_j - x_{j + 1}) \cdot \ldots \cdot (x_j - x_n)}$$
+
+where $j$ is for each point from $0$ to $n$. This formula can also be put short with:
+
+$$\prod_{s = 0 \wedge s \neq 0}^{n} \frac{x - x_s}{x_j - x_s}$$
+
+These lagrange polynomials are then put together as follows:
+
+$$p(x) = \sum_{j = 0}^{n} y_jL_j(x)$$
 
 \subsection{Secretly Sharing Strings}
 
