@@ -1762,12 +1762,51 @@ misleading examples.
 A weakness of existing implementations of the json schema draft are error
 messages. An error message often looks like the following
 
-"The property '\#/a' of type String did not match the following type: integer in
-schema 03179a21-197e-5414-9611-e9f63e8324cd\#"
+\paragraph{}{"The property '\#/a' of type String did not match the following type: integer in
+schema 03179a21-197e-5414-9611-e9f63e8324cd\#"}
 
-While it accurately states the situation, a more descriptive message would be
+\paragraph{}{While it accurately states the situation, a more descriptive message would be
 appropriate for users not aware of the use of json-schema, since the schema
-UUID is not relevant for the single property.
+UUID is not relevant for the single property.}
+
+\paragraph{}{ 
+  
+  The JSON schema for a secret can be modeled as in
+  \ref{code:secret_json_schema}. At top level, it expects an object. This
+  object has two properties, a title and parts. Parts are an array of arrays
+  containing the shares. A share is represented by the user it belongs to, with
+  the \textit{user\_id}, the encrypted content and the signature to verify the
+  author of the secret.
+
+}
+
+\begin{figure}
+\begin{lstlisting}
+{
+  "type": "object",
+  "required": ["title", "parts"],
+  "properties": {
+    "title": { "title": "string" }
+    "parts": {
+      "type": "array",
+      "items": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "user_id": "integer",
+            "content": "string",
+            "signature": "string"
+          }
+        }
+      }
+    }
+  }
+}
+\end{lstlisting}
+\caption{JSON Schema of a secret}
+\label{code:secret_json_schema}
+\end{figure}
 
 \subsection{Semantic Validation}
 
