@@ -1707,7 +1707,6 @@ Successful responses describe, how the resource has changed. (see
   \label{tab:error_codes}
 \end{figure}
 
-
 \begin{figure}
   \begin{tabular}{|l|l|l|}
     \hline
@@ -1723,7 +1722,53 @@ Successful responses describe, how the resource has changed. (see
 \end{figure}
 
 \section{Validation}
-\subsection{JSON Validation}
+
+Validation of data coming into the system is complicated especially for the
+nested structures of secrets. To prevent unnecessary load on the server when
+validating the data itself, the structure of it is validated first.
+
+\subsection{Structural Validation}
+
+The most popular representation of data in RESTful APIs today is JSON. It only
+has a small amount of metadata.
+
+There are multiple approaches to validating JSON, however, they actually do not
+rely on JSON. It is rather a structural validation, applied to JSON.
+
+A possible approach, can be to reduce the JSON in the request body to a
+predefined set of attributes, and apply what is left directly to a model. The
+model then verifies itself and saves to the database.
+
+Another approach is to define a schema, which the JSON is verified against. The
+json-schema draft describes such an approach. It can be used to extract,
+validate structurally and partly to validate the content. Content can be
+validated by providing the expected datatype or a regular expression. Datatypes
+include the Javascript primitives: Integers, String, Array, Object, Float.
+Furthermore it provides more complex types such as email, IP-Address,
+date-time, URI, and hostnames.
+
+After the validation of datatypes, the schema can also define some semantic
+validations, such as constraints on numbers or length of a string, however,
+these validations fail in its effect to validate relations between nested
+entities.
+
+Not only does json-schema allow validation, but it also leaves the database
+untouched until the data is in the correct format. Besides ensuring the correct
+format of the data, it also has straigtforward documentation advantage. Since
+the json-schema is written in json itself, it can easily be published to
+informs users of the API about the correct usage, instead of single possibly
+misleading examples.
+
+A weakness of existing implementations of the json schema draft are error
+messages. An error message often looks like the following
+
+"The property '\#/a' of type String did not match the following type: integer in
+schema 03179a21-197e-5414-9611-e9f63e8324cd\#"
+
+While it accurately states the situation, a more descriptive message would be
+appropriate for users not aware of the use of json-schema, since the schema
+UUID is not relevant for the single property.
+
 \subsection{Semantic Validation}
 
 \section{Clients}
