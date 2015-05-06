@@ -368,24 +368,42 @@ to save to be encrypted with symmetric encryption using a randomly generated
 key. The key is then divided using Shamir's Secret Sharing and each share is
 then encrypted with the participating users public keys.
 
-In comparison to the mechanism developed in \ref{sec:duse:crypto_protocol},
-this only requires asymmetric encryption to be used once per user, instead of
-once per user per secret part. Additionally it allows large secrets to be
-saved, since the decryption of the symmetric cipher texts is very performant.
-Requireing thousands of decryption processes is not feasible, in contrast to a
-single performant decryption.
+\subsection{Advantages}
 
-Not only does this mechanism reduce the load on clients, but also on the
-server. The server decrypts its own share of the symmetric key only once
-instead of $n$ times, where $n$ is the number of parts of a secret. Having many
-parts, which in turn also have many shares is complex to safe. A single large
-cipher text is easier to handle. If the upper limits of a data type of the used
-database is not large enough, the cipher texts could be safed in a distributed
-filesystem.
+Introducing hybrid encryption would improve multiple aspects of the overall
+system. In the following paragraphs, the most notable ones are depicted.
 
-Separating cipher and access allows updating a secret to be performed in a more
-detailed manner. The cipher text must only be modified, if the plaintext it
-conceals is changed. If the participating parties are modified only the shares
-are changed. Hence, the API can differentiate what part of the secret is changed
-and can log the type of change, as well as have named rollbacks when using a
-revisioning mechanism.
+\paragraph{Less asymmetric crypto}{ In comparison to the mechanism developed in
+  \ref{sec:duse:crypto_protocol}, this only requires asymmetric encryption to
+  be used once per user, instead of once per user per secret part. Additionally
+  it allows large secrets to be saved more efficiently, since the decryption of
+the symmetric cipher texts is very performant. Requireing thousands of
+decryption processes is not feasible, in contrast to a single performant
+decryption.}
+
+\paragraph{Less complex storage}{ Not only does this mechanism reduce the load
+  on clients, but also on the server. The server decrypts its own share of the
+  symmetric key only once instead of $n$ times, where $n$ is the number of
+  parts of a secret.  Having many parts, which in turn also have many shares is
+complex to safe. A single large cipher text is easier to handle. If the upper
+limits of a data type of the used database is not large enough, the cipher
+texts could be safed in a distributed filesystem.}
+
+\paragraph{Less complex, more efficient Validation}{ Besides the improved
+  storage possibilities on a low level, the complexity of the associations is
+  also reduced. Instead of each part containing shares, a secret only has one
+  set of shares.  Therefore the semantic validation also becomes less complex,
+  since relationships between parts do not have to be verified. When using the
+  parts attempt, the server has to verify, that all users the shares assiociate
+  to have to be the same for all parts. Apart from that, each shares signature
+  is checked, which is a slow operation. An attacker could use this
+characteristic to perform a denial of service attack. Using the hybrid
+encryption approach minimizes the signature checks to the number of
+participants. }
+
+\paragraph{Detailed updates}{ Separating cipher and access allows updating a
+  secret to be performed in a more detailed manner. The cipher text must only
+  be modified, if the plaintext it conceals is changed. If the participating
+  parties are modified only the shares are changed. Hence, the API can
+differentiate what part of the secret is changed and can log the type of
+change, as well as have named rollbacks when using a revisioning mechanism. }
