@@ -624,7 +624,70 @@ contain.
 \paragraph{AddRoundKey}
 This step is rather simple: Each byte is XORed with the current round key.
 
-\subsection{Extended euclidean algorithm}
+\subsection{Euclidean algorithm}
+
+The euclidian algorithm was discovered by Euclid, a greek mathematician and it
+determines the greatest common divisor of two numbers.
+Hence it is often referred to as \textit{gcd}. There are several variants
+of the euclidian algorithm, the \textit{classical} euclidian algorithm and the
+\textit{modern} variant of it.
+
+\subsubsection{Classical euclidian algorithm}
+
+Euclid used the property that the greatest common divisor of two numbers does
+not change if the larger number is subtracted by the smaller number. The classical
+algorithm in iterative form is described in \ref{code:euclid_classic}
+
+\begin{figure}
+\begin{lstlisting}
+EUCLID-CLASSIC(a, b)
+  if (a == 0)
+    return b
+  while (b != 0)
+    if (a > b) // Determines larger side
+      a = a - b
+    else
+      b = b - a
+\end{lstlisting}
+\caption{Classic euclidian algorithm}
+\label{code:euclid_classic}
+\end{figure}
+
+\subsubsection{Modern euclididian algorithm}
+
+If the difference between the two numbers is large the classical algorithm
+needs many subtraction steps until termination. The modern euclidian algorithm
+addresses these problems by applying modular divisions instead of subtractions.
+It starts of with $a$ and $b = r_0$, the first remainder. The algorithm then
+proceeds as described in \ref{code:euclid_modern}. It continues to
+calculate the remainder $r$ until it is $0$.
+
+\begin{figure}
+\begin{lstlisting}
+EUCLID-MODERN(a, b)
+  while (b != 0)
+    h = a mod b
+    a = b
+    b = a
+  return a
+\end{lstlisting}
+\caption{Modern euclidian algorithm}
+\label{code:euclid_classic}
+\end{figure}
+
+\subsubsection{Extended euclidian algorithm}
+
+While the regular versions of the euclidian algorithm calculate the greatest
+common divisor $gcd(a, b)$ of the two numbers $a$ and $b$, the extended
+euclidian algorithm additionaly calculates the two numbers $s$ and $t$ so
+that $gcd(a, b) = s \cdot a + t \cdot b$.
+
+It proceeds by first calculating the regular euclidian algorithm. In each
+step, the current $a$, $b$ and $q$ are saved into a matrix. $q$ is the division
+result of $a \Mod b$. For each row, one now has to calculate
+$g = s \cdot a + t \cdot b$, where $g = gcd(a, b)$. The calculation begins from
+the last line, bottom up. For the last row, $s = 1$ and $t = 0$. For each
+following rows, $s = t_{old}$ and $t = s_{old} - q \cdot t_{old}$.
 
 \subsection{Secretly Sharing Strings}
 
