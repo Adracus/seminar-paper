@@ -459,9 +459,9 @@ consequently creates an edge condition of $t \geq 1$.
 
 \subsection{Blakley's scheme}
 
-Blakeley's scheme offers another but referring to the idea quite similar
+Blakley's scheme offers another but referring to the idea quite similar
 approach for secret sharing. For a secret which consists of two parts, 
-Blakeley encodes the parts into two dimensional, non-parallel linear functions.
+Blakley encodes the parts into two dimensional, non-parallel linear functions.
 The point where the graphs of the two functions intersect represents the
 secret. For example, if the secret $s$ is $4$, one has to compute two non-parallel
 linear functions intersecting at $y = 4$. It is simple to generate those two
@@ -533,7 +533,7 @@ Those include:
 \subsection{Finite Fields}
 
 To be cryptographically secure, the operations are to be done within finite
-fields. Using Shamir's secret sharing scheme that means, that the prime of the
+fields. Using Shamir's Secret Sharing scheme that means, that the prime of the
 finite field has to be larger than the secret integer. $P > S$
 
 To get such a prime number, one has to test numbers larger than $S$. For example
@@ -549,7 +549,7 @@ example, for a secret $S = 14$, the prime number $P = 17$ is suitable as it
 \textit{covers} the range from $13$ to $17$. As a result, the range of each
 prime number $P$ is from $P_{-1} to P-1$, where $P_{-1}$ is the next smaller
 prime number (and for $P = 1$ it is $0$). To represent those ranges one could
-invent a range-data structure (R-Tree is not suitable for this use case), but
+invent a range data structure (R-Tree is not suitable for this use case), but
 if one tried to store the prime numbers from $0$ to $10^{100}$ one would need
 an incredibly high amount of storage. As a result, the approach to store all
 prime numbers in a large range is quite inefficient in terms of storage and
@@ -764,7 +764,7 @@ was applied and the other the result of integer division.
 To reconstruct the string using \textit{DIVMOD} all, that has to be done is
 apply \textit{DIVMOD} to the input integer and use the result of the integer
 division for the next iteration and the remainder of the modulo operation is
-the codepoint of the next character. The string is reconstructed from left to
+the code point of the next character. The string is reconstructed from left to
 right. (see figure \ref{code:integerToString})
 
 \begin{figure}
@@ -802,7 +802,7 @@ possibilities to incorrectly use these random number generators.
 
 Built-in random number generators often allow specifying an upper bound to
 randomly select from. The result is a number between zero and that upper bound.
-Specifically in the case of Shamir's secret sharing, when a random polynomial
+Specifically in the case of Shamir's Secret Sharing, when a random polynomial
 is generated, the coefficients should not be zero. If a coefficient is zero, it
 can potentially result in a lower threshold than intended. Say the randomly
 generated polynomial is of degree three and in standard form. A polynomial of
@@ -819,11 +819,11 @@ $1 \leq a \leq p$
 
 \subsection{Share representation}
 
-How Shamir's secret sharing can be extended to use finite fields and allowing
+How Shamir's Secret Sharing can be extended to use finite fields and allowing
 UTF-8 have been discussed. To communicate a share, however, a reasonable string
 representation has to be chosen.
 
-The main components of a Shamir's secret sharing share are the \textit{x} and
+The main components of a Shamir's Secret Sharing share are the \textit{x} and
 the \textit{y} value. Combining them in a single string can be accomplished by
 concatenating the two around a dash. While the \textit{x} values will only
 become as large as the number of participants, the \textit{y} value can become
@@ -845,16 +845,16 @@ Accordingly, the \textit{x} values are represented as $01, 02, 03, 04, 05, 06,
 An example of the explained representation could be \textit{"1-f0"}, which is
 equivalent to the point $(1, 240)$.
 
-Additionally the representation is in use by other Shamir's secret sharing
+Additionally the representation is in use by other Shamir's Secret Sharing
 libraries, therefore compatibility is more uncomplicated when choosing the
 argued representation.
 
-\subsection{Connecting Shamir's secret sharing and RSA}
+\subsection{Connecting Shamir's Secret Sharing and RSA}
 
-When using Shamir's secret sharing, even under consideration of finite fields,
+When using Shamir's Secret Sharing, even under consideration of finite fields,
 an attacker can estimate the size of a secret since it is somewhat close to the
 chosen prime. To eliminate this possibility and introduce more security
-features such as integrity and authentication, Shamir's secret sharing and RSA
+features such as integrity and authentication, Shamir's Secret Sharing and RSA
 are going to be combined. Due to some limitations of both technologies some
 adaptions have to be made. These mainly concern length restrictions of RSA.
 
@@ -1373,23 +1373,23 @@ When creating a secret, the client first has to retrieve all profiles of the
 users the secret should be shared with. These profiles contain the public key
 of each user.
 
-Now Shamir's secret sharing could be used to split the secret into shares for
-each user, however, this can lead to problems. Since Shamir's secret sharing
+Now Shamir's Secret Sharing could be used to split the secret into shares for
+each user, however, this can lead to problems. Since Shamir's Secret Sharing
 requires primes equally large as the input, it can in theory handle any size of
 input, but not in practise, as it might take a long time to calculate such a
 large prime. Instead the original secret is split into chunks, here called
 \textit{secret parts}.
 
 Considering that all the \textit{secret parts} are not too long to compute
-primes for each of them, Shamir's secret sharing can now be applied.
+primes for each of them, Shamir's Secret Sharing can now be applied.
 
-Once Shamir's secret sharing has been applied there are shares for each user
+Once Shamir's Secret Sharing has been applied there are shares for each user
 for every secret part. These shares can then be encrypted with the previously
 retrieved public keys of each user and then signed with the creating users
 private key. All of this data is then send to the server to verify and save.
 (see figure \ref{fig:creating_a_secret})
 
-Shamir's secret sharing requires at least two shares to reconstruct a secret,
+Shamir's Secret Sharing requires at least two shares to reconstruct a secret,
 therefore there will always be a transparent "server"-user which gets a share
 that is shared with every participant.
 
@@ -1410,7 +1410,7 @@ metadata, such as the secrets title and a list of participants, is then
 returned as the response to the clients request.
 
 Once the client received said response, it decrypts the shares and reconstructs
-the secret parts using Shamir's secret sharing. Next the secret parts are
+the secret parts using Shamir's Secret Sharing. Next the secret parts are
 concatenated, and the secret is successfully retrieved.
 
 \begin{figure}
@@ -1601,7 +1601,7 @@ request without putting any load on an applications instance.
 \subsubsection{REST Maturity Model}
 
 There is a REST Maturity Model describing how consequent the constraints are
-applied. It is very much scoped on Web-Services using the REST principles via
+applied. It is very much scoped on web services using the REST principles via
 HTTP. There are four levels, 0 to 3.
 
 Level 0 describes services using XML-RPC or SOAP. These services are always
@@ -1843,7 +1843,7 @@ predefined set of attributes, and apply what is left directly to a model. The
 model then verifies itself and saves to the database.
 
 Another approach is to define a schema, which the JSON is verified against. The
-json-schema draft describes such an approach. It can be used to extract,
+JSON schema draft describes such an approach. It can be used to extract,
 validate structurally and partly to validate the content. Content can be
 validated by providing the expected data type or a regular expression. Data types
 include the JavaScript primitives: Integers, String, Array, Object, Float.
@@ -1855,27 +1855,27 @@ validations, such as constraints on numbers or length of a string, however,
 these validations fail in its effect to validate relations between nested
 entities.
 
-Not only does json-schema allow validation, but it also leaves the database
+Not only does JSON Schema allow validation, but it also leaves the database
 untouched until the data is in the correct format. Besides ensuring the correct
 format of the data, it also has straightforward documentation advantage. Since
-the json-schema is written in json itself, it can easily be published to
+the JSON Schema is written in JSON itself, it can easily be published to
 informs users of the API about the correct usage, instead of single possibly
 misleading examples.
 
-A weakness of existing implementations of the json schema draft are error
+A weakness of existing implementations of the JSON Schema draft are error
 messages. An error message often looks like the following
 
 \paragraph{}{"The property '\#/a' of type String did not match the following type: integer in
 schema 03179a21-197e-5414-9611-e9f63e8324cd\#"}
 
 \paragraph{}{While it accurately states the situation, a more descriptive message would be
-appropriate for users not aware of the use of json-schema, since the schema
+appropriate for users not aware of the use of JSON Schema, since the schema
 UUID is not relevant for the single property.}
 
 \paragraph{}{ 
   
   The JSON schema for a secret can be modeled as in
-  \ref{code:secret_json_schema}. At top level, it expects an object. This
+  \ref{code:secret_JSON_schema}. At top level, it expects an object. This
   object has two properties, a title and parts. Parts are an array of arrays
   containing the shares. A share is represented by the user it belongs to, with
   the \textit{user\_id}, the encrypted content and the signature to verify the
@@ -1908,13 +1908,13 @@ UUID is not relevant for the single property.}
 }
 \end{lstlisting}
 \caption{JSON Schema of a secret}
-\label{code:secret_json_schema}
+\label{code:secret_JSON_schema}
 \end{figure}
 
 \subsection{Semantic Validation}
 
 When creating or updating a secret, the input can very well comply with the
-json-schema, but are not valid to be saved to the database. More specifically,
+JSON Schema, but are not valid to be saved to the database. More specifically,
 the parts and shares must be validated. Each part contains shares, which in
 turn contain a users id, the shares content encrypted with the associated users
 public key and a signature created by the user performing the action.
@@ -1939,10 +1939,10 @@ restricted.
 
 \section{Clients}
 
-\subsection{Web-Front end}
+\subsection{Web front end}
 
 As every modern computer has got a browser as well as an internet connection today,
-a web-front end was a requirement from the beginning. This web front end should be
+a web front end was a requirement from the beginning. This web front end should be
 easy to use but offer the same security and the same features as the command line
 client does. An issue of many of today's browsers is their support for
 cryptographic operations which conflicted with the security requirement:
