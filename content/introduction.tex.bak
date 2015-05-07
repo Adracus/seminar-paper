@@ -27,9 +27,9 @@ and well researched algorithms and protocols.
 \section{Structure of this Paper}
 \label{sec:StructureOfThisPaper}
 
-This paper starts by recapitulating important cryptographic fundamentals,
+This paper starts by recapitulating important crypographic fundamentals,
 algorithms and protocols. Subsequently the strategy to achieve secure secret
-sharing over the internet will be explained accompanied by discussions of
+sharing over the internet will be explained accompanied by dicussions of
 decisions made. Afterwards strengths, weaknesses and possible attacks of the
 defined protocol are examined. Finishing up, possible future work and
 improvements are discussed.

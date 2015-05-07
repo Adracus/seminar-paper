@@ -196,9 +196,9 @@ large numbers, more time than the age of the universe is needed.
 But how can one get prime numbers in a short amount of time? There are two
 main known solutions: The first solution is to permute through all positive
 natural numbers, more efficient algorithms here are for example the
-\textit{Sieve of Eratosthenes} or the \textit{Sieve of Atkin}. The other
+\textit{Sieve of Erathostenes} or the \textit{Sieve of Atkin}. The other
 main approach is the statistical or heuristic approach. Well known methods
-here are the \textit{Miller Rabin Test}, a test which delivers the probability
+here are the \textit{Miller Rabin Test}, a test which delivers the propability
 of a number to be a prime or not. This test is used in \textit{OpenSSL} to
 find large primes, which makes it possible for users of \textit{OpenSSL} to
 not have primes as factors of their RSA modulus.
@@ -206,7 +206,7 @@ not have primes as factors of their RSA modulus.
 \subsection{Chinese remainder theorem}
 
 Given $k$ positive integers $n_1, \ldots, n_k$ which are pairwise coprime\footnote{
-  Pairwise coprimality is fulfilled if a set is \textit{set-wise coprime},
+  Pairwise coprimalty is fullfilled if a set is \textit{setwise coprime},
   which means that the greatest common divisor of all elements in the set
   is $1$ and also each pair in the set is coprime.
 }. For any given sequence of $i$ integers  $a_1, \ldots a_i$, there is an integer
@@ -227,13 +227,13 @@ Additionally all solutions $x$ are also congruent modulo the Product $N = n_1 \l
 \subsection{RSA}
 	
 RSA is an asymmetric encryption standard, developed by Rivest, Shamir and
-Adleman. As many other asymmetric encryption algorithms, RSA uses a one way function
+Adleman. As many other asymmetric encryptions, RSA uses a one way function
 with a trapdoor. So in order to understand RSA, one has to understand the
 trapdoor function. The RSA trapdoor function relies on Euler's totient function
 $\phi$. This function returns the amount of numbers, which are relatively prime
 and smaller than a number n. Since prime numbers are only evenly divisible by
 1 and themselves, the totient function returns n - 1 for prime numbers. Also,
-if you multiply a number with another, the totient function also multiplies
+if you multiply a number with another, the totient function also mutliplies
 with the totient function of the other number. An example:
 
 $$\phi(13) = 12$$
@@ -276,7 +276,7 @@ has to know the RSA procedure as well as the used padding.
 
 There are several known so called \textit{padding schemes}. The most widespread
 padding was defined in \textit{PKCS \#1}, the first of a family of standards
-called Public Key Cryptography Standards. To encrypt, a secret Integer $m$ is 
+called Public Key Kryptography Standards. To encrypt, a secret Integer $m$ is 
 first encoded into an octet string using the $i2osp$ (integer to octet string 
 primitive). This results in an octet string message $M$. $M$ is then
 concatenated with a randomly generated octet string as well as some other control
@@ -299,10 +299,10 @@ always different integer outcomes.
 A cryptographic protocol is a combination of cryptographic primitives,
 algorithms and possibly other cryptographic protocols. The protocol describes
 how the cryptographic algorithms are used in order to increase confidentiality,
-integrity and availability of the underlying goal.
+integrity and availablility of the underlying goal.
 
 Cryptographic protocols are usually defined abstract in order to leave language
-specific difficulties up to the implementation. Since only the interfaces are
+specific dificulties up to the implementation. Since only the interfaces are
 defined, the developers can implement against those and therefore make sure
 different implementations are compatible to each other.
 
@@ -425,7 +425,7 @@ the $n$th share. To reconstruct the secret $S$ simply \textit{XOR} the shares.
 This is possible since \textit{XOR} is symmetric.
 
 Although secret sharing through \textit{XOR} encryption is simple and fast, it
-becomes impractical once there are many participants, since all shares are
+becomes impractical once there are many particpants, since all shares are
 required to reconstruct the secret and $k = n$ and $n$ is large.
 
 To solve this issue secure $(t, n)$-threshold schemes with $t < n$ must be
@@ -446,7 +446,7 @@ $$a_{n}x^n + a_{n-1}x^{n-1} + ... + a_{3}x^3 + a_{2}x^2 + a_{1}x + a_0 $$
 Shamir's Secret Sharing uses a polynomial of degree $t$ to generate secrets.
 In the generated polynomial in standard form the secret would be $a_0$. The
 main idea is that any polynomial can be reconstructed using $degree + 1$ points
-on the function. The task of reconstruction can be accomplished using Lagrange
+on the function. The task of reconstruction can be accomplished using lagrange
 interpolation.
 
 In the sense of secret sharing $n$ would be any number of distinct points on
@@ -498,7 +498,7 @@ while $M$ has to be split as well, but $m_1 \neq m_2$ (non-parallel lines).
 
 If one instead wants to split a secret for three participants, one has to
 create three planes. The point where the three planes intersect
-is the secret point (as seen previous for secrets with two participants).
+is the secret point (as seeen previous for secrets with two participants).
 A line can be described by a slope and an intercept. A plane has one
 additional ``slope'' which then spans up the plane. For each further
 dimension, an additional component is needed. As a result, the space needed
@@ -508,11 +508,11 @@ threshold of needed participants in a shared secret.
 \subsection{Choosing a scheme}
 
 Both secret sharing algorithms achieve security and are able to produce
-parts which can be shared across several participants. Blakley's scheme
+parts which can be shared across several particpants. Blakeleys scheme
 has the important drawback of larger shares the larger the threshold (number
 of needed persons to recover a secret) becomes. It can be limited using
 several techniques but that would increase the complexity of the encryption.
-As a result, a space efficient and for our use case optimal secret sharing
+As a result, a space efficient and for our usecase optimal secret sharing
 scheme is \textit{Shamir's Secret Sharing} due to it's simplicity and
 security.
 
@@ -533,7 +533,7 @@ Those include:
 \subsection{Finite Fields}
 
 To be cryptographically secure, the operations are to be done within finite
-fields. Using Shamir's secret sharing scheme that means, that the prime of the
+fields. Using shamir's secret sharing scheme that means, that the prime of the
 finite field has to be larger than the secret integer. $P > S$
 
 To get such a prime number, one has to test numbers larger than $S$. For example
@@ -549,7 +549,7 @@ example, for a secret $S = 14$, the prime number $P = 17$ is suitable as it
 \textit{covers} the range from $13$ to $17$. As a result, the range of each
 prime number $P$ is from $P_{-1} to P-1$, where $P_{-1}$ is the next smaller
 prime number (and for $P = 1$ it is $0$). To represent those ranges one could
-invent a range-data structure (R-Tree is not suitable for this use case), but
+invent a range-datastructure (R-Tree is not suitable for this use case), but
 if one tried to store the prime numbers from $0$ to $10^{100}$ one would need
 an incredibly high amount of storage. As a result, the approach to store all
 prime numbers in a large range is quite inefficient in terms of storage and
@@ -564,9 +564,9 @@ The only limitation we have is that $P > S$, so any prime larger that the
 secret is valid. Using Mersenne primes we can easily use the known primes for
 the finite field to use.
 
-This, however, creates a new limitation. A secret can theoretically be larger
+This, however, creates a new limitation. A secret can thoretically be larger
 than $17,425,170$ digits. To avoid using the secret sharing scheme with larger
-secrets. It can previously be divided into several parts making sure, the limit
+secrets. It can previously be devided into several parts making sure, the limit
 is never reached for a single part. Then the secret sharing scheme is applied to
 each part instead of once per secret.
 
@@ -582,7 +582,7 @@ AES is the short form for \textit{Advanced Encryption Standard}. It is a block c
 and the successor of \textit{DES}. It is also often referred as \textit{Rijndael}
 because of John Daemen and Vincent Rimen, who created the name as a play on their
 names. It was submitted by them to the American NIST (National Institute of
-Standards and Technology) when NIST was publicly searching for a successor of
+Standards and Technology) when NIST was publically searching for a successor of
 DES.
 
 \subsection{Criteria for the algorithm}
@@ -593,8 +593,8 @@ the relation between ciphertext and the key. Diffusion wants to
 destroy the structure of the original text in the resulting ciphertext.
 Additional to these two criteria, AES should be fast in software implementations
 as well as in hardware realizations and also be space efficient for use
-inside for example smart cards. At the time of writing, AES fulfills these
-criteria and is used for strictly confidential documents inside the American
+inside for example smartcards. At the time of writing, AES fullfills these
+criteria and is used for strictly confidential documents inside the american
 secret services.
 
 \subsubsection{Procedure}
@@ -635,11 +635,11 @@ the keys are adjusted to fit the block size.
 \paragraph{SubBytes}
 SubBytes substitutes the bytes by putting them into substitution boxes (sbox).
 This will map each byte to another and represents a monoalphabetic substitution
-and fulfills the \textit{confusion} criteria.
+and fullfills the \textit{confusion} criteria.
 
 \paragraph{ShiftRows}
 The ShiftRows step applies a shifting operation to the input bytes. This step
-fulfills the \textit{diffusion} criteria each good encryption algorithm should
+fullfills the \textit{diffusion} criteria each good encryption algorithm should
 contain.
 
 \paragraph{AddRoundKey}
@@ -647,13 +647,13 @@ This step is rather simple: Each byte is XORed with the current round key.
 
 \subsection{Euclidean algorithm}
 
-The euclidean algorithm was discovered by Euclid, a Greek mathematician and it
+The euclidian algorithm was discovered by Euclid, a greek mathematician and it
 determines the greatest common divisor of two numbers.
 Hence it is often referred to as \textit{gcd}. There are several variants
-of the euclidean algorithm, the \textit{classical} euclidean algorithm and the
+of the euclidian algorithm, the \textit{classical} euclidian algorithm and the
 \textit{modern} variant of it.
 
-\subsubsection{Classical euclidean algorithm}
+\subsubsection{Classical euclidian algorithm}
 
 Euclid used the property that the greatest common divisor of two numbers does
 not change if the larger number is subtracted by the smaller number. The classical
@@ -670,14 +670,14 @@ EUCLID-CLASSIC(a, b)
     else
       b = b - a
 \end{lstlisting}
-\caption{Classic euclidean algorithm}
+\caption{Classic euclidian algorithm}
 \label{code:euclid_classic}
 \end{figure}
 
-\subsubsection{Modern euclidean algorithm}
+\subsubsection{Modern euclididian algorithm}
 
 If the difference between the two numbers is large the classical algorithm
-needs many subtraction steps until termination. The modern euclidean algorithm
+needs many subtraction steps until termination. The modern euclidian algorithm
 addresses these problems by applying modular divisions instead of subtractions.
 It starts of with $a$ and $b = r_0$, the first remainder. The algorithm then
 proceeds as described in \ref{code:euclid_modern}. It continues to
@@ -692,18 +692,18 @@ EUCLID-MODERN(a, b)
     b = a
   return a
 \end{lstlisting}
-\caption{Modern euclidean algorithm}
+\caption{Modern euclidian algorithm}
 \label{code:euclid_modern}
 \end{figure}
 
-\subsubsection{Extended euclidean algorithm}
+\subsubsection{Extended euclidian algorithm}
 
-While the regular versions of the euclidean algorithm calculate the greatest
+While the regular versions of the euclidian algorithm calculate the greatest
 common divisor $gcd(a, b)$ of the two numbers $a$ and $b$, the extended
-euclidean algorithm additionally calculates the two numbers $s$ and $t$ so
+euclidian algorithm additionaly calculates the two numbers $s$ and $t$ so
 that $gcd(a, b) = s \cdot a + t \cdot b$.
 
-It proceeds by first calculating the regular euclidean algorithm. In each
+It proceeds by first calculating the regular euclidian algorithm. In each
 step, the current $a$, $b$ and $q$ are saved into a matrix. $q$ is the division
 result of $a \Mod b$. For each row, one now has to calculate
 $g = s \cdot a + t \cdot b$, where $g = gcd(a, b)$. The calculation begins from
@@ -715,8 +715,8 @@ following rows, $s = t_{old}$ and $t = s_{old} - q \cdot t_{old}$.
 The polynomial interpolation tries to find a polynomial of maximum degree $n - 1$ which
 contains $n$ given points. Several algorithms exist which solve this problem,
 the most famous of them being the so called \textit{Lagrange Interpolation}. The
-Lagrange interpolation takes these $n$ points and transforms them into \textit{Lagrange
-polynomials}. The formula for a Lagrange polynomial is
+Lagrange interpolation takes these $n$ points and transforms them into \textit{lagrange
+polynomials}. The formula for a lagrange polynomial is
 
 $$l_j(x) = \frac{(x - x_0) \cdot (x - x_1) \cdot \ldots \cdot (x - x_{j - 1}) \cdot (x - x_{j + 1}) \cdot \ldots \cdot (x - x_n)}
 {(x_j - x_0) \cdot (x_j - x_1) \cdot \ldots \cdot (x_j - x_{j - 1}) \cdot (x_j - x_{j + 1}) \cdot \ldots \cdot (x_j - x_n)}$$
@@ -725,7 +725,7 @@ where $j$ is for each point from $0$ to $n$. This formula can also be put short 
 
 $$\prod_{s = 0 \wedge s \neq 0}^{n} \frac{x - x_s}{x_j - x_s}$$
 
-These Lagrange polynomials are then put together as follows:
+These lagrange polynomials are then put together as follows:
 
 $$p(x) = \sum_{j = 0}^{n} y_jL_j(x)$$
 
@@ -741,7 +741,7 @@ in a way that is reversible start with a result of 0. Process each character of
 the string from left to right one at a time. Multiply the current result with
 the length of your set of characters for every character in the string and add
 the position of the current character in your set of characters, also known as
-a code point. (see figure \ref{code:stringToInteger})
+a codepoint. (see figure \ref{code:stringToInteger})
 
 \begin{figure}
 \begin{lstlisting}
@@ -784,13 +784,13 @@ INTEGER-TO-STRING(input)
 One of the challenges of secretly sharing strings however, is to support a wide
 range of characters. As a result ASCII is not very effective since it limits
 the characters immensely, which is a result of ASCII being created to display
-only the English language. An encoding, which supports a large set of
+only the english language. An encoding, which supports a large set of
 characters and is widely used is UTF-8.
 
 Since UTF-8 has a very large set of characters (1114112 to be exact) simply
 converting all characters as explained is impractical. To allow the usage of
 UTF-8 anyways the easiest solution is to encode the UTF-8 strings as Base64,
-then apply the string to integer conversion as explained using the ASCII
+then apply the string to integer conversion as explained usind the ASCII
 charset. This is possible, since all characters of Base64 are a subset of
 ASCII.
 
@@ -802,7 +802,7 @@ possibilities to incorrectly use these random number generators.
 
 Built-in random number generators often allow specifying an upper bound to
 randomly select from. The result is a number between zero and that upper bound.
-Specifically in the case of Shamir's secret sharing, when a random polynomial
+Specifically in the case of shamir's secret sharing, when a random polynomial
 is generated, the coefficients should not be zero. If a coefficient is zero, it
 can potentially result in a lower threshold than intended. Say the randomly
 generated polynomial is of degree three and in standard form. A polynomial of
@@ -819,11 +819,11 @@ $1 \leq a \leq p$
 
 \subsection{Share representation}
 
-How Shamir's secret sharing can be extended to use finite fields and allowing
+How shamir's secret sharing can be extended to use finite fields and allowing
 UTF-8 have been discussed. To communicate a share, however, a reasonable string
 representation has to be chosen.
 
-The main components of a Shamir's secret sharing share are the \textit{x} and
+The main components of a shamir's secret sharing share are the \textit{x} and
 the \textit{y} value. Combining them in a single string can be accomplished by
 concatenating the two around a dash. While the \textit{x} values will only
 become as large as the number of participants, the \textit{y} value can become
@@ -845,16 +845,16 @@ Accordingly, the \textit{x} values are represented as $01, 02, 03, 04, 05, 06,
 An example of the explained representation could be \textit{"1-f0"}, which is
 equivalent to the point $(1, 240)$.
 
-Additionally the representation is in use by other Shamir's secret sharing
+Additionally the representation is in use by other shamir's secret sharing
 libraries, therefore compatibility is more uncomplicated when choosing the
 argued representation.
 
-\subsection{Connecting Shamir's secret sharing and RSA}
+\subsection{Connecting shamir's secret sharing and RSA}
 
-When using Shamir's secret sharing, even under consideration of finite fields,
+When using shamir's secret sharing, even under consideration of finite fields,
 an attacker can estimate the size of a secret since it is somewhat close to the
 chosen prime. To eliminate this possibility and introduce more security
-features such as integrity and authentication, Shamir's secret sharing and RSA
+features such as integrity and authentication, shamir's secret sharing and RSA
 are going to be combined. Due to some limitations of both technologies some
 adaptions have to be made. These mainly concern length restrictions of RSA.
 
@@ -869,9 +869,9 @@ character, leaving up to 115 bytes of payload.
 Since the chosen prime restricts the size of the shares \textit{y} value, it
 has a heavy influence on the total size. To calculate the maximum size of the
 payload, the primes have to be examined. The largest possible share can be
-represented as only 15 or \textit{f} in terms of hex. Since the Mersenne primes
+represented as only 15 or \textit{f} in terms of hex. Since the mersenne primes
 are used, they can be examined for their maximum size. The expected prime is
-the Mersenne prime below the first prime resulting in more than 117 bytes.
+the mersenne prime below the first prime resulting in more than 117 bytes.
 
 $$11. Mersenne prime: 2^{107}-1$$
 $$2^{107} = 800000000000000000000000000_{16}$$
@@ -882,7 +882,7 @@ $$2^{127} = 80000000000000000000000000000000_{16}$$
 $$13. Mersenne prime: 2^{521}-1$$
 $$2^{521} = (2*10^{130})_{16}$$
 
-Since the 13$^{th}$ Mersenne prime is the first one to exceed 117 digits in
+Since the 13$^{th}$ mersenne prime is the first one to exceed 117 digits in
 hex, the searched for prime is the 12$^{th}$. Therefore the maximum length for
 a single share can be up to 34, since the length of the \textit{y}
 representation can be up to 32 bytes. The two additional bytes are for the
@@ -898,7 +898,7 @@ $$34 <= total\_length$$
 
 \chapter{Quality Assurance}
 
-Quality assurance in software covers all aspects of a software's life cycle.
+Quality assurance in software covers all aspects of a softwares lifecycle.
 From design over the process of development, code revisions, testing and
 deployment.
 
@@ -967,8 +967,8 @@ coverage determines the number of lines covered during a test. It is much
 easier to get 100\% line coverage, but tests with 100\% line coverage do
 not guarantee the absence of errors.
 
-The programming language in the back end of our service offers good integration
-for line coverage analysis while the front end language for our HTML interface
+The programming language in the backend of our service offers good integration
+for line coverage analysis while the frontend language for our HTML interface
 completely lacked an integration for services offering line coverage analysis.
 As a result and as an important measure for quality assurance, an integration
 for the coverage analysis service is now established and made public as open
@@ -990,7 +990,7 @@ humans to perform, or they would take a lot of time and be error-prone.
 
 There are several kinds of methods used in automated testing. Some of them
 focus on the exhaustiveness of the overall testing, others to ensure that bugs
-that already occurred do not appear again.
+that already occured do not appear again.
 
 \subsection{Mutation testing}
 
@@ -1045,9 +1045,9 @@ implementing new features or patches.
 
 Continuous Delivery embraces test automation, Continuous Integration and the
 continuous installation of a software product. It allows teams to perform task
-with lots of agility while improving the software's quality.
+with lots of agility while improving the softwares quality.
 
-A central concept of continuous delivery is known as the deployment pipeline.
+A central concept of continuous delivery is known as the deployment pipleline.
 The deployment pipeline is the collection of processes a software has to go
 through before being released or deployed. An example of a deployment pipeline
 could be: 
@@ -1071,8 +1071,8 @@ This approach allows easy rollback in case a faulty version passed the checks,
 since earlier versions of the software can be deployed from version control.
 
 Following this methodology allows teams to ship extremely early and often.
-Accompanied by the perfectly fitting use of the so called Feature Toggle. A
-Feature Toggle allows a developer to hide a feature which is currently in
+Accompanied by the perfectly fitting use of the so called FeatureToggle. A
+FeatureToggle allows a developer to hide a feature which is currently in
 development in production, but have it available in the other phases of the
 deployment pipeline. It can be thought of as beta testing for each feature.
 
@@ -1094,7 +1094,7 @@ with the version control system in use.
 
 CI originated from the extreme programming methodology, however, today many
 software teams embrace CI without following all extreme programming guidelines.
-Typically CI is referred to as a server, service or platform where tests are
+Typically CI is refered to as a server, service or platform where tests are
 executed and the outcome is reported back to the development team. This is also
 known as the feedback loop.
 
@@ -1103,17 +1103,17 @@ benefit though is that the team eliminate the \textit{it works on my machine}
 phenomenon. If the tests pass on the CI server, then the code is classified as
 \textit{shippable}. It wipes out the possibility, that a local configuration,
 the developer adds is lost along the way, which directly contributes to the
-idea of continuous deployment. The CI becomes the central location of truth
+idea of continuous deloyment. The CI becomes the central location of truth
 concerning passing tests.
 
 \subsection{Code reviews}
 
-Software teams regularly review their code to improve the software's quality,
+Software teams regularly review their code to improve the softwares quality,
 reduce the risk of bugs and provide a consistent coding standard. Code reviews
 can take place in different forms, but they all serve the same purpose.
 
 A team can also perform code reviews through version control systems, without
-requiring the team to be in the same place. These forms are referred to as
+requiring the team to be in the same place. These forms are refered to as
 collaborative or crowdsourced reviews.
 
 Code reviews have been researched and they show a significant discovery of
@@ -1131,8 +1131,8 @@ production. To avoid end users ever noticing these downtimes, a method for zero
 downtime has to be applied.
 
 Blue green deployments allow deployments to be zero downtime. The approach is
-simple. When deploying, there are two identical but separate environments. The
-blue and the green environment. A router, in case of a web server this can for
+simple. When deploying, there are two identical but seperate environments. The
+blue and the green environment. A router, in case of a webserver this can for
 example be a reverse proxy or a load balancer, decides to which environment a
 requesting user is routed to. Before deployment the service points to the green
 environment.
@@ -1142,7 +1142,7 @@ new version is deployed to the blue environment. In case something fails while
 deploying, the router simply does not route to the blue environment. If the
 deployment is successful, then the router switches to the blue environment,
 thus the new version is now live without any downtime. (see fig
-\ref{fig:blue_green_deployment}) Of course, this requires the router to hot-load the
+\ref{fig:blue_green_deployment}) Of course, this requires the router to hotload the
 new configuration.
 
 \begin{figure}
@@ -1208,7 +1208,7 @@ problems in different environment. Worst case would be in production.
 developed by experts from Heroku. The rules provide a framework to make the
 development of web applications maintainable, of high quality, and scalable.
 Portability and agility of development is of high importance as well. As the
-name states, there are twelve factors to consider when developing.
+name states, there are telve factors to consider when developing.
 
 \paragraph{Codebase}
 
@@ -1222,7 +1222,7 @@ deployments of each application. There can be different stages between
 development and release. Deploys are any running instance of the application,
 even an instance running on a developers machine, locally. It heavily
 contributes to continuous deployment, as the application is tested in every
-stage of the development life cycle.
+stage of the development lifecycle.
 
 \paragraph{Dependency Isolation}
 
@@ -1242,7 +1242,7 @@ minimal system requirements.
 Configuration parameters are to be stored within environment variables. It
 allows the app to be configured by its environment rather than configuration
 files, which would have to be checked into version control. As this is not
-desirable the configuration is solely done by environment variables, or
+desireable the configuration is solely done by environment variables, or
 configuration files generated by the environment upon deploys.
 
 \paragraph{Backing services}
@@ -1280,13 +1280,13 @@ not be routed to the same instance of the application.
 
 12 Factor apps are completely self contained and bind the service they offer to
 a specific port, which is configurable. Their runtime does not need to be
-injected into a web server or otherwise. The application itself provides a
-web server.  Therefore when running the application everything is executed in
+injected into a webserver or otherwise. The application itself provides a
+webserver.  Therefore when running the application everything is executed in
 the same user space and is not able to access unauthorized content due to
 permissions.
 
 The exposed service does not necessarily need to be HTTP, it can be any
-protocol, and therefore a Backing service for other apps.
+protocol, and therefore a Backing serivice for other apps.
 
 \paragraph{Concurrency}
 
@@ -1302,7 +1302,7 @@ jobs.
 Disposability describes the value of a single instance in the whole
 infrastructure of an application. Any instance can be started or stopped at any
 time. A goal is to make this as efficient as possible, to be able to move
-processes from one server to the other. Thus fast start and stop times allows
+processes from one server to the other. Thus fast startup and stop times allows
 moving of processes to be done quickly.
 
 Stopping an instance is done by sending the SIGTERM signal to the process. It
@@ -1338,7 +1338,7 @@ Logs are viewed as streams of events. Storage of an applications logs is
 transparent for it, the application simply prints its logs to stdout, which can
 be captured by the environment running the application. It allows logs to be
 handled completely separately. Since logs are a stream of events of the usage
-it can be analyzed. Analyzing the usage can lead to the discovery of trends and
+it can be analysed. Analysing the usage can lead to the discovery of trends and
 possibly generate alerts.
 
 \paragraph{Admin processes}
@@ -1353,7 +1353,7 @@ production without undergoing the deployment pipeline.
 
 \chapter{Duse}
 
-The most important part of a system to securely share secrets is the
+The most important part of a system to securly share secrets is the
 cryptographic protocol consisting of multiple cryptographic primitives and
 other protocols or algorithms. Since it is a security concerned system,
 possible attacks must also be examined.
@@ -1361,7 +1361,7 @@ possible attacks must also be examined.
 \section{The Cryptographic Protocol}
 \label{sec:duse:crypto_protocol}
 
-The protocol involves a server and a client. During a secrets life cycle, there
+The protocol involves a server and a client. During a secrets lifecycle, there
 are four events that are relevant for the protocol creating, reading, updating,
 and deleting. These are also known as \textit{CRUD}. Most interesting of those
 are creating and reading a secret, because deleting just removes all related
@@ -1373,17 +1373,17 @@ When creating a secret, the client first has to retrieve all profiles of the
 users the secret should be shared with. These profiles contain the public key
 of each user.
 
-Now Shamir's secret sharing could be used to split the secret into shares for
-each user, however, this can lead to problems. Since Shamir's secret sharing
+Now shamir's secret sharing could be used to split the secret into shares for
+each user, however, this can lead to problems. Since shamir's secret sharing
 requires primes equally large as the input, it can in theory handle any size of
 input, but not in practise, as it might take a long time to calculate such a
 large prime. Instead the original secret is split into chunks, here called
 \textit{secret parts}.
 
 Considering that all the \textit{secret parts} are not too long to compute
-primes for each of them, Shamir's secret sharing can now be applied.
+primes for each of them, shamir's secret sharing can now be applied.
 
-Once Shamir's secret sharing has been applied there are shares for each user
+Once shamir's secret sharing has been applied there are shares for each user
 for every secret part. These shares can then be encrypted with the previously
 retrieved public keys of each user and then signed with the creating users
 private key. All of this data is then send to the server to verify and save.
@@ -1410,7 +1410,7 @@ metadata, such as the secrets title and a list of participants, is then
 returned as the response to the clients request.
 
 Once the client received said response, it decrypts the shares and reconstructs
-the secret parts using Shamir's secret sharing. Next the secret parts are
+the secret parts using shamir's secret sharing. Next the secret parts are
 concatenated, and the secret is successfully retrieved.
 
 \begin{figure}
@@ -1421,7 +1421,7 @@ concatenated, and the secret is successfully retrieved.
 
 \section{Attacks}
 
-Since this is an attempt to build a system to securely share secrets, possible
+Since this is an atempt to build a system to securely share secrets, possible
 attacks must be examined. To prove the security of a protocol the Dolev-Yao
 model is often used. The Dolev-Yao model includes abilities one must assume
 when evaluating a cryptographic protocol. These include, that the attacker can
@@ -1457,7 +1457,7 @@ There is a second aspect to be examined when creating a secret. The attacker
 cannot create modified secrets, since the authenticity through RSA signatures
 is checked upon receiving by the server. The attacker is only able to modify a
 secret and save it, if the attacker had modified the public key, when the user
-was created. To eliminate the possibility of such an attack the operator of the
+was created. To eliminate the possiblity of such an attack the operator of the
 system could use a second way of checking the authenticity of a users public
 key, an eligibility check for example.
 
@@ -1483,7 +1483,7 @@ attacker previously already tampered the communication of a users public key at
 time of user creation is useless for the attacker.
 
 The only assumption an attacker can track is the circumstance, that a secret
-has been divided into multiple parts. The number of parts can be used to
+has been devided into multiple parts. The number of parts can be used to
 approximate the total length. All parts have a maximum length, thus the
 attacker can multiply the maximum length by the number of parts and receives an
 approximate length of the secret.
@@ -1498,10 +1498,10 @@ $$(n - 1) * l \leq length(secret) \leq n * l$$
 
 Middlewares are a method in which software applications are build within
 layers. Each layer only concerning the in- and output. It allows applications
-to be more modular and increase the Separation of Concerns principle.
+to be more modular and increase the Seperation of Concerns principle.
 
-Within web development middlewares describe the architecture of a web server.  A
-call to a web server is handled by several middlewares until one of the
+Within web development middlewares describe the architecture of a webserver.  A
+call to a webserver is handled by several middlewares until one of the
 middlewares produce and reply a response. Typically middlewares process
 incoming data and then call the next middleware, until a middleware decides to
 end the request and send a response.
@@ -1516,7 +1516,7 @@ purpose.
 \subsection{RESTful API}
 
 REST is an abbreviation for Representational State Transfer. It describes the
-behaviour of web service. It defines a set of constraints leading to several
+behaviour of webservice. It defines a set of constraints leading to several
 advantages. It is usually practised via HTTP and its methods.
 
 The constraints include
@@ -1533,7 +1533,7 @@ The constraints include
 
 This constraint has if fundamental for any API as it tries to achieve
 separation of concerns between client and server. It requires a client to be
-completely independent of how resources are handled by the server. The server
+completely independant of how resources are handled by the server. The server
 should even be able to switch out technologies, without effecting the client.
 This could for example be the replacement and migration to another database
 management system.
@@ -1549,8 +1549,8 @@ Statelessness is crucial for RESTful application to scale. Statelessness
 requires the server to know nothing about a state of a user. All necessary
 information to process a single request is also packaged within this one
 request. Doing so allows the operator of the service to seamlessly add more
-instances of the application without having to worry about synchronizing states
-among them. For all instances of an application to still be synchronized in
+instances of the application without having to worry about syncronizing states
+among them. For all instances of an application to still be syncronized in
 terms of resources, they have to access a shares resource, such as a database
 or cache server.
 
@@ -1565,8 +1565,8 @@ for the servers response.
 
 \subsubsection{Uniform Interface}
 
-The uniform interface constraint is essential for a RESTful architecture. It
-allows parts of a system to mature independently while only having to develop
+The uniform interface contraint is essential for a RESTful architecture. It
+allows parts of a system to mature independantly while only having to develop
 against a specification.
 
 Resources are identified by the request of a client. The request also indicates
@@ -1618,7 +1618,7 @@ navigate using HATEOAS provided information.
 \section{Git}
 
 Git is a distributed version control system initially developed in 2005 to
-maintain the Linux kernel. Git uses, unlike other version control systems,
+maintain the linux kernel. Git uses, unlike other version control systems,
 snapshots instead of deltas to represent a new version. Whenever a new version
 is created each state of every file is saved in a new snapshot. If a file was
 unchanged, then only a pointer to the latest version is saved in the snapshot,
@@ -1638,16 +1638,16 @@ Commiting is simply the creation of a new version from local changes. Git
 distinguishes between three main sections of a project. The working directory,
 or the files the developer actually changes. Once the developer is ready to
 commit changes or part of the changes, they are \textit{staged}. This is called
-the staging area. When the developer is satisfied with the staged changes,
-they can be committed to the directory.
+the staging area. When the developer is statisfied with the staged changes,
+they can be commited to the directory.
 
-Branching and merging is a pain point of many other version control systems. Git
+Branching and merging is a painpoint of many other version control systems. Git
 has first class support for both. Every commit, with a few exceptions, has one
 or more parent commits. It indicates, which commit the commit is based of off.
 Branching allows a project to have several paths of development simultaneously.
 This way a main branch can always be stable, while other branches contain new
 feature development or fixes. Once these branches have reached maturity, they
-can be merged back into the main branch. When merging Git looks at the latest
+can be merged back inte the main branch. When merging Git looks at the latest
 commits of the branches to merge and tries to merge with multiple strategies.
 If there are still conflicts, then these have to be handled by the developer
 manually. Merging often results in an additional commit, the merge commit.
@@ -1658,20 +1658,20 @@ repository. They are commonly used to specify versions of a software.
 Since Git is a \textit{distributed} version control system, every developer has
 their own local copy of the repository. Thus the changes have to be uploaded,
 once the developer is done with the changes and wants to provide them to the
-rest of the team. This action is referred to as \textit{pushing} changes. The
+rest of the team. This action is refered to as \textit{pushing} changes. The
 receiving server then makes sure, that there are no inconsistencies.
 
 Various Git integrations make is a perfect fit for use in a deployment
 pipeline.
 
 There are many more features and characteristics that make Git special, but for
-the use in this project the highlighted features are essential.
+the use in this project the highligted features are essential.
 
 \subsection{Hooks}
 
 An essential feature of Git in a deployment pipeline are hooks. There are
 multiple hooks in Gits workflow. Git can essentially embed a shell script
-before and after any event happening in the life cycle of a repository. This
+before and after any event happening in the lifecycle of a repository. This
 works on the client as well as on the server side.
 
 On client side this can be used to make sure, that code which is about to be
@@ -1694,17 +1694,17 @@ commit. This hook is known as the post-receive hook.
 The big picture see \ref{fig:big_picture} has three conceptual actors:
 
 \begin{enumerate}
-  \item[Users] Users access the duse RESTful API via various
+  \item[Users] Users access the duse RESTful api via various
   clients (CLI- and web-clients are depicted). One user can use multiple
   clients and therefore is not bound to any specific client. The clients
-  establish their connection to the duse API via HTTP calls on REST
+  establish their connection to the duse API via http calls on REST
   resources.
 
   \item[RESTful duse API] The RESTful API is the core of the
   duse application stack. It consists of four main components. The first
   component, the routing, takes care of routing calls to the correct
   resources. The syntactical correctness is ensured here(like checking
-  for tokens or well-formedness etc.). The next layer is the organization
+  for tokens or well-formedness etc.). The next layer is the organisation
   layer. Here, the structure of the secrets as well as accessing them is
   controlled. The most inner layer is the data. These are the raw, public
   encrypted secrets which are accessed via an ORM on the database.
@@ -1732,18 +1732,18 @@ several clients, cross platform and for multiple languages.
 
 \subsection{Architecture}
 
-Duse's RESTful API is composed of multiple middlewares.
+Duses RESTful API is composed of multiple middlewares.
 
-When a client does a HTTP request, the first middleware the request passes
+When a client does a http request, the first middleware the request passes
 through is a middleware enabling \textit{Cross Origin Resource Sharing}. This
-is necessary for possible HTML front ends for the web browser. Web browsers have
-the \textit{Same Origin Policy}, it forbids JavaScript, ActionScript and CSS
+is necessary for possible HTML frontends for the webbrowser. Webbrowsers have
+the \textit{Same Origin Policy}, it forbids Javascript, ActionScript and CSS
 from accessing resources from another origin than the host which the browser
 currently accesses. CORS has been introduced to relax the SOP. It allows the
-configuration of possible access points. CORS can be restricted to specific
-resources or resource patterns as well as specific HTTP Verbs. The web browser
+configuration of possible access points. CORS can be resticted to specific
+resources or resource patterns as well as specific HTTP Verbs. The webbrowser
 performs the so called \textit{preflight}, which is a HTTP Options request. The
-web browser then allows or denies the access, depending on the content of the
+webbrowser then allows or denies the access, depending on the content of the
 response. The said middleware handles the \textit{preflight} requests and
 allows any resource to be requested with all HTTP Verbs.
 
@@ -1775,7 +1775,7 @@ the API. Each version is essentially its own application.
 Since CORS and authentication is already taken care of, the application can
 purely focus on its purpose.
 
-There are several endpoints for mainly two substantial ones, secrets and users.
+There are several endpoints for mainly two substantials, secrets and users.
 User endpoints are not very interesting. They take care of user registrations,
 confirmation and viewing users. The endpoints for secrets are a typical CRUD,
 but involve several steps to complete. (see \ref{fig:action_flow})
@@ -1803,7 +1803,7 @@ Successful responses describe, how the resource has changed. (see
     Authorization & 403 & Insufficient permissions to perform the action \\ \hline
     JSON Validation & 400, 422 & \parbox[t]{10cm}{HTTP 400 code on malformed JSON\\HTTP 422 code when the JSON does not match the schema} \\ \hline
     Semantic Validation & 422 & Data did not pass the semantic criteria \\ \hline
-    Apply to Model & 422 & Database constraints are not met \\ \hline
+    Apply to Model & 422 & Database contraints are not met \\ \hline
   \end{tabular}
   \caption{HTTP Error codes with description}
   \centering
@@ -1845,19 +1845,19 @@ model then verifies itself and saves to the database.
 Another approach is to define a schema, which the JSON is verified against. The
 json-schema draft describes such an approach. It can be used to extract,
 validate structurally and partly to validate the content. Content can be
-validated by providing the expected data type or a regular expression. Data types
-include the JavaScript primitives: Integers, String, Array, Object, Float.
+validated by providing the expected datatype or a regular expression. Datatypes
+include the Javascript primitives: Integers, String, Array, Object, Float.
 Furthermore it provides more complex types such as email, IP-Address,
 date-time, URI, and hostnames.
 
-After the validation of data types, the schema can also define some semantic
+After the validation of datatypes, the schema can also define some semantic
 validations, such as constraints on numbers or length of a string, however,
 these validations fail in its effect to validate relations between nested
 entities.
 
 Not only does json-schema allow validation, but it also leaves the database
 untouched until the data is in the correct format. Besides ensuring the correct
-format of the data, it also has straightforward documentation advantage. Since
+format of the data, it also has straigtforward documentation advantage. Since
 the json-schema is written in json itself, it can easily be published to
 informs users of the API about the correct usage, instead of single possibly
 misleading examples.
@@ -1939,10 +1939,10 @@ restricted.
 
 \section{Clients}
 
-\subsection{Web-Front end}
+\subsection{Web-Frontend}
 
 As every modern computer has got a browser as well as an internet connection today,
-a web-front end was a requirement from the beginning. This web front end should be
+a web-frontend was a requirement from the beginning. This web frontend should be
 easy to use but offer the same security and the same features as the command line
 client does. An issue of many of today's browsers is their support for
 cryptographic operations which conflicted with the security requirement:
@@ -1950,17 +1950,17 @@ Since duse uses a lot of random numbers, random number generation is an importan
 security aspect. Inside the command line client, randomness sources such as
 /dev/random could be used but not all modern browsers offer such randomness
 sources. Therefore a strong but also slower pseudorandom number generator has
-to be used for the web front end.
+to be used for the web frontend.
 
-The web front end is built in a language which runs inside a virtual machine and
-can also be cross-compiled to the web's lingua franca JavaScript. As a result,
-the library for the web front end can also be used to implement an
+The web frontend is built in a language which runs inside a virtual machine and
+can also be cross-compiled to the web's lingua franca Javascript. As a result,
+the library for the web frontend can also be used to implement an
 additional command line client (which wasn't the focus during implementation).
 
 \subsubsection{Issues and Mitigations}
 
-As the programming language used inside the front end technology is relatively
-new (it was first unveiled in 2011), its ecosystem is rather small. Many
+As the programming language used inside the frontend technology is relatively
+new (it was first unveilled in 2011), its ecosystem is rather small. Many
 important functionalities have to be implemented by hand. Quality assurance
 and cryptography functions belong to the requirements of duse. Some of the
 needed parts of QA and cryptography exist, but some other, very important
@@ -1971,7 +1971,7 @@ discovered during development:
 
 \begin{itemize}
   \item RSA-Support: Since duse requires RSA for the encryption of the shares,
-  RSA is missing critical for the implementation of duse. The front end ecosystem
+  RSA is missin critical for the implementation of duse. The frontend ecosystem
   did not offer a full RSA implementation (supporting encryption and padding
   operations). One should not implement cryptography functions oneself and use
   other, already tested implementations. As a result, RSA has to be implemented
@@ -1989,46 +1989,46 @@ discovered during development:
   companies such as for example Google.
 
   \item Cross-Compilation: It is sometimes difficult to write maintainable and
-  well-structured software using JavaScript. Until ECMAScript 6, JavaScript
+  well-structured software using Javascript. Until Ecmascript 6, Javascript
   completely lacks the support of classes, there is no real first hand import
   system and the language itself offers some traps which are not obvious at
-  first sight. The language used inside the front end offers all these features
+  first sight. The language used inside the frontend offers all these features
   as well as a more concise and clear syntax. It is then cross-compiled to
-  JavaScript for the use inside modern browsers.
+  Javascript for the use inside modern browsers.
   Duse uses a lot of cryptographic operations with huge numbers, for example
   RSA uses public keys with a key length of 1024 bit. If one tried to handle
-  this with pure JavaScript, one would run into problems: According to the
-  ECMAScript 5 specification, \cite[p. 29]{ecmascriptfive} \textit{
+  this with pure Javascript, one would run into problems: According to the
+  Ecmascript 5 specification, \cite[p. 29]{ecmascriptfive} \textit{
   ``The Number type has exactly 18437736874454810627 (that is $2^{64}-2^{53}+3$)
   values, representing the double-precision 64-bit format IEEE 754 values...''
   }. To solve this problem, one could use JS libraries such as \textit{Big-Integer}
   or others, which have a different internal representation of numbers and
   can handle numbers of arbitrary length.
-  The language used inside the front end features two different number types:
+  The language used inside the frontend features two different number types:
   \textit{integers} and \textit{doubles}, with the integer type being arbitrary
-  size. If one now cross-compiles code into JavaScript using numbers lower than
-  the maximum JavaScript number, everything is just fine. On the other hand,
+  size. If one now cross-compiles code into Javascript using numbers lower than
+  the maximum Javascript number, everything is just fine. On the other hand,
   if the number is larger than the maximum JS number, the code errors silently.
-  This issue is known at the developers of the front end language and it
+  This issue is known at the developers of the frontend language and it
   has the state \textit{accepted} at the date of writing. Duse ought to be
-  running on every modern browser but this bug makes the front end implementation
+  running on every modern browser but this bug makes the frontend implementation
   useless as long as it exists. If it is resolved, it should run again, but
-  at the time when this work is finished, the front end cannot be deployed.
+  at the time when this work is finished, the frontend cannot be deployed.
   There are several strategies to mitigate this:
   \begin{itemize}
     \item Cross-compile from other languages or completely develop a new
     web client. This strategy could cost a lot of time but the time could
-    be reduced if the back end encryption- and decryption code can be
-    compiled to JavaScript code. Even if this was the case, one would have
+    be reduced if the backend encryption- and decryption code can be
+    compiled to javascript code. Even if this was the case, one would have
     to combine logic and user interface again which costs a lot of time.
     In future work there is a section describing this approach.
 
     \item Mitigate the cross compilation integer overflow bug with additional
     data structures: One could implement a big integer logic which works
-    on browser side as well as on back end/vm side. If the cross compilation
+    on browser side as well as on backend/vm side. If the cross compilation
     issue is finally resolved, one could revert to the plain solution.
 
-    \item Make use of an existing JavaScript BigInteger library. This would
+    \item Make use of an existing Javascript BigInteger library. This would
     lead to code which does not work the same on client and on server side which
     is harder to maintain and not as clean as the previous solution.
   \end{itemize}
@@ -2055,14 +2055,14 @@ gets information of underlying models to generate an interface for the user.
 Model-view-controller was originally developed for desktop software, but it gained
 more importance as a the concept of some famous full stack web frameworks like
 Ruby on Rails or Django. As mentioned before, duse features a RESTful API. The 
-MVC pattern is used inside the front end technologies by a JavaScript based web
+MVC pattern is used inside the frontend technologies by a Javascript based web
 framework. This framework defines its model layer by several classes and objects
 which reside on client side only and also by calls to the duse API. Controller and
 views inside the JS-Framework behave as described before.
 
 \section{Deployment}
 
-Throughout the whole project, a complete deployment pipeline for all components
+Througout the whole project, a complete deployment pipeline for all components
 is used. For each component of the project the deployment works differently.
 
 \subsection{API}
@@ -2096,24 +2096,24 @@ considered a deployment. Therefore a similar approach as deployment of the API
 can be used. Once a git tag is pushed, the build system tests the tagged commit
 and pushes the artifact to a central repository for others to consume.
 
-\subsection{Web Front end}
+\subsection{Web Frontend}
 
-The main steps of deploying the web front end are the same as the steps for the
+The main steps of deploying the web frontend are the same as the steps for the
 API. The interesting part is how it can be modular and comply with the 12
-Factor app rules. The front end does all its calculations entirely on the client
-and sends the results to the RESTful API. How does the front end know, what the
+Factor app rules. The frontend does all its calculations entirely on the client
+and sends the results to the RESTful API. How does the frontend know, what the
 hostname of the API to use is? According to 12 Factor, all configurations must
 be done with environment variables.
 
-Since a language, which is compiled to JavaScript is at use, the language can
+Since a language, which is compiled to javascript is at use, the language can
 take care of these configurations at compile time. Traditionally, modular
-configurations of JavaScript have to be done by creating templates which insert
+configurations of javascript have to be done by creating templates which insert
 the values when rendering these templates. Thanks to the compiled language, the
 environment variables do not need to be rendered at runtime.
 
-Therefore the deployment pipeline of the front end works as follows. Same as for
+Therefore the deployment pipeline of the frontend works as follows. Same as for
 all other deployments, the trigger for the pipeline is a git commit. Automated
-tests are executed on a build server, which then deploys the front end. Once the
+tests are executed on a build server, which then deploys the frontend. Once the
 files arrive in the production environment, they are compiled with the preset
 environment variables and can then be statically served with optimal
 performance.
