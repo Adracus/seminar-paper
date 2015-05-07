@@ -47,11 +47,60 @@ algorithm, Duse can too.
 \section{Offline access}
 \subsection{Conflicts}
 \subsection{Unrestricted access complications}
-\section{Advanced permissions}
-\subsection{Sub-Users}
-\subsection{Using Shamir's Secret Sharing for restrictions}
-\section{Leasing secrets}
+
 \section{Groups}
+
+\section{Advanced permissions}
+
+Currently, duse supports all CRUD operations regarding secrets. However,
+sometimes this isn't the desired behaviour: If one user created a secret,
+he or she might want others to read it but not modify it. Therefore, an
+advanced permission system should be established: It should be possible to
+control reads, updates and deletions for each secret. Additionally, if
+someone is in a group, it might be good if one could control who creates
+secrets for the group or not.
+
+\subsection{Sub-Users}
+
+Sub-Users are also an additional functionality duse wants to introduce in
+the future which tackles problems during using duse for server provisioning:
+If a provisioned server needs access to some duse configuration parameters,
+for example as ENV-variables, how could one establish access for that server
+to the duse ecosystem? One option would be to create a new user and to make
+this user shareholder of the needed secrets. This would in fact work but for
+each provisioned server there would be an additional user which would be a
+huge overhead and difficult to maintain. That's why so called Sub-Users should
+be introduced: Sub-Users are nothing more than a token authorized by a certain
+user and it gives access to reading all secrets that user can read with the
+user's permissions. One could also think of a permission system with finer
+granularity here (for example, Sub-User groups and token-specific permissions)
+but primarily the token function should be established.
+
+\subsection{Fully using Shamir's Secret Sharing}
+
+The current implementation of duse features secrets with a default and 
+immutable threshold of 2. This means that always two users are needed in
+order to restore a secret (of which one is always the server). The original
+idea of secret sharing is the freely choosen threshold $\geq 2$, which
+means that it is also possible to create a secret which needs two or more
+shareholders in order to unlock it. For example, if there were three users
+needed (user A, user B and the Server), it would not be sufficient just to
+wait for the decrypted share of the server for user a or user b to decrypt
+the secret. The users would also need the ``approval'' of the other user
+in form of their decrypted share to unlock the secret. At runtime, this could
+also differ if for example there were five users and the secret's threshold
+is three: One user of these four users (the fifth one is the server) would
+need the server share and one share of the remaining three users, regardless
+which of these three users approves with his share.
+
+A concept to make this possible could be queues: If one wanted
+approval for a secret, one could demand approval from the other needed
+shareholders. The other shareholders can then ``approve'' and send their
+shares to the queue of the demanding user, who was waiting for these shares
+to decrypt the secret.
+
+\section{Leasing secrets}
+
 
 When sharing secrets, it conceivable that a group of secrets are commonly
 shared with the same participants. This involves a more complex strategy of
