@@ -45,8 +45,44 @@ algorithm, Duse can too.
 \section{Revisioning the data}
 \section{Private key sharing}
 \section{Offline access}
+
+Whenever a secret is retrieved, saved, updated, or deleted, it is performed by
+HTTP calls to the RESTful API. If the user is not able to access the API, none
+of these actions are possible. An offline access can be helpful to do so, however,
+also brings new challenges with it.
+
 \subsection{Conflicts}
+
+Performing actions on an offline storage is difficult, as the cryptographic
+protocol highly depends on the access to the API. If the API is not accessible,
+creating new secrets, deleting and updating secrets becomes impossible if
+attemped in an offline environment. Retrieving secrets can be done once and be
+kept in an encrypted offline storage, which can be encrypted with a key.
+
+To be able to create new secrets and delete secrets, a local change log can be
+recorded, whenever the user performs an action, which the constraint, that the
+secret cannot be shared, since the user profiles and thus their public keys are
+not accessible. When the user has acess to the API again, then the change set
+can be applied to the live system having regard to conflicts. While the user
+was performing actions on the local secrets, there could be conflicts with
+actions other users have been doing to the live system.
+
+By restricting actions to perform in offline mode to retrieving secrets,
+deleting secrets for all secrets and creating and updating secrets owned only
+by the user these conflicts can be avoided.
+
+Otherwise mergestrategies have to be developed, which can only be client-side,
+since the server has no knowledge of the encrypted content.
+
 \subsection{Unrestricted access complications}
+
+A core functionality is revoking the access to a secret for users. Having
+offline usage would counteract against this mechanism as revoking the secret by
+denying access in the API does not detain access to the local, offline storage.
+
+However, due to the nature of the developed cryptographic protocol, any client
+developed by a third party could implement such a feature, therefore, it is
+good to think about safe solutions beforehand.
 
 \section{Advanced permissions}
 
