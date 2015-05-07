@@ -159,6 +159,16 @@ permissions and grouping secrets logically together. Inside a group creation
 rights are can be limited and only specific persons inside a group could for
 example have the authority to update and delete secrets.
 
+When a member of a group is removed, all access to the shares is denied. It
+could also work similarly to leasing secrets as described later in
+\ref{sec:leasing_secrets}.
+
+Aside from access to secrets, the group would also need to be managed in regard
+to rights to add or remove users. Due to the nature of the cryptographic
+protocol, this would also require all owners of a group to also be owners of
+the secrets belonging to the group, since adding and removing users requires
+decrypting the secret. However this constraint is reasonable anyways.
+
 \section{Advanced permissions}
 
 Currently, duse supports all CRUD operations regarding secrets. However,
@@ -209,6 +219,7 @@ shares to the queue of the demanding user, who was waiting for these shares
 to decrypt the secret.
 
 \subsection{Leasing secrets}
+\label{sec:leasing_secrets}
 
 It is thinkable, that a secret should be accessible by another user for a
 specific timespan. It would only require the owner to create another share for
