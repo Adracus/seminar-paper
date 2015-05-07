@@ -48,8 +48,6 @@ algorithm, Duse can too.
 \subsection{Conflicts}
 \subsection{Unrestricted access complications}
 
-\section{Groups}
-
 \section{Advanced permissions}
 
 Currently, duse supports all CRUD operations regarding secrets. However,
@@ -59,6 +57,15 @@ advanced permission system should be established: It should be possible to
 control reads, updates and deletions for each secret. Additionally, if
 someone is in a group, it might be good if one could control who creates
 secrets for the group or not.
+
+\section{Groups}
+
+When sharing secrets, it conceivable that a group of secrets are commonly
+shared with the same participants. This involves a more complex strategy of
+permissions and grouping secrets logically together. As said before,
+inside a group also creation rights are sometimes limited and only specific
+persons inside a group could for example have the authority to update and
+delete secrets.
 
 \subsection{Sub-Users}
 
@@ -101,13 +108,7 @@ to decrypt the secret.
 
 \section{Leasing secrets}
 
-
-When sharing secrets, it conceivable that a group of secrets are commonly
-shared with the same participants. This involves a more complex strategy of
-permissions and grouping secrets logically together.
-
 \subsection{Namespace}
-\subsection{Permissions}
 
 \section{Event logging}
 
