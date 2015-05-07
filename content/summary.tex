@@ -108,7 +108,26 @@ information)
 
 \section{Private key sharing}
 
+In today's world, a single user often has several devices and wants to access
+secrets from each device. To do so, the public key is needed to be synced for
+encryption and the private key for decryption. While the public key is no
+sensitive information (it can be shared freely, it is only important for others
+to know if it belongs to the correct person) the private key is highly sensitive
+data: If it is disclosed inadvertently, unauthorized people are able to decrypt
+each information which was encrypted with the corresponding public key. Therefore,
+to sync a private key across several devices, a secure mechanism has to be
+established.
 
+A company called \textit{Whiteout}, which focuses on cryptographically secure
+emails, made a proposal addressing this issue \cite{whiteout_pgp_sync}. It
+suggests that users can encrypt and upload their private key using a symmetric
+cipher, generating a sequence called \textit{keychain code} as the key.
+If now a new device wants to have the private key, the user first has to enter
+a device key which is obtained through, for example, a short message sent by
+whiteout. If the device key is correct, the user has to enter the keychain code
+in order to download and encrypt the private key for use on the device.
+This principle of sharing the private key could also be a conceivable solution
+for duse in the future.
 
 \section{Offline access}
 
