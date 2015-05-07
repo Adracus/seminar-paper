@@ -8,6 +8,8 @@
 *.aux
 *.bcf
 *.xml
+*.bbl
+*.blg
 .DS_Store
 seminar-paper.sublime-project
 seminar-paper.sublime-workspace
