@@ -193,71 +193,65 @@ Aside from access to secrets, the group would also need to be managed in regard
 to rights to add or remove users. Due to the nature of the cryptographic
 protocol, this would also require all owners of a group to also be owners of
 the secrets belonging to the group, since adding and removing users requires
-decrypting the secret. However, this constraint is reasonable nevertheless.
+decrypting the secret. However this constraint is reasonable anyways.
 
 \section{Advanced permissions}
 
 Currently, duse supports all CRUD operations regarding secrets. However,
-sometimes this is not the desired behaviour: If one user created a secret, he
-or she might want others to read it but not modify it. Therefore, an advanced
-permission system should be established. The system should be able to control
-reads, updates and deletions for each secret. Additionally, if someone is in a
-group, it might be good if one could control who creates secrets for the group
-or not.
+sometimes this isn't the desired behaviour: If one user created a secret,
+he or she might want others to read it but not modify it. Therefore, an
+advanced permission system should be established: It should be possible to
+control reads, updates and deletions for each secret. Additionally, if
+someone is in a group, it might be good if one could control who creates
+secrets for the group or not.
 
 \subsection{Sub-Users}
 
-Sub-Users are also an additional functionality that could be introduces in the
-future as part of an advanced permission system tackling the problems occuring
-during server provisioning. If a provisioned server needs access to a secret
-configuration parameters, for example as environment-variables, how could one
-establish access for that server to the duse ecosystem? One option would be to
-create a new user and to make this user shareholder of the needed secrets. This
-would in fact work but for each provisioned server there would be an additional
-user, which would be a huge overhead and difficult to maintain. That's why so
-called Sub-Users should be introduced: Sub-Users are nothing more than a token
-authorizing the server to act as a certain user and gives access to reading all
-secrets the said user can read with its permissions. One could also think of a
-permission system with finer granularity here (for example, Sub-User groups and
-token-specific permissions) but primarily the token function should be
-established.
+Sub-Users are also an additional functionality duse wants to introduce in
+the future which tackles problems during using duse for server provisioning:
+If a provisioned server needs access to some duse configuration parameters,
+for example as environment-variables, how could one establish access for that server
+to the duse ecosystem? One option would be to create a new user and to make
+this user shareholder of the needed secrets. This would in fact work but for
+each provisioned server there would be an additional user which would be a
+huge overhead and difficult to maintain. That's why so called Sub-Users should
+be introduced: Sub-Users are nothing more than a token authorized by a certain
+user and it gives access to reading all secrets that user can read with the
+user's permissions. One could also think of a permission system with finer
+granularity here (for example, Sub-User groups and token-specific permissions)
+but primarily the token function should be established.
 
 \subsection{Fully using Shamir's Secret Sharing}
 
-The current implementation of duse features secrets with a fixes threshold of
-2. This means that always two shares are required in order to restore a secret
-(one of the shares always belongs to the server). The original idea of secret
-sharing is the freely chosen threshold $t \geq 2$ in the $(t, n)$ threshold
-schemes, which means that it is also possible to create a secret which needs
-two or more shareholders in order to unlock it.
+The current implementation of duse features secrets with a default and 
+immutable threshold of 2. This means that always two users are needed in
+order to restore a secret (of which one is always the server). The original
+idea of secret sharing is the freely chosen threshold $\geq 2$, which
+means that it is also possible to create a secret which needs two or more
+shareholders in order to unlock it. For example, if there were three users
+needed (user A, user B and the Server), it would not be sufficient just to
+wait for the decrypted share of the server for user a or user b to decrypt
+the secret. The users would also need the ``approval'' of the other user
+in form of their decrypted share to unlock the secret. At runtime, this could
+also differ if for example there were five users and the secret's threshold
+is three: One user of these four users (the fifth one is the server) would
+need the server share and one share of the remaining three users, regardless
+which of these three users approves with his share.
 
-For example, if there were three shares required, one belonging to user A, one
-belonging user B and the Server's share. Two of the shares would not be
-sufficient to decrypt decrypt the secret. The users would also need the
-``approval'' of the other user in form of their decrypted share to unlock the
-secret. At runtime, this could also differ if for example there were five users
-and the secret's threshold is three: One user of these four users (the fifth
-one is the server) would need the server share and one share of the remaining
-three users, regardless which of these three users approves.
-
-A concept to make this possible could be using queues: If one wanted approval
-for a secret, one could demand approval from the other shareholders. The other
-shareholders can then ``approve'' and send their shares to the queue. The
-shares can be encrypted with the requesting users public key, similar to the
-core sharing mechanism. The next time the user, who requested the another
-share, uses the system receives a notification, that the secret can now be
-decrypted using the shares in the queue.
-
-Using the queueing approach, any threshold $t$ can be used.
+A concept to make this possible could be queues: If one wanted
+approval for a secret, one could demand approval from the other needed
+shareholders. The other shareholders can then ``approve'' and send their
+shares to the queue of the demanding user, who was waiting for these shares
+to decrypt the secret.
 
 \subsection{Leasing secrets}
 \label{sec:leasing_secrets}
 
 It is thinkable, that a secret should be accessible by another user for a
-specific time span. It would only require the owner of a secret to create
-another share for the user and make it available via the API. The API can then
-delete this share once the time span has ended without any other interaction by
-the owner, therefore removing access from the user the lease was issued to.
+specific time span. It would only require the owner to create another share for
+the user and make it available via the API. The API can then delete this share
+once the time span has ended without any other interaction by the owner,
+therefore removing access from the user the lease was issued to.
 
 Very similar to offline access, as described in
 \ref{sub_sec:unrestricted_access}, the problem is, that the user could have
@@ -269,45 +263,40 @@ could be used to achieve this, depending on the security level of the secret.
 \section{Event logging}
 \label{sec:event_logging}
 
-The CIA triad confidentiality, integrity and availability are the core concepts
-of information security. Non-repudiation was often considered to be added but
-conflicted with the idea of the core idea of information security.
-Nevertheless, non-repudiation plays an important role for the future of the
-system: It should be possible to know who accessed which secret when, how often
-and using which client. This all makes it possible to get a more detailed view
-of user activity and also enables administrators of a system to identify
-possible security leaks.
+The CIA triad confidentiality, integrity and availability are the core
+concepts of information security. Non-repudiation was often considered
+to be added but conflicted with the idea of the core idea of information
+security. Nevertheless, non-repudiation plays an important role for the
+future of the duse system: It should be possible to know who accessed
+which secret when, how often and using which client. This all makes it
+possible to get a more detailed view of user activity and also enables
+administrators of duse systems to identify possible security leaks.
 
-Event logging has to be ubiquitous, every action has to be logged and be
-comprehensible. Because it is a security critical system and the secrets
-themselves are not decryptable even by the API itself this won't conflict with
-the privacy of users.
+Event logging for duse has to be ubiquitous, every action has to be
+logged and comprehensible. Because duse is a security critical system
+and the secrets themselves are not decryptable even from the duse API
+itself this won't conflict with the privacy of users.
 
 The main sections of logging are:
 \begin{itemize}
   \item Request control: Each request (also from anonymous sources) have
-  to be logged. People could try to DDoS or exploit vulnerabilities of the
-  system. Admins should be informed if there are anomalies in order
+  to be logged. People could try to DDoS or use vulnerabilities of the
+  duse system. Admins should be informed if there are anomalies in order
   to establish countermeasures.
 
-  \item Secret retrieval: Secret retrieval is a very important point of logging:
+  \item Secret access: Secret access is a very important point of logging:
   Who accessed a secret and when? This could be of interest for example if
   a private key of a person has been unveiled, did this person access any
   secrets after that point in time?
-
-  \item Secret access: Granting access to a user can be important, when
-  examining an intrusion. It should be possible comprehend who has gained
-  access to a secret and when. It might also be relevant, who granted access
-  to the secret.
 
   \item Organizational access: Public keys of users are an insurance that
   only authorized persons can read shares. Access to these is therefore
   also crucial and has to be logged.
 \end{itemize}
 
-Using event logging in whole is critical for examination of attacks on the
-system, but it can also be used to discover the usage of a system and are
-therefore a positive addition.
+Using event logging in conjunction with revisioning data in the database allows
+revisions and the event together to form named rollbacks, which would be far
+more descriptive than rolling back to a specific revision number.
 
 \section{RSA OAEP}
 
@@ -317,22 +306,21 @@ revealed a chosen ciphertext attack \footnote{
   An attacker is able to decrypt self-chosen ciphertexts (also
   known as Decryption Oracle). \cite[p. 70]{baumann2014kryptographische}
 }.
+It is still used inside TLS encryption at the time of writing,
+but just because TLS does it doesn't make it right. A very important
+future work is to replace the default PKCS\#1v1.5 padding scheme with
+the more secure OAEP padding scheme.
 
-It is still used inside TLS encryption at the time of writing, but just because
-TLS does it does not make it right. An major improvement in future work is to
-replace the default PKCS\#1v1.5 padding scheme with the more secure OAEP
-padding scheme.
-
-The Optimal Asymmetric Encryption Padding, also known as \textit{OAEP}
-is an algorithm in form of a \textit{Feistel Network}\footnote{
+The Optimal Asymmetric Encryption Padding or also \textit{OAEP}
+is an algorithm which is a form of a \textit{Feistel Network}\footnote{
   Feistel Networks or Feistel Ciphers are symmetric structures which are used
   during the construction of block ciphers with the most prominent example
   being the DES encryption. In general, a Feistel cipher is a cipher which
   iteratively applies an internal function, often referred as \textit{round function}.
 }. OAEP prevents information leakage caused by partial decryption of 
 ciphertexts and also turns deterministic encryption schemes like RSA into
-probabilistic encryption schemes. When used in conjunction with RSA, OAEP is
-called RSA-OAEP.
+probabilistic encryption schemes. When used with RSA, OAEP is called
+RSA-OAEP.
 
 \subsection{Applying the padding}
 
@@ -374,19 +362,19 @@ If one wants to share his secret with many others, one first encrypts the
 secret into many shares with the secret sharing scheme. After that, one needs
 to fetch all public keys of the secret's participants in order to encrypt the
 shares so no unauthorized person has access to the share. In the current
-implementation, the public keys are stored as part of a user account in the
-Duse system. But the system itself is \textit{not} designed to work as a public
-key exchange. If it is compromised, the public key access becomes a major
-attack point: A fake public key could be downloaded and shares could be
-encrypted with an insecure public key. As a result, an attacker could easily
-read shares without permission, if the attacker has access to the database or
-the entire system. The secret sharing platform is not the right place to
-perform public key exchange. It is designed to host and distribute secrets to
-users with ease.  As mentioned before, secret exchange is still safe even if
-the server is compromised but the area of public key exchange is one major
-attack point.  The key exchange should therefore be outsourced to another
+implementation of Duse, the public keys are stored as part of a user account
+in the Duse system. But the Duse system itself is \textit{not} designed to
+work as a public key exchange. If it is compromised, the public key access
+becomes a major attack point: A fake public key could be downloaded and shares
+could be encrypted with an insecure public key. As a result, an attacker
+could easily read shares without permission, if he has access to the database
+or the entire Duse system. Duse is not the right place to perform public
+key exchange. It is designed to host and distribute secrets to users with ease.
+As mentioned before, secret exchange is still safe even if the server is compromised
+but the area of public key exchange is one major attack point.
+The key exchange should therefore be outsourced to another
 infrastructure or happen between the users directly. There are three possible
-attempts for this problem.
+solutions for this problem.
 
 \subsection{Diffie-Hellman key exchange}
 
@@ -394,19 +382,17 @@ The Diffie-Hellman key exchange is one option. Users which want to share secrets
 start the Diffie-Hellman key exchange as described in the section Cryptography
 Fundamentals. But there are two main attack points here:
 
-First, how can one user even know the IP-Address of the other user? If a
-compromised system hosts the address of each participant for the key exchange,
-one could easily change the address so that the key exchange is made with the
-wrong person.
+First, how can one user even know the IP-Address of the other user? If a compromised
+Duse system hosts the address of each participant for the key exchange, one could
+easily change the address so that the key exchange is made with the wrong person.
 
-Even if this problem could be solved somehow (secret channels or manual IP
-transmission between future share holders), the possibility of a
-man-in-the-middle attack still exists. The attacker could easily redirect
-participant traffic so that all participants actually exchange keys with the
-attacker than with their original target. These insecurities as well as the
-huge workload each user has to do to obtain secure IP addresses are the reason
-for not choosing the Diffie-Hellman key exchange as the public key exchange
-protocol for the system.
+Even if this problem could be solved somehow (secret channels or manual IP transmission
+between future share holders), the possibility of a man-in-the-middle attack still
+exists. The attacker could easily redirect participant traffic so that all participants
+actually exchange keys with the attacker than with their original target.
+These insecurities as well as the huge workload each user has to do to obtain
+secure IP addresses are the reason for not choosing the Diffie-Hellman key exchange
+as the public key exchange protocol for Duse.
 
 \subsection{Trust Models for Public Key Infrastructures}
 
@@ -421,18 +407,19 @@ in conjunction with duse.
 
 \subsubsection{Strict Hierarchical PKI}
 
-This PKI model relies on a root certification authority, short
-\textit{Root-CA}.  All other groups have to trust this Root-CA.  De facto a
-single Root-CA does not exist. There is a Root-CA for many countries in order
-for them to be able to control their trust chain.  The certificate of this
-Root-CA, the root certificate, has no signature and is therefore called
-\textit{self-signed}.  Products. Web browsers for example usually package some
-chosen, default trusted Root-CAs in order for the trust-chain to work. A
-disadvantage of this certification model is the strong dependency on the
-Root-CA as well as the power the Root-CA possesses.  If one wants a trusted
-certificate nowadays, one has to pay a lot of money to get one. This creates a
-strong conjunction of the amount of money someone has with the trustworthiness
-that someone gets by obtaining an expensive, valuable certificate.
+This PKI model relies on a root certification authority, short \textit{Root-CA}.
+All other groups have to trust this Root-CA.
+De facto a single Root-CA does not exist. There is a Root-CA for many countries
+in order for them to be able to control their trust chain.
+The certificate of this Root-CA, the
+root certificate, has no signature and is therefore called \textit{self-signed}.
+Products, like for example \textit{Google Chrome} or other main browsers are
+shipped with some chosen, default trusted Root-CAs in order for the trust-chain
+to work with the product. A disadvantage of this certification model is the
+strong dependency on the Root-CA as well as the power the Root-CA possesses.
+If one wants a trusted certificate nowadays, one has to pay a lot of money to
+get one. This creates a strong conjunction of the amount of money someone has with
+the trustworthiness that someone gets by obtaining an expensive, valuable certificate.
 
 \subsubsection{Cross Certification}
 
@@ -443,7 +430,7 @@ sign their root certificates. This creates a sign of trust between the two
 CAs. Today this is used as a method to connect two or more hierarchical PKIs
 in order to achieve cross country communication. The disadvantage of this
 technology is the amount of cross certificates between the several Root-CAs
-which increases as the square of the number of Root-CAs.
+which rises squarely with the number of Root-CAs.
 
 \subsubsection{Web of Trust}
 
@@ -462,15 +449,14 @@ in terms of creating a trusted web.
 \label{sec:future:client_sig_check}
 
 Besides attacks with the goal of attaining a secret in plaintext, there is also
-another type of attack, which is feasible for the current system. A man in the
-middle attacker could replace the shares with a secret, the attacker created,
-since the public keys are also accessed for the procedure of creation. This
-could be the goal of the attacker, if attaining the plaintext is not necessary,
-but the resulting secret the user receives is under complete control of the
-attacker.
+another type of attack, which is feasible for duse. A man in the middle
+attacker could replace the shares with a secret, the attacker created, since
+the public keys are also accessed for the procedure. This could be the goal of
+the attacker, if attaining the plaintext is not necessary, but the resulting
+secret the user receives is under complete control of the attacker.
 
 To avoid such situations, the client could also check the signature of the
-received shares. Until now, only the server performs integrity checks by
+received shares, until now, only the server performs integrity checks by
 verifying the signature at time of creation. Using a method of key
 establishment, the clients can also ensure, the received public keys are not
 tampered, or notice, when the they are tampered. (see
@@ -498,7 +484,7 @@ access the old key and create new shares encrypted with it.
 
 Simultaneously updating the public key and the shares also does not work, as it
 does not eliminate the possibility of users creating new shares with the old key
-before the newly encrypted shares replace the old ones.
+before the newly encrypted shares replace the old ones..
 
 To avoid this race condition, the key must be updated first and then the shares
 have to be replaced in separate steps.
@@ -524,20 +510,21 @@ whole, but also shares in detail.
 Using multiple steps to update the key pair allow the user to leave the process
 uncompleted. This circumstance also leaves the key pair as not to be used for
 signature checks. Therefore the system should rollback the update process after
-a specific time span.
+a specific time span. Revisioning all the data would ease the rollback
+immensely. (see \ref{sec:future:revisoning})
 
 \section{Additional clients}
 
-Having defined an abstract protocol which is independent of client programming
-languages eases the adoption.  It is easy to implement clients based on
-different languages. This leads to faster adoption of the overall ecosystem by
-other developers and this leads to contributions of the community as well as a
-better reputation. One could think of clients in several popular programming
-languages such as Python, but the main focus of planned clients is the
-availability of the mechanism to be established on lots of various platforms.
+Duse offers a protocol which is independent of client programming languages.
+Therefore, it is easy to implement clients based on different
+languages. This leads to faster adoption of the duse technology stack by
+other developers and this leads to contributions of the community as well
+as a better reputation for duse. One could think of clients in several
+popular programming languages such as Python, but the main focus of planned
+clients is the availability of duse on lots of various platforms.
 Planned are client implementations for the JVM as well as directly executable
 machine code clients for various PC architectures. Additionally, a working
-JavaScript client should be established, because of the cross compilation issue.
+JavaScript client should be established because of the cross compilation issue.
 
 \subsection{JavaScript client}
 
@@ -547,7 +534,7 @@ is a well-maintained compiler for this purpose, but arbitrary size integers
 have to be implemented there as well. The other approach is by writing
 an entirely new client in vanilla JavaScript. An advantage of a pure JS
 client would be that the JavaScript community has access to a clean
-implementation of the technology stack.
+implementation of the duse technology stack.
 
 \subsection{JVM-based client}
 
@@ -556,7 +543,7 @@ abstraction on which many languages build. Some noteworthy languages here are
 of course Java, Scala and Clojure. These languages are bytecode compatible,
 a single implementation here could be used across several JVM based languages.
 As such, the JVM offers a broad developer community in which duse should
-integrate into in order for better adaption as well as a better availability of
+integrate in order for better adaption as well as a better availability of
 clients. A difficulty of JVM based languages is the final packaging of the
 executable software for different operating systems because of the dependency
 on a specific JVM. Hence, a client in machine code should also exist.
@@ -576,7 +563,7 @@ could either happen through a manual process or automatically through specific
 event triggers.
 
 Manually flagging a secret as insecure could be the result of the disclosure of
-an individual secret. Then a user manually flags the secret as insecure.
+an individual secret.
 
 An automated way of flagging secrets as insecure can simply be an expiry date.
 Once the expiry date passes, the secret becomes insecure.
@@ -599,7 +586,7 @@ For symmetric encryption the soundness relies on the randomness of the key
 used. If the key is not random, then there is no point in using it. If the key,
 however, is random and complex, then it is very well suited. The problem with
 random and complex keys is, that they are hard to remember for humans.
-Therefore the key is encrypted with the public key of a user, who can decrypt
+Therefore the key is encrypted with the public key of a user, who can encrypt
 it due to the ownership of the private key.
 
 Not only does this have an effect on the usability for humans, but it also
@@ -610,7 +597,7 @@ Therefore combining the who algorithms allows these restrictions to be
 eliminated.
 
 Integrating hybrid encryption into the duse protocol would require the secret
-to save, to be encrypted with symmetric encryption using a randomly generated
+to save to be encrypted with symmetric encryption using a randomly generated
 key. The key is then divided using Shamir's Secret Sharing and each share is
 then encrypted with the participating users public keys.
 
@@ -625,13 +612,13 @@ system. In the following paragraphs, the most notable ones are depicted.
   it allows large secrets to be saved more efficiently, since the decryption of
 the symmetric cipher texts is very performant. Requiring thousands of
 decryption processes is not feasible, in contrast to a single performant
-symmetric decryption.}
+decryption.}
 
 \paragraph{Less complex storage}{ Not only does this mechanism reduce the load
   on clients, but also on the server. The server decrypts its own share of the
   symmetric key only once instead of $n$ times, where $n$ is the number of
   parts of a secret.  Having many parts, which in turn also have many shares is
-complex to save. A single large cipher text is easier to handle. If the upper
+complex to safe. A single large cipher text is easier to handle. If the upper
 limits of a data type of the used database is not large enough, the cipher
 texts could be saved in a distributed file system.}
 
@@ -641,7 +628,7 @@ texts could be saved in a distributed file system.}
   set of shares.  Therefore the semantic validation also becomes less complex,
   since relationships between parts do not have to be verified. When using the
   parts attempt, the server has to verify, that all users the shares associate
-  to have to be the same for all parts. Apart from that, each share's signature
+  to have to be the same for all parts. Apart from that, each shares signature
   is checked, which is a slow operation. An attacker could use this
 characteristic to perform a denial of service attack. Using the hybrid
 encryption approach minimizes the signature checks to the number of
@@ -652,4 +639,4 @@ participants. }
   be modified, if the plaintext it conceals is changed. If the participating
   parties are modified only the shares are changed. Hence, the API can
 differentiate what part of the secret is changed and can log the type of
-change. }
+change, as well as have named rollbacks when using a revisioning mechanism. }
