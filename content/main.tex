@@ -48,7 +48,7 @@ distribution of one's secrets.
 
 In present and past it is and always has been important for messages to be
 transmitted securely and without the danger of information disclosure.  To meet
-these requirements, two main technique have emerged:
+these requirements, two main techniques have emerged:
 
 One technique is called steganography. This discipline focuses on hiding the
 transmission of messages. An example for this can be found in the past: To hide
@@ -81,7 +81,8 @@ would look like this:
 \vspace{0.5cm}
 
 The message immediately becomes unreadable for someone who doesn't know about
-the underlying substitution. This was, when cryptanalysis comes in: If one looks
+the underlying substitution. As a measure to break this, cryptanalysis comes in:
+If one looks
 at the text, one could for example analyze the frequency of some specific
 letters, in this example "z" and "e". The most common letters in the English
 alphabet are "e" and "a". One could now try to substitute the letter "z" with
@@ -104,7 +105,7 @@ letter combinations with "a" is "at" (as one could have guessed when seeing
 Soon, this procedure also became quite insecure and cryptographers tried to
 find new ways to encrypt their messages. It was a gift for them when computers
 became commonly available: Procedures requiring masses of mathematical
-operations could be executed in less than a second, complex encryption
+operations could be executed in less than a second, more complex encryption
 algorithms appeared.
 
 In modern cryptography there are two main kinds of encrypting and decrypting a
@@ -122,13 +123,13 @@ encryption and a decryption key to perform \textit{asymmetric encryption}.
 
 The most basic building blocks in the field of cryptography are known as
 cryptographic primitives. They include well researched, reliable and accepted
-algorithms. Digital signatures, one-way has functions, as and public key
+algorithms. Digital signatures, one-way hash functions and public key
 cryptography are examples for cryptographic primitives.
 
 \subsection{Random numbers}
 
 Random numbers are one of the main building blocks of modern cryptography.
-Inside RSA they are used to create many different encryption results even
+Inside RSA (see \ref{sub_sec:rsa}) they are used to create many different encryption results even
 if always the same secret is being encrypted. But what if the random numbers
 are not ``random enough''?
 
@@ -174,10 +175,10 @@ the starting number $s_0$ has to be coprime to the modulus $n$.
 Once both $s_0$ and $n$ have been determined, the following random number $s_{i+1}$ is
 calculated as follows:
 
-$$s_{i+1} = s_{i}^2 \Mod n$$.
+$$s_{i+1} = s_{i}^2 \Mod n$$
 
 In general, the security of the Blum Blum Shub CSPRNG is determined by the
-difficulty of factorization of the modulus $n$. Since it is very difficult
+difficulty of the factorization of the modulus $n$. Since it is very difficult
 to factorize huge $n$, Blum Blum Shub is considered safe if one uses a large
 modulus.
 
@@ -210,7 +211,11 @@ Given $k$ positive integers $n_1, \ldots, n_k$ which are pairwise coprime\footno
   which means that the greatest common divisor of all elements in the set
   is $1$ and also each pair in the set is coprime.
 }. For any given sequence of $i$ integers  $a_1, \ldots a_i$, there is an integer
-$x$ which is congruent with all $a$s with the integers $n$:
+$x$ which is congruent\footnote{
+  A number is congruent another number if they output the same remainder
+  after a modulo operation with the same modulus.
+}
+with all $a$s with the integers $n$:
 
 $$
 \left\{
@@ -225,14 +230,15 @@ $$
 Additionally all solutions $x$ are also congruent modulo the Product $N = n_1 \ldots n_k$.
 
 \subsection{RSA}
+\label{sub_sec:rsa}
 	
 RSA is an asymmetric encryption standard, developed by Rivest, Shamir and
 Adleman. As many other asymmetric encryption algorithms, RSA uses a one way function
 with a trapdoor. So in order to understand RSA, one has to understand the
 trapdoor function. The RSA trapdoor function relies on Euler's totient function
-$\phi$. This function returns the amount of numbers, which are relatively prime
+$\phi$. This function returns the amount of numbers which are relatively prime
 and smaller than a number n. Since prime numbers are only evenly divisible by
-1 and themselves, the totient function returns n - 1 for prime numbers. Also,
+1 and themselves, the totient function returns $n - 1$ for prime numbers. Also,
 if you multiply a number with another, the totient function also multiplies
 with the totient function of the other number. An example:
 
@@ -251,7 +257,7 @@ two primes, \textit{p} and \textit{q}. The public key additionally has
 the number \textit{e} and the private key has the additional number
 \textit{d}. \textit{e} is a number which is coprime to the result of
 the totient function of \textit{n}. \textit{d} is the multiplicative inverse
-\footnote{The multiplicative inverse of a number a is the number b where $a*b = 1$} of
+\footnote{The multiplicative inverse of a number $a$ is the number $b$ where $a*b = 1$} of
 \textit{e} relative to $\phi(n)$.
 
 Having calculated those needed factors, it is easy to en- and decrypt
@@ -351,7 +357,7 @@ private numbers $a$ and $b$, for example $a = 4$ and $b = 10$. Referring to the
 previously mentioned visualization, $a$ and $b$ are the private colors of the
 two persons wanting to communicate. They both then compute the mixture of their
 private color and the ``color'' $g$ with $A = g^a$ and $B = g^b$ which is
-$A = 5^4 \Mod{13} = 625 \Mod{13} = 1$ and $B = 5^10 \Mod{13} = 9765625 \Mod{13} = 12$.
+$A = 5^4 \Mod{13} = 625 \Mod{13} = 1$ and $B = 5^{10} \Mod{13} = 9765625 \Mod{13} = 12$.
 
 The mixtures are then transferred to the communication partner. Each
 participant then computes the shared secret $s$ by raising the mixture
@@ -364,7 +370,7 @@ or
 $$s = A^b \Mod{p} = 1^10 \Mod{13} = 1 \Mod{13} = 1$$
 
 All in all, the Diffie-Hellmann key exchange provides a very secure way
-to create a shared secret, but it also is not bulletproof. It is vulnerable
+to create a shared secret, but it is not bulletproof. It is vulnerable
 to man-in-the-middle attacks:
 
 Imagine Alice and Bob want to establish a shared secret. They proceed as
@@ -380,7 +386,7 @@ signatures are applied to the exchanged messages.
 
 \section{Secret Sharing}
 
-The practise of secret sharing takes a secret and splits it into $n$ parts,
+The practice of secret sharing takes a secret and splits it into $n$ parts,
 called shares. These shares can then be distributed among all participants, the
 secret should be shared with.
 
@@ -401,7 +407,7 @@ possibilities.  However, if the attacker is able to obtain a share and knows
 where in the secret it belongs, then the possibilities to try decrease to
 $4^{26} = 4.5 * 10^{15}$. That's a factor of $37876$.
 
-To avoid this issue a schemes shares below the threshold must not disclose any
+To avoid this issue a scheme's shares below the threshold must not disclose any
 information about the secret. This is called \textit{secure} secret sharing.
 An example for a secure secret sharing scheme with a $(t, n)$-threshold is the
 \textit{XOR} encryption.
@@ -418,7 +424,7 @@ $$j_{n} = S \oplus j_{1} \oplus j_{2} \oplus ... \oplus j_{n-1} $$
 
 $$S = j_{1} \oplus j_{2} \oplus ... \oplus j_{n-1} \oplus j_{n} $$
 
-To perform this type of scheme $n-1$ random numbers $j_{i}$ must be generated.
+To perform this type of scheme, $n-1$ random numbers $j_{i}$ must be generated.
 Then \textit{XOR} the secret $S$ and the randomly generated numbers. Each of
 the generated numbers is a share and the result of the \textit{XOR} chain being
 the $n$th share. To reconstruct the secret $S$ simply \textit{XOR} the shares.
@@ -465,7 +471,7 @@ Blakley encodes the parts into two dimensional, non-parallel linear functions.
 The point where the graphs of the two functions intersect represents the
 secret. For example, if the secret $s$ is $4$, one has to compute two non-parallel
 linear functions intersecting at $y = 4$. It is simple to generate those two
-functions if you remember how to compute the point of intersection of two graphs.
+functions if one remembers how to compute the point of intersection of two graphs.
 
 For 2D graphs, the intersection can be computed by equating one function with
 another function:
@@ -512,7 +518,7 @@ parts which can be shared across several participants. Blakley's scheme
 has the important drawback of larger shares the larger the threshold (number
 of needed persons to recover a secret) becomes. It can be limited using
 several techniques but that would increase the complexity of the encryption.
-As a result, a space efficient and for our use case optimal secret sharing
+As a result, a space efficient and for the use case of duse optimal secret sharing
 scheme is \textit{Shamir's Secret Sharing} due to it's simplicity and
 security.
 
@@ -548,7 +554,7 @@ number of a pre-computed set. Each prime number \textit{covers} its on range. Fo
 example, for a secret $S = 14$, the prime number $P = 17$ is suitable as it
 \textit{covers} the range from $13$ to $17$. As a result, the range of each
 prime number $P$ is from $P_{-1} to P-1$, where $P_{-1}$ is the next smaller
-prime number (and for $P = 1$ it is $0$). To represent those ranges one could
+prime number. To represent those ranges one could
 invent a range data structure (R-Tree is not suitable for this use case), but
 if one tried to store the prime numbers from $0$ to $10^{100}$ one would need
 an incredibly high amount of storage. As a result, the approach to store all
@@ -560,15 +566,15 @@ a phenomenon that $2^p-1$, is likely to be a prime. These primes are called
 Mersenne primes, with $p$ being the $p_{th}$ Mersenne prime. The largest known
 Mersenne prime is the 48$_{th}$ and has $17,425,170$ digits.
 
-The only limitation we have is that $P > S$, so any prime larger that the
-secret is valid. Using Mersenne primes we can easily use the known primes for
-the finite field to use.
+The only limitation is that $P > S$, so any prime larger that the
+secret is valid. Using Mersenne primes we can easily use the known primes in
+order to discover an appropriate finite field.
 
 This, however, creates a new limitation. A secret can theoretically be larger
 than $17,425,170$ digits. To avoid using the secret sharing scheme with larger
-secrets. It can previously be divided into several parts making sure, the limit
+secrets, it can be divided into several parts. This ensures that the limit
 is never reached for a single part. Then the secret sharing scheme is applied to
-each part instead of once per secret.
+each part instead once per secret.
 
 Fortunately this also has another side effect. If the secret and thus the
 calculated shares could be infinitely long, then they would be very inefficient
@@ -593,7 +599,7 @@ the relation between ciphertext and the key. Diffusion wants to
 destroy the structure of the original text in the resulting ciphertext.
 Additional to these two criteria, AES should be fast in software implementations
 as well as in hardware realizations and also be space efficient for use
-inside for example smart cards. At the time of writing, AES fulfills these
+inside, for example, smart cards. At the time of writing, AES fulfills these
 criteria and is used for strictly confidential documents inside the American
 secret services.
 
@@ -627,8 +633,8 @@ Hereafter, the main parts \textit{key expansion}, \textit{SubBytes},
 \textit{MixColumns} and \textit{AddRoundKey} are explained.
 
 \paragraph{Key expansion}
-The key expansion generates $R + 1$ keys out of the user predefined key where
-$R$ is the number of encryption rounds which in turn is dependent on the key 
+The key expansion generates $R + 1$ keys out of the user predefined key.
+$R$ is the number of encryption rounds which in turn dependends on the key 
 bit size (supported sizes are 128, 192 and 256 bits). Also,
 the keys are adjusted to fit the block size.
 
@@ -676,7 +682,7 @@ EUCLID-CLASSIC(a, b)
 
 \subsubsection{Modern euclidean algorithm}
 
-If the difference between the two numbers is large the classical algorithm
+If the difference between the two numbers is large, the classical algorithm
 needs many subtraction steps until termination. The modern euclidean algorithm
 addresses these problems by applying modular divisions instead of subtractions.
 It starts of with $a$ and $b = r_0$, the first remainder. The algorithm then
@@ -700,7 +706,7 @@ EUCLID-MODERN(a, b)
 
 While the regular versions of the euclidean algorithm calculate the greatest
 common divisor $gcd(a, b)$ of the two numbers $a$ and $b$, the extended
-euclidean algorithm additionally calculates the two numbers $s$ and $t$ so
+euclidean algorithm additionally calculates the numbers $s$ and $t$ so
 that $gcd(a, b) = s \cdot a + t \cdot b$.
 
 It proceeds by first calculating the regular euclidean algorithm. In each
@@ -761,7 +767,7 @@ characters. \textit{DIVMOD} can be seen as a mathematical operation returning
 two results. One of the results would be the same as if the modulo operation
 was applied and the other the result of integer division.
 
-To reconstruct the string using \textit{DIVMOD} all, that has to be done is
+To reconstruct the string using \textit{DIVMOD}, all that has to be done is
 apply \textit{DIVMOD} to the input integer and use the result of the integer
 division for the next iteration and the remainder of the modulo operation is
 the code point of the next character. The string is reconstructed from left to
@@ -858,7 +864,7 @@ features such as integrity and authentication, Shamir's Secret Sharing and RSA
 are going to be combined. Due to some limitations of both technologies some
 adaptions have to be made. These mainly concern length restrictions of RSA.
 
-When using a RSA public key to encrypt a plain text, the resulting length of
+When using an RSA public key to encrypt a plain text, the resulting length of
 the cipher text is equal to the key size. In case of an 1024 bit RSA key, the
 resulting cipher text is always 128 bytes. Within those 128 bytes are a minimum
 of 11 bytes PKCS1.5 padding, which leaves up to 117 bytes of actual payload. As
@@ -916,9 +922,8 @@ One measure for tests is the so called \textit{coverage}. Coverage
 comes in two flavors: The first one is the \textit{Branch Coverage}.
 Branch coverage determines whether a test has run through the
 required paths of a program. To calculate the branch coverage of a test,
-simply divide the number of covered branches $c$ by $b$, where b is the
-total number of branches. For example, imagine the following
-method:
+simply divide the number of covered branches $c$ by $b$, where $b$ is the
+total number of branches. For example, imagine the method \ref{code:branchCoverage}
 
 \begin{figure}
 \begin{lstlisting}
@@ -926,7 +931,7 @@ abs(int input)
   if (input < 0) return -input
   else return input
 \end{lstlisting}
-\caption{Absolute method for branch coverage analysis}
+\caption{abs method (calculates the abolute of an input number)}
 \label{code:branchCoverage}
 \end{figure}
 
@@ -966,18 +971,6 @@ Another metric for test coverage is the \textit{line coverage}. The line
 coverage determines the number of lines covered during a test. It is much
 easier to get 100\% line coverage, but tests with 100\% line coverage do
 not guarantee the absence of errors.
-
-The programming language in the back end of our service offers good integration
-for line coverage analysis while the front end language for our HTML interface
-completely lacked an integration for services offering line coverage analysis.
-As a result and as an important measure for quality assurance, an integration
-for the coverage analysis service is now established and made public as open
-source software. It is now also used by other programmers and companies, such
-as for example Google.
-
-It is also important to mention that we are not satisfied with a large line
-coverage, we also respect branch coverage (even if it is not calculated by
-the existing tools).
 
 \section{Testing}
 
@@ -1175,7 +1168,7 @@ respond yet. (see fig \ref{fig:rolling_updates})
   \includegraphics[scale=0.55]{pictures/rolling_updates.png}
   \caption{Rolling updates}
   \centering
-  \label{fig:rollgin_updates}
+  \label{fig:rolling_updates}
 \end{figure}
 
 While there is no established name for this method of zero downtime
@@ -1386,7 +1379,7 @@ primes for each of them, Shamir's Secret Sharing can now be applied.
 Once Shamir's Secret Sharing has been applied there are shares for each user
 for every secret part. These shares can then be encrypted with the previously
 retrieved public keys of each user and then signed with the creating users
-private key. All of this data is then send to the server to verify and save.
+private key. All of this data is then sent to the server to verify and save.
 (see figure \ref{fig:creating_a_secret})
 
 Shamir's Secret Sharing requires at least two shares to reconstruct a secret,
@@ -1405,9 +1398,9 @@ Retrieving a secret can be divided into two main parts, server and client
 processing.
 
 When a client requests a secret, the servers shares are first decrypted and
-then encrypted with the requesting users public key. The shares and additional
-metadata, such as the secrets title and a list of participants, is then
-returned as the response to the clients request.
+then encrypted with the requesting user's public key. The shares and additional
+metadata, such as the secret's title and a list of participants, is then
+returned as the response to the client's request.
 
 Once the client received said response, it decrypts the shares and reconstructs
 the secret parts using Shamir's Secret Sharing. Next the secret parts are
@@ -1463,11 +1456,11 @@ key, an eligibility check for example.
 
 \subsubsection{Retrieving a secret}
 
-Unless an attacker already modified the requesting users public key, at time of
+Unless an attacker already modified the requesting user's public key, at time of
 creation of the said user, then the attacker cannot determine the original
 secret.
 
-All shares are encrypted with the requesting users public key, thus the shares
+All shares are encrypted with the requesting user's public key, thus the shares
 are of no use for an attacker, under the condition, that the key establishment
 is secure.
 
@@ -1496,15 +1489,15 @@ $$(n - 1) * l \leq length(secret) \leq n * l$$
 \section{Web development}
 \subsection{Middlewares}
 
-Middlewares are a method in which software applications are build within
+Middlewares are a method in which software applications are built within
 layers. Each layer only concerning the in- and output. It allows applications
 to be more modular and increase the Separation of Concerns principle.
 
 Within web development middlewares describe the architecture of a web server.  A
 call to a web server is handled by several middlewares until one of the
-middlewares produce and reply a response. Typically middlewares process
+middlewares produces and replies a response. Typically middlewares process
 incoming data and then call the next middleware, until a middleware decides to
-end the request and send a response.
+end the request and sends a response.
 
 Middlewares can be used to authenticate a user and keep a request from entering
 domain logic if not authenticated. A middleware could also transform the
@@ -1516,7 +1509,7 @@ purpose.
 \subsection{RESTful API}
 
 REST is an abbreviation for Representational State Transfer. It describes the
-behaviour of web service. It defines a set of constraints leading to several
+behaviour of web services. It defines a set of constraints leading to several
 advantages. It is usually practised via HTTP and its methods.
 
 The constraints include
@@ -1531,16 +1524,16 @@ The constraints include
 
 \subsubsection{Client-Server}
 
-This constraint has if fundamental for any API as it tries to achieve
+This constraint is fundamental for any API as it tries to achieve
 separation of concerns between client and server. It requires a client to be
 completely independent of how resources are handled by the server. The server
-should even be able to switch out technologies, without effecting the client.
+should even be able to switch out technologies, without affecting the client.
 This could for example be the replacement and migration to another database
 management system.
 
 The communication between server and client is to be done via a predefined
-interface. Pervasively doing this allow multiple compatible servers and clients
-to be developed simultaneously since they only have to develop against the
+interface. Pervasively doing this allows multiple compatible servers and clients
+to be developed simultaneously since they only have to develop against the same
 specification.
 
 \subsubsection{Stateless}
@@ -1551,17 +1544,17 @@ information to process a single request is also packaged within this one
 request. Doing so allows the operator of the service to seamlessly add more
 instances of the application without having to worry about synchronizing states
 among them. For all instances of an application to still be synchronized in
-terms of resources, they have to access a shares resource, such as a database
+terms of resources, they have to access a shared resource, such as a database
 or cache server.
 
 \subsubsection{Cachable}
 
 Most web clients are able to cache data they receive, however, the server has
-to tell it when the data is cachable. There are multiple mechanisms included in
+to tell when the data is cachable. There are multiple mechanisms included in
 HTTP to make use of this. The server also has to tell the client what to use to
-detect expired cache. Not only does cache reduce load on from the server, but
+detect expired cache contents. Not only does caching reduce load on the server, but
 it also allows clients to respond much faster, since they do not have to wait
-for the servers response.
+for the server's response.
 
 \subsubsection{Uniform Interface}
 
@@ -1584,7 +1577,7 @@ Lastly, the Hypermedia as the Engine of Application State principle should be
 applied. A resource has to be self explanatory as in which actions can be
 applied, and which resources it is connected to. However, it does not nest the
 connected resources in its representation, it only tells the client where to
-find said resource. HATEOAS allows the viewed actions server to vary based on
+find said resource. HATEOAS allows the viewed action's server to vary based on
 the state of the data. This can be useful if a process requires multiple
 requests to complete.
 
@@ -1661,7 +1654,7 @@ once the developer is done with the changes and wants to provide them to the
 rest of the team. This action is referred to as \textit{pushing} changes. The
 receiving server then makes sure, that there are no inconsistencies.
 
-Various Git integrations make is a perfect fit for use in a deployment
+Various Git integrations make a perfect fit for use in a deployment
 pipeline.
 
 There are many more features and characteristics that make Git special, but for
@@ -1670,7 +1663,7 @@ the use in this project the highlighted features are essential.
 \subsection{Hooks}
 
 An essential feature of Git in a deployment pipeline are hooks. There are
-multiple hooks in Gits workflow. Git can essentially embed a shell script
+multiple hooks in Git's workflow. Git can essentially embed a shell script
 before and after any event happening in the life cycle of a repository. This
 works on the client as well as on the server side.
 
@@ -1683,7 +1676,7 @@ pre-commit hook.
 On the server side, it can be used to trigger the entire deployment pipeline.
 It tells the build server, that there is a new version to test. The build
 server can then decide what to do, depending on what changes have been
-introduced. For example deploy the application to production, if a new version
+introduced. For example: Deploy the application to production, if a new version
 has been created using git tags or deploy to staging if it was just a new
 commit. This hook is known as the post-receive hook.
 
@@ -1734,7 +1727,7 @@ several clients, cross platform and for multiple languages.
 
 Duse's RESTful API is composed of multiple middlewares.
 
-When a client does a HTTP request, the first middleware the request passes
+When a client makes an HTTP request, the first middleware the request passes
 through is a middleware enabling \textit{Cross Origin Resource Sharing}. This
 is necessary for possible HTML front ends for the web browser. Web browsers have
 the \textit{Same Origin Policy}, it forbids JavaScript, ActionScript and CSS
@@ -1971,18 +1964,19 @@ discovered during development:
 
 \begin{itemize}
   \item RSA-Support: Since duse requires RSA for the encryption of the shares,
-  RSA is missing critical for the implementation of duse. The front end ecosystem
+  RSA is mission critical for the implementation of duse. The front end ecosystem
   did not offer a full RSA implementation (supporting encryption and padding
   operations). One should not implement cryptography functions oneself and use
-  other, already tested implementations. As a result, RSA has to be implemented
+  other, already tested implementations, but the front end language did not offer
+  any implementation. As a result, RSA has to be implemented
   as part of the duse project. It is now available as a duse-independent library
   for open source use.
 
-  \item Coverage-Tracking-Support: To keep track of the line coverage of our unit and
+  \item Coverage-Tracking-Support: To keep track of the line coverage of unit and
   integration tests, the coverage data has to be pushed to an online service
-  which measures and analyzes that data (These services generate a percentage of
-  lines covered and can also be included inside the deployment pipeline). This is
-  needed in order to show users of the library how well it is tested and since
+  which measures and analyzes that data (These services calculate a percentage of
+  lines covered and can also be included inside the continuous deployment pipeline). This is
+  needed in order to show users of the library how well it is tested. Since
   there is no implemented interface for such services, it also has to be implemented
   as a part of the duse project. This interface is now also available as a
   duse-independent library. It is used by the open source community and some notable
@@ -2067,7 +2061,7 @@ is used. For each component of the project the deployment works differently.
 
 \subsection{API}
 
-The RESTful API is a web application developed in according to the 12 Factor
+The RESTful API is a web application developed under consideration of the 12 Factor
 app rules, which enables a straightforward deployment pipeline. Any time an
 event on the git repository happens, it triggers the deployment pipeline.
 Depending on the event, it can also start a release.
@@ -2075,8 +2069,8 @@ Depending on the event, it can also start a release.
 Whenever there is a new commit on the master branch, the API is tested with the
 build server and deployed to a staging system. Now acceptance tests can be
 executed with the various clients. Once the system in whole is in a state,
-where it can go into production a git tag is created and pushed. Not only
-triggers this the deployment pipeline, but it also uniquely identifies a
+where it can go into production a git tag is created and pushed. This does not
+only trigger the deployment pipeline, but it also uniquely identifies a
 version of the API.
 
 This triggers another run of the deployment pipeline, however, tags are not
@@ -2085,7 +2079,7 @@ deployed to a staging environment, but to a production one.
 \subsection{Libraries}
 
 A popular approach to versioning libraries is known as Semantic Versioning. In
-Semantic Versioning consists of three elements, major, minor and patch version.
+Semantic Versioning, versions consist of three elements: major, minor and patch version.
 A new major version is issued when a breaking change is introduced. A minor
 version is issued when adding new functionality without breaking existing ones
 and patch versions are used to publish non breaking bug fixes.
