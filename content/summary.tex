@@ -596,7 +596,7 @@ Hybrid encryption is known as the combination of asymmetric encryption and
 symmetric encryption. First the plaintext is encrypted with a symmetric
 encryption algorithm with a preferably randomly generated key. The used key is
 then encrypted with the asymmetric public key algorithm. Hybrid encryption
-eliminates some of the drawbacks for both kinds of algorithms.
+eliminates some of the drawbacks for both kinds of algorithms. \cite{hybrid_encryption}
 
 For symmetric encryption the soundness relies on the randomness of the key
 used. If the key is not random, then there is no point in using it. If the key,
@@ -610,7 +610,7 @@ softens restrictions of the two mechanisms. A restriction of asymmetric
 encryption is the limited plaintext size. Symmetric encryption does not have
 any limit on the plaintext size, and is significantly more performant.
 Therefore combining the who algorithms allows these restrictions to be
-eliminated.
+eliminated. \cite{pgp_evaluation}
 
 Integrating hybrid encryption into the duse protocol would require the secret
 to save, to be encrypted with symmetric encryption using a randomly generated

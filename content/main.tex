@@ -799,7 +799,7 @@ converting all characters as explained is impractical. To allow the usage of
 UTF-8 anyways the easiest solution is to encode the UTF-8 strings as Base64,
 then apply the string to integer conversion as explained using the ASCII
 charset. This is possible, since all characters of Base64 are a subset of
-ASCII.
+ASCII. \cite{unicode_spec}
 
 \subsection{Correctly using random values}
 
@@ -958,6 +958,8 @@ Similar to other metrics for tests it is usually very tedious to reach 100\%
 mutation coverage, but it ensures that the present tests are as thorough as
 possible.
 
+\cite{mutation_testing}
+
 \subsection{Regression testing}
 
 Regression testing are known as tests used to discover bugs in existing
@@ -1114,7 +1116,7 @@ collaborative or crowdsourced reviews.
 Code reviews have been researched and they show a significant discovery of
 defects in software of 60 percent or more. In terms of continuous deployment it
 is critical for a team to embed code reviews in their daily work to make sure
-all code is reviewed.
+all code is reviewed. \cite{code_reviews}
 
 \subsection{Blue green deployment}
 
@@ -1196,6 +1198,7 @@ When new versions of the dependencies are released, updates can be performed in
 a controlled way, rather than whenever an install happens. Updating
 dependencies in a not controlled way as described can lead to hard to debug
 problems in different environment. Worst case would be in production.
+\cite{dependency_locking}
 
 \section{12 Factor Apps}
 
@@ -1424,7 +1427,7 @@ model is often used. The Dolev-Yao model includes abilities one must assume
 when evaluating a cryptographic protocol. These include, that the attacker can
 listen to all communicated messages, modify them and possibly send them to a
 different recipient than the sender intended to. This essentially describes the
-classic \textit{Man in the middle} attack.
+classic \textit{Man in the middle} attack. \cite{dolev_yao}
 
 To validate the system further, the consequences of a completely compromised
 system are examined.
