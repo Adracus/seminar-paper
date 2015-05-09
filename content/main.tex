@@ -149,11 +149,11 @@ second are needed in order for some cryptographic protocols to work. It would
 take too long to generate a random number using a source of true randomness
 every time. Modern computers generate random numbers by using a predefined behaviour.
 They do some computations based on some merely random data and try to output
-random numbers. The fact that these numbers aren't truly random is made obvious
-by calling these numbers \textit{pseudorandom} and the algorithms which create
+random numbers. The fact that these numbers are not truly random explains the name.
+They are called \textit{pseudorandom} numbers  and the algorithms which create
 them \textit{pseudorandom number generators}. Some of the existing algorithms
 are rather easy to predict and some of them are not. For many use cases like
-for example genetic algorithms, predictable sources of randomness are satisfactory
+genetic algorithms, predictable sources of randomness are satisfactory
 good enough to use because they offer high speed access to many random numbers.
 However for cryptographic reasons, these numbers are not suitable. If one is
 able to predict random numbers in a cryptographic protocol, it is easier to
@@ -170,7 +170,7 @@ or on number theoretic designs.
 
 The Blum Blum Shub CSPRNG is a random number generator which is based on a number
 theoretic design. It was developed by Lenore Blum, Manuel Blum and Michael Shub
-(from which the name originates) in 1986. The Blum Blum Shub generator needs
+(which is where the name originates from) in 1986. The Blum Blum Shub generator needs
 two primes $q$ and $p$ to work. Both primes have to be of the form $4k + 3$. Also,
 the starting number $s_0$ has to be coprime to the modulus $n$.
 Once both $s_0$ and $n$ have been determined, the following random number $s_{i+1}$ is
@@ -233,8 +233,8 @@ Additionally all solutions $x$ are also congruent modulo the Product $N = n_1 \l
 \subsection{RSA}
 \label{sub_sec:rsa}
 	
-RSA is an asymmetric encryption standard, developed by Rivest, Shamir and
-Adleman. As many other asymmetric encryption algorithms, RSA uses a one way function
+RSA is an asymmetric encryption standard, developed by Ronald L. Rivest, Adi Shamir and
+Leonard Adleman. As many other asymmetric encryption algorithms, RSA uses a one way function
 with a trapdoor. So in order to understand RSA, one has to understand the
 trapdoor function. The RSA trapdoor function relies on Euler's totient function
 $\phi$. This function returns the amount of numbers which are relatively prime
@@ -433,7 +433,7 @@ This is possible since \textit{XOR} is symmetric.
 
 Although secret sharing through \textit{XOR} encryption is simple and fast, it
 becomes impractical once there are many participants, since all shares are
-required to reconstruct the secret and $k = n$ and $n$ is large.
+required to reconstruct the secret and $k = n$ where $n$ is large.
 
 To solve this issue secure $(t, n)$-threshold schemes with $t < n$ must be
 used.
@@ -448,12 +448,12 @@ possible values are equally likely)." With $D$ being any Data, like a secret.
 Shamir's Secret Sharing is more practical since it is a real $(t, n)$-threshold
 scheme as $t$ can be smaller than $n$.
 
-$$a_{n}x^n + a_{n-1}x^{n-1} + ... + a_{3}x^3 + a_{2}x^2 + a_{1}x + a_0 $$
+$$a_{t}x^t + a_{t-1}x^{t-1} + ... + a_{3}x^3 + a_{2}x^2 + a_{1}x + a_0 $$
 
 Shamir's Secret Sharing uses a polynomial of degree $t$ to generate secrets.
 In the generated polynomial in standard form the secret would be $a_0$. The
 main idea is that any polynomial can be reconstructed using $degree + 1$ points
-on the function. The task of reconstruction can be accomplished using Lagrange
+on the function (in this case $t + 1$). The task of reconstruction can be accomplished using Lagrange
 interpolation.
 
 In the sense of secret sharing $n$ would be any number of distinct points on
@@ -551,7 +551,7 @@ getting large prime numbers in a small amount of time.
 
 To always have accurate prime numbers one has to either have a way to efficiently
 calculate prime numbers as they are needed or a way to efficiently get a prime
-number of a pre-computed set. Each prime number \textit{covers} its on range. For
+number of a pre-computed set. Each prime number \textit{covers} its range. For
 example, for a secret $S = 14$, the prime number $P = 17$ is suitable as it
 \textit{covers} the range from $13$ to $17$. As a result, the range of each
 prime number $P$ is from $P_{-1} to P-1$, where $P_{-1}$ is the next smaller
@@ -813,7 +813,7 @@ Specifically in the case of Shamir's Secret Sharing, when a random polynomial
 is generated, the coefficients should not be zero. If a coefficient is zero, it
 can potentially result in a lower threshold than intended. Say the randomly
 generated polynomial is of degree three and in standard form. A polynomial of
-degree has a threshold of three.
+degree three has a threshold of four.
 
 $$f(x) = a_0 + a_1 * x + a_2 * x^2 + a_3 * x^3$$
 
@@ -909,69 +909,7 @@ Quality assurance in software covers all aspects of a software's life cycle.
 From design over the process of development, code revisions, testing and
 deployment.
 
-To ensure the best quality software, proven metrics and practises are used.
-
-\section{Code Coverage}
-
-Tests are great but they might be ineffective, test the wrong things
-or simply are too few to assure no bugs. This is why there are metrics
-for tests or other tools to test whether tests are effective or not.
-
-\subsection{Branch Coverage}
-
-One measure for tests is the so called \textit{coverage}. Coverage
-comes in two flavors: The first one is the \textit{Branch Coverage}.
-Branch coverage determines whether a test has run through the
-required paths of a program. To calculate the branch coverage of a test,
-simply divide the number of covered branches $c$ by $b$, where $b$ is the
-total number of branches. For example, imagine the method \ref{code:branchCoverage}
-
-\begin{figure}
-\begin{lstlisting}
-abs(int input)
-  if (input < 0) return -input
-  else return input
-\end{lstlisting}
-\caption{abs method (calculates the abolute of an input number)}
-\label{code:branchCoverage}
-\end{figure}
-
-This method has got two paths: If the number is negative, it will
-be multiplied with $-1$ to get the positive absolute of the number.
-Otherwise (if it is already positive), it returns the original input.
-
-Now imagine if one wrote the following test \ref{code:oneBranch}
-
-\begin{figure}
-\begin{lstlisting}
-assert(abs(5), equals(5))
-\end{lstlisting}
-\caption{One branch covered}
-\label{code:oneBranch}
-\end{figure}
-
-Of the two paths of the method, only the path with positive numbers is
-covered. This leads to $c$ (the number of branches covered) being $1$,
-as a result the branch coverage is $\frac{1}{2} = 0.5$. A test with
-full branch coverage would be \ref{code:fullBranch}
-
-\begin{figure}
-\begin{lstlisting}
-assert(abs(5), equals(5))
-assert(abs(-5), equals(5))
-\end{lstlisting}
-\caption{Full branch coverage}
-\label{code:fullBranch}
-\end{figure}
-
-Full branch coverage is hard to achieve, but important for full testing.
-
-\subsection{Line Coverage}
-
-Another metric for test coverage is the \textit{line coverage}. The line
-coverage determines the number of lines covered during a test. It is much
-easier to get 100\% line coverage, but tests with 100\% line coverage do
-not guarantee the absence of errors.
+To ensure the best quality software, metrics and practises are applied.
 
 \section{Testing}
 
@@ -1035,6 +973,68 @@ about it.
 Obviously these tests should be automated, for the developer to execute when
 implementing new features or patches.
 
+\section{Code Coverage}
+
+Tests are great but they might be ineffective, test the wrong things
+or simply are too few to assure no bugs. This is why there are metrics
+for tests and other tools to test whether tests are effective or not.
+
+\subsection{Branch Coverage}
+
+One measure for tests is the so called \textit{coverage}. Coverage
+comes in two flavors: The first one is the \textit{Branch Coverage}.
+Branch coverage determines whether a test has run through the
+required paths of a program. To calculate the branch coverage of a test,
+simply divide the number of covered branches $c$ by $b$, where $b$ is the
+total number of branches. For example, imagine the method \ref{code:branchCoverage}
+
+\begin{figure}
+\begin{lstlisting}
+abs(int input)
+  if (input < 0) return -input
+  else return input
+\end{lstlisting}
+\caption{abs method (calculates the abolute of an input number)}
+\label{code:branchCoverage}
+\end{figure}
+
+This method has got two paths: If the number is negative, it will
+be multiplied with $-1$ to get the positive absolute of the number.
+Otherwise (if it is already positive), it returns the original input.
+
+Now imagine if one wrote the following test \ref{code:oneBranch}
+
+\begin{figure}
+\begin{lstlisting}
+assert(abs(5), equals(5))
+\end{lstlisting}
+\caption{One branch covered}
+\label{code:oneBranch}
+\end{figure}
+
+Of the two paths of the method, only the path with positive numbers is
+covered. This leads to $c$ (the number of branches covered) being $1$,
+as a result the branch coverage is $\frac{1}{2} = 0.5$. A test with
+full branch coverage would be \ref{code:fullBranch}
+
+\begin{figure}
+\begin{lstlisting}
+assert(abs(5), equals(5))
+assert(abs(-5), equals(5))
+\end{lstlisting}
+\caption{Full branch coverage}
+\label{code:fullBranch}
+\end{figure}
+
+Full branch coverage is hard to achieve, but important for full testing.
+
+\subsection{Line Coverage}
+
+Another metric for test coverage is the \textit{line coverage}. The line
+coverage determines the number of lines covered during a test. It is much
+easier to get 100\% line coverage, but tests with 100\% line coverage do
+not guarantee the absence of errors.
+
 \section{Continuous Delivery}
 
 Continuous Delivery embraces test automation, Continuous Integration and the
@@ -1047,7 +1047,7 @@ through before being released or deployed. An example of a deployment pipeline
 could be: 
 
 \begin{itemize}
-  \item{passing all tests}
+  \item{run tests}
   \item{compiling the source to its targets}
   \item{packaging the application}
   \item{deploying the application to a staging environment}
@@ -1066,9 +1066,10 @@ since earlier versions of the software can be deployed from version control.
 
 Following this methodology allows teams to ship extremely early and often.
 Accompanied by the perfectly fitting use of the so called Feature Toggle. A
-Feature Toggle allows a developer to hide a feature which is currently in
-development in production, but have it available in the other phases of the
-deployment pipeline. It can be thought of as beta testing for each feature.
+Feature Toggle allows a developer to hide a feature, which is currently in
+development, in production, but have it available in the other phases of the
+deployment pipeline. For example the Feature Toggle is turned on in the staging
+environment. It can be thought of as beta testing on a feature basis.
 
 Integrating the deployment process into daily business of a developer reduces
 the risks when deploying to the customer or production.
@@ -1092,7 +1093,7 @@ Typically CI is referred to as a server, service or platform where tests are
 executed and the outcome is reported back to the development team. This is also
 known as the feedback loop.
 
-The benefit a team applying Continuous integration are numerous. An important
+The benefits for a team applying Continuous integration are numerous. An important
 benefit though is that the team eliminate the \textit{it works on my machine}
 phenomenon. If the tests pass on the CI server, then the code is classified as
 \textit{shippable}. It wipes out the possibility, that a local configuration,
@@ -1118,8 +1119,8 @@ all code is reviewed.
 \subsection{Blue green deployment}
 
 A critical feature of continuous deployment is to deploy or release the
-software in development up to several times a day. Feature toggles even allows
-these systems to be run in production. Troublesome however is when end users
+software in development several times a day. Feature toggles even allows
+these systems to be run in production. Troublesome, however, is when end users
 are restricted by downtimes of the application when deploying a new version to
 production. To avoid end users ever noticing these downtimes, a method for zero
 downtime has to be applied.
@@ -1359,7 +1360,7 @@ The protocol involves a server and a client. During a secrets life cycle, there
 are four events that are relevant for the protocol creating, reading, updating,
 and deleting. These are also known as \textit{CRUD}. Most interesting of those
 are creating and reading a secret, because deleting just removes all related
-data and creating essentially works like creating.
+data and updating essentially works like creating.
 
 \subsection{Creating a secret}
 
@@ -1385,7 +1386,9 @@ private key. All of this data is then sent to the server to verify and save.
 
 Shamir's Secret Sharing requires at least two shares to reconstruct a secret,
 therefore there will always be a transparent "server"-user which gets a share
-that is shared with every participant.
+that is shared with every participant. This is save, because the server does
+not have access to any other shares, and a single shares does not reveal
+anything about the secret.
 
 \begin{figure}
   \includegraphics[scale=0.55]{pictures/create_secret_sequence_diagram.png}
@@ -1694,7 +1697,7 @@ The big picture see \ref{fig:big_picture} has three conceptual actors:
   establish their connection to the duse API via HTTP calls on REST
   resources.
 
-  \item[RESTful duse API] The RESTful API is the core of the
+  \item[RESTful API] The RESTful API is the core of the
   duse application stack. It consists of four main components. The first
   component, the routing, takes care of routing calls to the correct
   resources. The syntactical correctness is ensured here(like checking
@@ -1703,7 +1706,7 @@ The big picture see \ref{fig:big_picture} has three conceptual actors:
   controlled. The most inner layer is the data. These are the raw, public
   encrypted secrets which are accessed via an ORM on the database.
 
-  \item[duse DB] Database access is highly abstracted inside an
+  \item[Database] Database access is highly abstracted inside an
   ORM. The database stores the various secrets in
   different tables. It is a relational database, but duse does not depend
   on any specific implementation. If there is an adapter for the ORM
@@ -1736,7 +1739,7 @@ from accessing resources from another origin than the host which the browser
 currently accesses. CORS has been introduced to relax the SOP. It allows the
 configuration of possible access points. CORS can be restricted to specific
 resources or resource patterns as well as specific HTTP Verbs. The web browser
-performs the so called \textit{preflight}, which is a HTTP Options request. The
+performs the so called \textit{preflight}, which is an HTTP Options request. The
 web browser then allows or denies the access, depending on the content of the
 response. The said middleware handles the \textit{preflight} requests and
 allows any resource to be requested with all HTTP Verbs.
