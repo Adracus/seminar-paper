@@ -7,27 +7,28 @@ It offers a model to store and retrieve secrets, secured by a
 master key which is split into shares and distributed to authorized
 participants. Vault describes its use cases in conjunction with
 server administration and orchestration activities for several users.
-This overlaps with the duse specification, but duse is more a
+This overlaps with the goal specification of this project, but this aims
+to be a more
 consumer grade product and it focuses on the secret sharing algorithm.
-duse splits every secret and treats it
+Every secret should be split and be treated
 as sensitive as Vault treats its master key. While the master key
-could be a single point of failure for vault, secrets in duse
-are still safe even if one secret is unveiled or a private key
-is made public. Also, duse is a product which has a strong focus
-on software craftsmanship: duse is a high level implementation which
+could be a single point of failure for Vault, secrets in the target implementation
+should still be safe even if one secret is unveiled or a private key
+is made public. Also, the target is a product which has a strong focus
+on software craftsmanship: A high level implementation which
 makes it easy for others to contribute and to write additional
 software while Vault is written in rather low-level go code. This
-code also meets various QA criteria, but is not as understandable
-as the code inside the duse technology stack.
+code also meets various QA criteria, but will not be as understandable
+as the code inside the desired technology stack.
 
 \section{Lastpass}
 
 The use case of Lastpass is the management of personal passwords.
 It is possible to share passwords with other people, but Lastpass
-uses public key crypto here instead of secret sharing. In general,
-duse tries to focus more on the implementation of secret sharing
+uses public key crypto here instead of secret sharing. The goal of this
+is to focus more on the implementation of secret sharing
 and the ability to split a secret than Lastpass. The other distinction
-here is that duse is a solution which is available open source and
+here is that this should be a solution which is available open source and
 which can be hosted by anyone and Lastpass is a closed source
 solution.
 
@@ -38,16 +39,16 @@ which contains all sensitive information. If one wants to unlock this,
 one has to use his master password. Cross platform use with KeePassX is rather
 difficult, because the key database file would have to be synced
 across many devices. Also, if the master password is stolen, the whole
-key database is public - in contrast, other secrets in duse are safe if
-one secret is unveiled. The duse system also takes care of the safe
-distribution of one's secrets.
+key database is public - in contrast, secrets should be safe if
+one secret is unveiled using the planned system. That system should also
+take care of the safe distribution of one's secrets.
 
 \chapter{Cryptography Fundamentals}
 
 \section{Definition}
 
 In present and past it is and always has been important for messages to be
-transmitted securely and without the danger of information disclosure.  To meet
+transmitted securely and without the danger of information disclosure. To meet
 these requirements, two main techniques have emerged:
 
 One technique is called steganography. This discipline focuses on hiding the
