@@ -525,6 +525,7 @@ The goals of Shamir's Secret Sharing are that "knowledge of any $k$ or more
 $D_i$ pieces makes $D$ easily computable; knowledge of any $k - 1$ or fewer
 $D_i$ pieces leaves $D$ completely undetermined (in the sense that all its
 possible values are equally likely)." With $D$ being any Data, like a secret.
+\cite{how_to_share_a_secret}
 
 Shamir's Secret Sharing is more practical since it is a real $(t, n)$-threshold
 scheme as $t$ can be smaller than $n$.
@@ -568,7 +569,8 @@ the secret.
 
 The smallest degree of a polynomial, that is not a single point, is a line, a
 polynomial of degree 1, it therefore be reconstructed with two points. It
-consequently creates an edge condition of $t \geq 1$.
+consequently creates an edge condition of $t \geq 2$.
+\cite{how_to_share_a_secret}
 
 \subsection{Blakley's scheme}
 
