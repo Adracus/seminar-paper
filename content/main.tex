@@ -20,6 +20,7 @@ makes it easy for others to contribute and to write additional
 software while Vault is written in rather low-level go code. This
 code also meets various QA criteria, but will not be as understandable
 as the code inside the desired technology stack.
+\cite{vault}
 
 \section{Lastpass}
 
@@ -119,6 +120,7 @@ key which is used for en- and decryption.
 The other encryption kind is called \textit{asymmetric encryption}. Here, en-
 and decryption are seen as different operations. That's why one has to use an
 encryption and a decryption key to perform \textit{asymmetric encryption}.
+\cite{singh2000geheime}
 
 \section{Cryptographic primitives}
 
@@ -183,6 +185,8 @@ difficulty of the factorization of the modulus $n$. Since it is very difficult
 to factorize huge $n$, Blum Blum Shub is considered safe if one uses a large
 modulus.
 
+\cite{blum1986simple}
+
 \subsection{Prime numbers}
 
 Prime numbers are natural numbers which are greater than one and only evenly
@@ -229,6 +233,8 @@ $$
 $$
 
 Additionally all solutions $x$ are also congruent modulo the Product $N = n_1 \ldots n_k$.
+
+\cite{ding1996chinese}
 
 \subsection{RSA}
 \label{sub_sec:rsa}
@@ -282,7 +288,7 @@ to obtain the original plaintext. As a result, to en- and decrypt a message, one
 has to know the RSA procedure as well as the used padding.
 
 There are several known so called \textit{padding schemes}. The most widespread
-padding was defined in \textit{PKCS \#1}, the first of a family of standards
+padding was defined in \textit{PKCS \#1}\cite{jonsson2003public}, the first of a family of standards
 called Public Key Cryptography Standards. To encrypt, a secret Integer $m$ is 
 first encoded into an octet string using the $i2osp$ (integer to octet string 
 primitive). This results in an octet string message $M$. $M$ is then
@@ -300,6 +306,8 @@ uses the leading $0x00$ and $0x02$ to check if the padding was
 applied. If so, it uses the second $0x00$ to detect the start of the encrypted
 message. In total, this encryption padding enables users to encrypt secrets with
 always different integer outcomes.
+
+\cite{rivest1978method}
 
 \subsection{AES}
 
@@ -369,6 +377,8 @@ contain.
 
 \paragraph{AddRoundKey}
 This step is rather simple: Each byte is XORed with the current round key.
+
+\cite{daemen20018}
 
 \section{Cryptographic Protocols}
 
@@ -453,6 +463,8 @@ Alice and Bob thinking they communicate with each other, they actually
 communicate with the man in the middle, who is now able to decrypt both
 the messages of Alice and Bob. In practice, to prevent such attacks, digital
 signatures are applied to the exchanged messages.
+
+\cite{diffie1976new}
 
 \section{Secret Sharing}
 
@@ -605,6 +617,8 @@ additional ``slope'' which then spans up the plane. For each further
 dimension, an additional component is needed. As a result, the space needed
 to describe such planes or more general, hyperplanes, rises with the
 threshold of needed participants in a shared secret.
+
+\cite{blakley1994linear}
 
 \subsection{Choosing a scheme}
 
