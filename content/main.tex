@@ -707,8 +707,7 @@ Euclid used the property that the greatest common divisor of two numbers does
 not change if the larger number is subtracted by the smaller number. The classical
 algorithm in iterative form is described in \ref{code:euclid_classic}
 
-\begin{figure}
-\begin{lstlisting}
+\begin{lstlisting}[caption={Classic euclidean algorithm}\label{code:euclid_classic},captionpos=b]
 EUCLID-CLASSIC(a, b)
   if (a == 0)
     return b
@@ -718,9 +717,6 @@ EUCLID-CLASSIC(a, b)
     else
       b = b - a
 \end{lstlisting}
-\caption{Classic euclidean algorithm}
-\label{code:euclid_classic}
-\end{figure}
 
 \subsubsection{Modern euclidean algorithm}
 
@@ -731,8 +727,7 @@ It starts of with $a$ and $b = r_0$, the first remainder. The algorithm then
 proceeds as described in \ref{code:euclid_modern}. It continues to
 calculate the remainder $r$ until it is $0$.
 
-\begin{figure}
-\begin{lstlisting}
+\begin{lstlisting}[caption={Modern euclidean algorithm}\label{code:euclid_modern},captionpos=b]
 EUCLID-MODERN(a, b)
   while (b != 0)
     h = a mod b
@@ -740,9 +735,6 @@ EUCLID-MODERN(a, b)
     b = a
   return a
 \end{lstlisting}
-\caption{Modern euclidean algorithm}
-\label{code:euclid_modern}
-\end{figure}
 
 \subsubsection{Extended euclidean algorithm}
 
@@ -791,8 +783,7 @@ the length of your set of characters for every character in the string and add
 the position of the current character in your set of characters, also known as
 a code point. (see figure \ref{code:stringToInteger})
 
-\begin{figure}
-\begin{lstlisting}
+\begin{lstlisting}[caption={Converting an ASCII string to an integer}\label{code:stringToInteger},captionpos=b]
 STRING-TO-INTEGER(input)
   result = 0
   while char = next-character(input)
@@ -800,9 +791,6 @@ STRING-TO-INTEGER(input)
     result = result * 128 + CODEPOINT(char)
   return result
 \end{lstlisting}
-\caption{Converting an ASCII string to an integer}
-\label{code:stringToInteger}
-\end{figure}
 
 \textit{DIVMOD} is the inverse function to what was applied to each of the
 characters. \textit{DIVMOD} can be seen as a mathematical operation returning
@@ -815,8 +803,7 @@ division for the next iteration and the remainder of the modulo operation is
 the code point of the next character. The string is reconstructed from left to
 right. (see figure \ref{code:integerToString})
 
-\begin{figure}
-\begin{lstlisting}
+\begin{lstlisting}[caption={Converting an integer to an ASCII string}\label{code:integerToString},captionpos=b]
 INTEGER-TO-STRING(input)
   result = ""
   while input > 0
@@ -825,9 +812,6 @@ INTEGER-TO-STRING(input)
     result = CHAR-OF-CODEPOINT(codepoint) + result
   return result
 \end{lstlisting}
-\caption{Converting an integer to an ASCII string}
-\label{code:integerToString}
-\end{figure}
 
 One of the challenges of secretly sharing strings however, is to support a wide
 range of characters. As a result ASCII is not very effective since it limits
@@ -986,19 +970,14 @@ Mutations include modification of conditions, literals, return values,
 replacing objects with null references, deleting code, and many more, also
 depending on the language used.
 
-\begin{figure}
-\begin{lstlisting}
+\begin{lstlisting}[caption={Mutation missed example}\label{code:bad_mutation},captionpos=b]
 # production code
 calc(float input)
   floor(input / 2)
-\end{lstlisting}
-\begin{lstlisting}
+
 # test
 assertEquals(calc(4), 2)
 \end{lstlisting}
-\caption{Mutation missed example}
-\label{code:bad_mutation}
-\end{figure}
 
 In the case of integer literals being modified they could be modified by
 increasing or decreasing it or setting it to another random value. Then a test
@@ -1055,15 +1034,11 @@ required paths of a program. To calculate the branch coverage of a test,
 simply divide the number of covered branches $c$ by $b$, where $b$ is the
 total number of branches. For example, imagine the method \ref{code:branchCoverage}
 
-\begin{figure}
-\begin{lstlisting}
+\begin{lstlisting}[caption={abs method (calculates the abolute of an input number)}\label{code:branchCoverage},captionpos=b]
 abs(int input)
   if (input < 0) return -input
   else return input
 \end{lstlisting}
-\caption{abs method (calculates the abolute of an input number)}
-\label{code:branchCoverage}
-\end{figure}
 
 This method has got two paths: If the number is negative, it will
 be multiplied with $-1$ to get the positive absolute of the number.
@@ -1071,27 +1046,19 @@ Otherwise (if it is already positive), it returns the original input.
 
 Now imagine if one wrote the following test \ref{code:oneBranch}
 
-\begin{figure}
-\begin{lstlisting}
+\begin{lstlisting}[caption={One branch covered}\label{code:oneBranch},captionpos=b]
 assert(abs(5), equals(5))
 \end{lstlisting}
-\caption{One branch covered}
-\label{code:oneBranch}
-\end{figure}
 
 Of the two paths of the method, only the path with positive numbers is
 covered. This leads to $c$ (the number of branches covered) being $1$,
 as a result the branch coverage is $\frac{1}{2} = 0.5$. A test with
 full branch coverage would be \ref{code:fullBranch}
 
-\begin{figure}
-\begin{lstlisting}
+\begin{lstlisting}[caption={Full branch coverage}\label{code:fullBranch},captionpos=b]
 assert(abs(5), equals(5))
 assert(abs(-5), equals(5))
 \end{lstlisting}
-\caption{Full branch coverage}
-\label{code:fullBranch}
-\end{figure}
 
 Full branch coverage is hard to achieve, but important for full testing.
 
@@ -1889,7 +1856,7 @@ Error conditions for the steps are as followed (see \ref{tab:error_codes}).
 Successful responses describe, how the resource has changed. (see
 \ref{tab:success_codes})
 
-\begin{figure}
+\begin{table}
   \begin{tabular}{|l|l|l|}
     \hline
     Step & HTTP Codes & Description \\ \hline
@@ -1902,9 +1869,9 @@ Successful responses describe, how the resource has changed. (see
   \caption{HTTP Error codes with description}
   \centering
   \label{tab:error_codes}
-\end{figure}
+\end{table}
 
-\begin{figure}
+\begin{table}
   \begin{tabular}{|l|l|l|}
     \hline
     Action & HTTP Codes & Description \\ \hline
@@ -1916,7 +1883,7 @@ Successful responses describe, how the resource has changed. (see
   \caption{HTTP Success codes with description}
   \centering
   \label{tab:success_codes}
-\end{figure}
+\end{table}
 
 \section{Validation}
 
@@ -1977,8 +1944,7 @@ UUID is not relevant for the single property.}
 
 }
 
-\begin{figure}
-\begin{lstlisting}
+\begin{lstlisting}[caption={JSON Schema of a secret}\label{code:secret_JSON_schema},captionpos=b]
 {
   "type": "object",
   "required": ["title", "parts"],
@@ -2001,9 +1967,6 @@ UUID is not relevant for the single property.}
   }
 }
 \end{lstlisting}
-\caption{JSON Schema of a secret}
-\label{code:secret_JSON_schema}
-\end{figure}
 
 \subsection{Semantic Validation}
 
