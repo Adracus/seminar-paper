@@ -1118,6 +1118,8 @@ Continuous delivery does not only improve life for the developer, but also
 allows customers to see results in very early stages of the development
 process.
 
+\cite{cd}
+
 \subsection{Continuous Integration}
 
 Continuous integration is the part of Continuous delivery ensuring that a
@@ -1139,7 +1141,7 @@ phenomenon. If the tests pass on the CI server, then the code is classified as
 \textit{shippable}. It wipes out the possibility, that a local configuration,
 the developer adds is lost along the way, which directly contributes to the
 idea of continuous deployment. The CI becomes the central location of truth
-concerning passing tests.
+concerning passing tests. \cite{cd}
 
 \subsection{Code reviews}
 
@@ -1216,7 +1218,8 @@ respond yet. (see figure \ref{fig:rolling_updates})
 \end{figure}
 
 While there is no established name for this method of zero downtime
-deployments, it is sometimes referred to as rolling updates.
+deployments, it is sometimes referred to as rolling updates. \ref{rolling
+updates}
 
 \section{Dependency locking}
 
@@ -1921,7 +1924,7 @@ validate structurally and partly to validate the content. Content can be
 validated by providing the expected data type or a regular expression. Data types
 include the JavaScript primitives: Integers, String, Array, Object, Float.
 Furthermore it provides more complex types such as email, IP-Address,
-date-time, URI, and hostnames.
+date-time, URI, and hostnames. \cite{json_schema_draft}
 
 After the validation of data types, the schema can also define some semantic
 validations, such as constraints on numbers or length of a string, however,
