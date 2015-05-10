@@ -101,17 +101,17 @@ A rollback would restore the exact state of the version rolled back to,
 therefore also the participants having access to the secret. In other words,
 the user performing the rollback could possibly lose access. Rolling back a
 secret also does so with the associated shares, which can turn into a problem.
-If the user is able to change its public key as described in
+If the user is able to change its public key as described in section
 \ref{sec:update_key_pair}, the shares restored can possibly not be decrypted by
 the user anymore, since the private key has been removed. Furthermore,
 signatures would become invalid without also rolling back the associated users
-to the same state, when checking signatures client-side as described in
+to the same state, when checking signatures client-side as described in section
 \ref{sec:future:client_sig_check}.
 
 Without a possibility to also achieve these features, revisioning is not worth
 it, due to the loss of security relevant features. The auditing part of
 revisions might be done by logging all actions, that way it is at least
-possible to track changes for a secret, without rollbacks. (see
+possible to track changes for a secret, without rollbacks. (see section
 \ref{sec:event_logging} for more information)
 
 \section{Private key sharing}
@@ -190,7 +190,7 @@ example have the authority to update and delete secrets.
 
 When a member of a group is removed, all access to the shares must be denied.
 It could also work similarly to the termination of a lease as described later in
-\ref{sec:leasing_secrets}.
+section \ref{sec:leasing_secrets}.
 
 Aside from access to secrets, the group would also need to be managed in regard
 to rights to add or remove users. Due to the nature of the cryptographic
@@ -478,7 +478,7 @@ To avoid such situations, the client could also check the signature of the
 received shares. Until now, only the server performs integrity checks by
 verifying the signature at time of creation. Using a method of key
 establishment, the clients can also ensure, the received public keys are not
-tampered, or notice, when the they are tampered. (see
+tampered, or notice, when the they are tampered. (see section
 \ref{sec:key_establishment}) After the key exchange, the signatures can be
 checked.
 
@@ -508,7 +508,7 @@ before the newly encrypted shares replace the old ones.
 To avoid this race condition, the key must be updated first and then the shares
 have to be replaced in separate steps.
 
-In conjunction with client side signature checks
+In conjunction with client side signature checks from section
 \ref{sec:future:client_sig_check} the proposed solution is a dilemma as either
 the shares get in a race condition or the public key to check the signature
 with. Only one of the race conditions can be solved by without introducing
@@ -625,7 +625,7 @@ Introducing hybrid encryption would improve multiple aspects of the overall
 system. In the following paragraphs, the most notable ones are depicted.
 
 \paragraph{Less asymmetric crypto}{ In comparison to the mechanism developed in
-  \ref{sec:duse:crypto_protocol}, this only requires asymmetric encryption to
+  section \ref{sec:duse:crypto_protocol}, this only requires asymmetric encryption to
   be used once per user, instead of once per user per secret part. Additionally
   it allows large secrets to be saved more efficiently, since the decryption of
 the symmetric cipher texts is very performant. Requiring thousands of

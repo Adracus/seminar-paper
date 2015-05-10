@@ -132,9 +132,9 @@ cryptography are examples for cryptographic primitives.
 \subsection{Random numbers}
 
 Random numbers are one of the main building blocks of modern cryptography.
-Inside RSA (see \ref{sub_sec:rsa}) they are used to create many different encryption results even
-if always the same secret is being encrypted. But what if the random numbers
-are not ``random enough''?
+Inside RSA (see section \ref{sub_sec:rsa}) they are used to create many
+different encryption results even if always the same secret is being encrypted.
+But what if the random numbers are not ``random enough''?
 
 \paragraph{True Randomness}
 True randomness is difficult to achieve in cryptography. Human behaviour
@@ -710,7 +710,7 @@ of the euclidean algorithm, the \textit{classical} euclidean algorithm and the
 
 Euclid used the property that the greatest common divisor of two numbers does
 not change if the larger number is subtracted by the smaller number. The classical
-algorithm in iterative form is described in \ref{code:euclid_classic}
+algorithm in iterative form is described in listing \ref{code:euclid_classic}
 
 \begin{lstlisting}[caption={Classic euclidean algorithm}\label{code:euclid_classic},captionpos=b]
 EUCLID-CLASSIC(a, b)
@@ -729,7 +729,7 @@ If the difference between the two numbers is large, the classical algorithm
 needs many subtraction steps until termination. The modern euclidean algorithm
 addresses these problems by applying modular divisions instead of subtractions.
 It starts of with $a$ and $b = r_0$, the first remainder. The algorithm then
-proceeds as described in \ref{code:euclid_modern}. It continues to
+proceeds as described in listing \ref{code:euclid_modern}. It continues to
 calculate the remainder $r$ until it is $0$.
 
 \begin{lstlisting}[caption={Modern euclidean algorithm}\label{code:euclid_modern},captionpos=b]
@@ -786,7 +786,7 @@ in a way that is reversible start with a result of 0. Process each character of
 the string from left to right one at a time. Multiply the current result with
 the length of your set of characters for every character in the string and add
 the position of the current character in your set of characters, also known as
-a code point. (see figure \ref{code:stringToInteger})
+a code point. (see listing \ref{code:stringToInteger})
 
 \begin{lstlisting}[caption={Converting an ASCII string to an integer}\label{code:stringToInteger},captionpos=b]
 STRING-TO-INTEGER(input)
@@ -806,7 +806,7 @@ To reconstruct the string using \textit{DIVMOD}, all that has to be done is
 apply \textit{DIVMOD} to the input integer and use the result of the integer
 division for the next iteration and the remainder of the modulo operation is
 the code point of the next character. The string is reconstructed from left to
-right. (see figure \ref{code:integerToString})
+right. (see listing \ref{code:integerToString})
 
 \begin{lstlisting}[caption={Converting an integer to an ASCII string}\label{code:integerToString},captionpos=b]
 INTEGER-TO-STRING(input)
@@ -1037,7 +1037,7 @@ comes in two flavors: The first one is the \textit{Branch Coverage}.
 Branch coverage determines whether a test has run through the
 required paths of a program. To calculate the branch coverage of a test,
 simply divide the number of covered branches $c$ by $b$, where $b$ is the
-total number of branches. For example, imagine the method \ref{code:branchCoverage}
+total number of branches. For example, imagine the method listing \ref{code:branchCoverage}
 
 \begin{lstlisting}[caption={abs method (calculates the abolute of an input number)}\label{code:branchCoverage},captionpos=b]
 abs(int input)
@@ -1049,7 +1049,7 @@ This method has got two paths: If the number is negative, it will
 be multiplied with $-1$ to get the positive absolute of the number.
 Otherwise (if it is already positive), it returns the original input.
 
-Now imagine if one wrote the following test \ref{code:oneBranch}
+Now imagine if one wrote the following test listing \ref{code:oneBranch}
 
 \begin{lstlisting}[caption={One branch covered}\label{code:oneBranch},captionpos=b]
 assert(abs(5), equals(5))
@@ -1058,7 +1058,7 @@ assert(abs(5), equals(5))
 Of the two paths of the method, only the path with positive numbers is
 covered. This leads to $c$ (the number of branches covered) being $1$,
 as a result the branch coverage is $\frac{1}{2} = 0.5$. A test with
-full branch coverage would be \ref{code:fullBranch}
+full branch coverage would be in listing \ref{code:fullBranch}
 
 \begin{lstlisting}[caption={Full branch coverage}\label{code:fullBranch},captionpos=b]
 assert(abs(5), equals(5))
@@ -1175,7 +1175,7 @@ Assuming when the deployment starts, the green environment is live, then the
 new version is deployed to the blue environment. In case something fails while
 deploying, the router simply does not route to the blue environment. If the
 deployment is successful, then the router switches to the blue environment,
-thus the new version is now live without any downtime. (see fig
+thus the new version is now live without any downtime. (see figure
 \ref{fig:blue_green_deployment}) Of course, this requires the router to hot-load the
 new configuration.
 
@@ -1205,7 +1205,7 @@ running, there is no single point of failure. Once there is a new version to be
 deployed, it is deployed one instance at a time. Since there are multiple
 instances running anyways, there will be no noticeable downtime for end users,
 thanks to the load balancer, which does not route to an instance that does not
-respond yet. (see fig \ref{fig:rolling_updates})
+respond yet. (see figure \ref{fig:rolling_updates})
 
 \begin{figure}
   \includegraphics[scale=0.55]{pictures/rolling_updates.png}
@@ -1287,10 +1287,10 @@ configuration files generated by the environment upon deploys.
 Any service an application relies on is a backing service. Backing services can
 be message brokers, databases, caches and many more. All access details,
 credentials and the location of these services are to be configured as
-described in \ref{para:12factor:config}. The importance is, that this allows
-these service to be easily replaced in case of any incidents. All that has to
-be done, is reconfigure the location of a backup service in the environment
-variable and reboot the application.
+described in config. The importance is, that this allows these service to be
+easily replaced in case of any incidents. All that has to be done, is
+reconfigure the location of a backup service in the environment variable and
+reboot the application.
 
 \paragraph{Build, release, run}
 
@@ -1762,7 +1762,7 @@ the new version are started.
 
 \section{Big Picture}
 
-The big picture see \ref{fig:big_picture} has three conceptual actors:
+The big picture, see figure \ref{fig:big_picture}, has three conceptual actors:
 
 \begin{enumerate}
   \item[Users] Users access the duse RESTful API via various
@@ -1849,7 +1849,7 @@ purely focus on its purpose.
 There are several endpoints for mainly two substantial ones, secrets and users.
 User endpoints are not very interesting. They take care of user registrations,
 confirmation and viewing users. The endpoints for secrets are a typical CRUD,
-but involve several steps to complete. (see \ref{fig:action_flow})
+but involve several steps to complete. (see figure \ref{fig:action_flow})
 
 In case a step cannot complete successfully, it returns an error code along
 with an error message. Otherwise, the request is processed further by the next
@@ -1862,9 +1862,9 @@ step, which can now assume the past steps have been successful.
   \label{fig:action_flow}
 \end{figure}
 
-Error conditions for the steps are as followed (see \ref{tab:error_codes}).
-Successful responses describe, how the resource has changed. (see
-\ref{tab:success_codes})
+Error conditions for the steps are as followed (see table
+\ref{tab:error_codes}). Successful responses describe, how the resource has
+changed. (see table \ref{tab:success_codes})
 
 \begin{table}
   \begin{tabular}{|l|l|l|}
@@ -1945,7 +1945,7 @@ UUID is not relevant for the single property.}
 
 \paragraph{}{ 
   
-  The JSON schema for a secret can be modeled as in
+  The JSON schema for a secret can be modeled as in listing
   \ref{code:secret_JSON_schema}. At top level, it expects an object. This
   object has two properties, a title and parts. Parts are an array of arrays
   containing the shares. A share is represented by the user it belongs to, with
