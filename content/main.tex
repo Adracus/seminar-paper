@@ -1004,6 +1004,9 @@ Similar to other metrics for tests it is usually very tedious to reach 100\%
 mutation coverage, but it ensures that the present tests are as thorough as
 possible.
 
+There are mutation testing tools for some languages, but many lack their
+presence.
+
 \cite{mutation_testing}
 
 \subsection{Regression testing}
@@ -1733,6 +1736,35 @@ introduced. For example: Deploy the application to production, if a new version
 has been created using git tags or deploy to staging if it was just a new
 commit. This hook is known as the post-receive hook.
 
+\section{Docker}
+
+Docker is an open-source project providing operating-system-level
+virtualization. It is used to isolate applications inside containers. To
+achieve this, it uses the cgroups and kernel namespace features of the Linux
+kernel. Therefore it is only possible to use Docker on a Linux distribution,
+however, there are workarounds so users of other platforms are also able to
+use it.
+
+The company behind Docker describes it as follows
+
+\paragraph{}{"Docker enables any application and its dependencies to be packaged up as a
+lightweight, portable, self-sufficient container. Containers have standard
+operations, thus enabling automation. And, they are designed to run on
+virtually any Linux server."\newline}
+
+While traditional virtualization technologies have used application level
+virtualization, Docker utilizes operating system virtualization. It allows
+Docker to use Kernel functionalities directly from the host system, which
+an application level virtualization could not do.
+
+Docker introduced various concepts for to automate the creation and use of
+containers. When an application is packaged with Docker, a bash like language
+is used to declaratively describe how the image should be built. Once an image
+is built, a container can be created from it. This fits perfectly into the
+notion of an immutable infrastructure. Whenever a new version of an image is
+released, the containers are simply stopped and deleted, and new containers of
+the new version are started.
+
 \chapter{Development}
 
 \section{Big Picture}
@@ -1985,6 +2017,15 @@ restricted.
 
 \section{Clients}
 
+\subsection{Shamir's Secret Sharing Library}
+
+While there are libraries available for cryptographic primitives in most
+languages, Shamir's Secret Sharing is not as widely spread. Therefore it has
+to be implemented for the used technologies.
+
+To ensure, that the cryptographic libraries are thoroughly tested, mutation
+testing is applied, where the tooling is available.
+
 \subsection{Web front end}
 
 As every modern computer has got a browser as well as an internet connection today,
@@ -2128,6 +2169,16 @@ version of the API.
 
 This triggers another run of the deployment pipeline, however, tags are not
 deployed to a staging environment, but to a production one.
+
+To make the setup of the API as easy as possible, Docker images are built every
+time a commit is pushed. The image can then be downloaded as if it was a single
+binary and can be setup within seconds. To allow easy to follow versioning,
+each git release tags a Docker image. The user can then decide to either use
+a bleeding edge version, or a specific release.
+
+Using Docker images and containers easily allows blue green deployments for
+single instance deployments as well as rolling updates for multi-instance
+deployments.
 
 \subsection{Libraries}
 
