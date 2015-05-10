@@ -1,4 +1,6 @@
 *.lof
+*.ilg
+*.nls
 *.log
 *.lot
 *.nlo
@@ -11,5 +13,5 @@
 *.bbl
 *.blg
 .DS_Store
-seminar-paper.sublime-project
-seminar-paper.sublime-workspace
+*.sublime-project
+*.sublime-workspace
