@@ -1194,6 +1194,8 @@ This approach leads to the thought of an immutable infrastructure, where the
 philosophy is to never change the state of a deployed system and rather discard
 it and fully redeploy it.
 
+\cite{cd}
+
 \subsection{Rolling updates}
 
 Once applications receive more traffic, then multiple instances have to be
@@ -1565,6 +1567,7 @@ The constraints include
   \item{Uniform Interface}
   \item{Layered system}
 \end{itemize}
+\cite{rest_style}
 
 \subsubsection{Client-Server}
 
@@ -1652,6 +1655,8 @@ Level 2 is similar to level 1, but makes use of multiple HTTP methods.
 In addition to all requirements for level 2, level 3 requires a service to
 navigate using HATEOAS provided information.
 
+\cite{rmm}
+
 \section{Git}
 
 Git is a distributed version control system initially developed in 2005 to
@@ -1696,7 +1701,7 @@ Since Git is a \textit{distributed} version control system, every developer has
 their own local copy of the repository. Thus the changes have to be uploaded,
 once the developer is done with the changes and wants to provide them to the
 rest of the team. This action is referred to as \textit{pushing} changes. The
-receiving server then makes sure, that there are no inconsistencies.
+receiving server then makes sure, that there are no inconsistencies. \cite{git}
 
 Various Git integrations make a perfect fit for use in a deployment
 pipeline.
@@ -1722,7 +1727,7 @@ It tells the build server, that there is a new version to test. The build
 server can then decide what to do, depending on what changes have been
 introduced. For example: Deploy the application to production, if a new version
 has been created using git tags or deploy to staging if it was just a new
-commit. This hook is known as the post-receive hook.
+commit. This hook is known as the post-receive hook. \cite{git}
 
 \section{Docker}
 
@@ -1738,7 +1743,7 @@ The company behind Docker describes it as follows
 \paragraph{}{"Docker enables any application and its dependencies to be packaged up as a
 lightweight, portable, self-sufficient container. Containers have standard
 operations, thus enabling automation. And, they are designed to run on
-virtually any Linux server."\newline}
+virtually any Linux server."\cite{docker_quote}\newline}
 
 While traditional virtualization technologies have used application level
 virtualization, Docker utilizes operating system virtualization. It allows
