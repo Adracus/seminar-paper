@@ -970,10 +970,31 @@ Mutations include modification of conditions, literals, return values,
 replacing objects with null references, deleting code, and many more, also
 depending on the language used.
 
+\begin{figure}
+\begin{lstlisting}
+# production code
+calc(float input)
+  floor(input / 2)
+\end{lstlisting}
+\begin{lstlisting}
+# test
+assertEquals(calc(4), 2)
+\end{lstlisting}
+\caption{Mutation missed example}
+\label{code:bad_mutation}
+\end{figure}
+
 In the case of integer literals being modified they could be modified by
 increasing or decreasing it or setting it to another random value. Then a test
 must cover whatever effect the value of the literal has and hopefully
 invalidate that cause when it is modified.
+
+Take listing \ref{code:bad_mutation}. While all lines and branches are covered,
+there are mutations that are going to fail. For the specified asserts, the
+\textit{floor} function is completely irrelevant. The mutation of removing the
+call to the \textit{floor} would still make the test pass, therefore the
+mutation fails. To eliminate this mutation, a test with an uneven number would
+have to be added.
 
 When using conditions, it happens easily that a condition is not properly
 defined. Therefore mutating rational operators can be useful to determine the
