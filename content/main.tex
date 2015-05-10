@@ -665,11 +665,16 @@ number of a pre-computed set. Each prime number \textit{covers} its range. For
 example, for a secret $S = 14$, the prime number $P = 17$ is suitable as it
 \textit{covers} the range from $13$ to $17$. As a result, the range of each
 prime number $P$ is from $P_{-1} to P-1$, where $P_{-1}$ is the next smaller
-prime number. To represent those ranges one could
-invent a range data structure (R-Tree is not suitable for this use case), but
-if one tried to store the prime numbers from $0$ to $10^{100}$ one would need
+prime number. Data structures to organize range data exist, like for
+example so called \textit{R-Trees}\cite{guttman1984r}. These are data structures
+which are used inside database systems and can hold multidimensional data like
+range rectangles. Since the needed datastructure would not store rectangle
+bounded data but line bounded data, the R-Tree is inappropriate for this use.
+But before inventing new data structures, one should first think of the space
+requirements of the data to store:
+If one tried to store the prime numbers from $0$ to $10^{100}$, one would need
 an incredibly high amount of storage. As a result, the approach to store all
-prime numbers in a large range is quite inefficient in terms of storage and
+prime numbers in a datastructure is quite inefficient in terms of storage and
 overall hard to realize.
 
 While it is hard to identify the next prime larger than $S$, there is
