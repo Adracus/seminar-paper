@@ -525,6 +525,31 @@ main idea is that any polynomial can be reconstructed using $degree + 1$ points
 on the function (in this case $t + 1$). The task of reconstruction can be accomplished using Lagrange
 interpolation.
 
+\begin{figure}
+  \centering
+  \begin{tikzpicture}[x=1cm,y=0.4cm]
+    \draw[latex-latex, thin, draw=gray] (-4,0)--(4,0) node [right] {$x$};
+    \draw[latex-latex, thin, draw=gray] (0,-5)--(0,5) node [above] {$y$};
+    \draw[thick] (-3,-2)--(3,4);
+    \draw[thick] (3,1)--(-3,4);
+    \draw[thick] (3,3)--(-3,0);
+
+    \foreach \Point in {(1,2.0)}{
+      \node at \Point {$\circ$};
+    }
+
+    \foreach \x in {1,...,3}
+      \draw (\x,1pt) -- (\x,-3pt)
+        node[anchor=north] {\x};
+    \foreach \y in {2.5,5}
+      \draw (1pt,\y) -- (-3pt,\y) 
+        node[anchor=east] {\y}; 
+
+    \draw [dotted, gray] (-4,-6) grid (4,5);
+  \end{tikzpicture}
+  \caption{With $t-1$ points known, there are still infinite solutions}
+\end{figure}
+
 In the sense of secret sharing $n$ would be any number of distinct points on
 the generated polynomial, except the intercept with the value axis, which is
 the secret.
