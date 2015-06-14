@@ -1,5 +1,6 @@
 Paper
 =====
+[![PDF Status](https://www.sharelatex.com/github/repos/duse-io/seminar-paper/builds/latest/badge.svg)](https://www.sharelatex.com/github/repos/duse-io/seminar-paper/builds/latest/output.pdf)
 
 You will need a LaTeX Distribution like TeX Live. Then you can simply compile
 the document with
